@@ -1,0 +1,20 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Categorias</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+    <ion-list>
+
+        <button ion-item  *ngFor="let category of (allCategories | async)?.success" no-lines>
+            {{category.name}}
+        </button>          
+        
+      </ion-list>
+
+</ion-content>

@@ -1,17 +1,67 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+
+  <ion-navbar text-center no-border-bottom color="primary">      
+    <ion-title> Woocommerce </ion-title>
+
+    <ion-buttons end>
+      <button ion-button menuToggle color="white_">
+      <ion-icon name="menu"></ion-icon></button>
+  </ion-buttons>
+
+</ion-navbar>  
+
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
-</ion-content>
+<ion-content padding class="trips detail-bg">
+
+  <div class="trip card" tappable (click)="goPageCategories()" margin-bottom>
+    <div class="background border-bottom" [ngStyle]="{'background-image': 'url(assets/imgs/agenda.jpg'}">
+      <div class="background-filter rlt">
+        <div class="align-bottom" padding-left padding-right>            
+          <h6 class="pull-right text-white" ion-text>Categorias</h6>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+    <div class="padding-sm primary-bg">
+      <ion-icon name="alert" class="text-white"></ion-icon>
+      <span ion-text class="text-white"> x </span>
+      <span class="pull-right" ion-text color="light"><strong>yyyy</strong> <span ion-text  class="text-green bold"> Preenchidos </span></span>
+    </div>
+</div>
+
+<div class="trip card" tappable (click)="goPageOrders()" margin-bottom>
+  <div class="background border-bottom" [ngStyle]="{'background-image': 'url(assets/imgs/agenda.jpg'}">
+    <div class="background-filter rlt">
+      <div class="align-bottom" padding-left padding-right>
+        <h6 class="pull-right text-white" ion-text>Todos pedidos</h6>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+  <div class="padding-sm primary-bg">
+    <ion-icon name="alert" class="text-white" *ngIf="totalWorks === 0"></ion-icon>
+    <ion-icon name="checkmark-circle" class="text-white" *ngIf="totalWorks !== 0"></ion-icon>
+    <span ion-text class="text-white"> Confirmados </span>          
+    <span class="pull-right" ion-text color="light"><strong>x</strong> <span ion-text  class="text-green bold"> Agendamentos </span></span>
+  </div>
+</div> 
+
+  <div class="trip card" tappable (click)="goPageOrders()" margin-bottom *ngIf="false">
+      <div class="background border-bottom" [ngStyle]="{'background-image': 'url(assets/imgs/clientes.jpg'}">
+        <div class="background-filter rlt">
+          <div class="align-bottom" padding-left padding-right>
+            <h6 class="pull-right text-white" ion-text>Pedidos confirmados</h6>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+      <div class="padding-sm primary-bg">
+        <ion-icon name="checkmark-circle" class="text-white"></ion-icon>
+        <span ion-text class="text-white">  </span>
+        <span class="pull-right" ion-text color="light"><strong>yy</strong> <span ion-text  class="text-green bold"> diaristas online </span></span>
+      </div>
+    </div>
+
+
+  </ion-content>
