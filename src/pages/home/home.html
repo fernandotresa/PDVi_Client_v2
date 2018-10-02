@@ -1,67 +1,28 @@
 <ion-header>
-
   <ion-navbar text-center no-border-bottom color="primary">      
-    <ion-title> Woocommerce </ion-title>
+      <ion-title> Vendas Online </ion-title>  
+  </ion-navbar>  
 
-    <ion-buttons end>
-      <button ion-button menuToggle color="white_">
-      <ion-icon name="menu"></ion-icon></button>
-  </ion-buttons>
+  <ion-toolbar no-border color="primary">
+    <ion-searchbar
+    [(ngModel)]="searchTerm"
+    (ionInput)="setFilteredItems()"
+    placeholder= "Procurar...">
+    
+  </ion-searchbar>
 
-</ion-navbar>  
+  </ion-toolbar>
 
 </ion-header>
 
-<ion-content padding class="trips detail-bg">
+<ion-content padding>  
 
-  <div class="trip card" tappable (click)="goPageCategories()" margin-bottom>
-    <div class="background border-bottom" [ngStyle]="{'background-image': 'url(assets/imgs/agenda.jpg'}">
-      <div class="background-filter rlt">
-        <div class="align-bottom" padding-left padding-right>            
-          <h6 class="pull-right text-white" ion-text>Categorias</h6>
-          <div class="clear"></div>
-        </div>
-      </div>
-    </div>
-    <div class="padding-sm primary-bg">
-      <ion-icon name="alert" class="text-white"></ion-icon>
-      <span ion-text class="text-white"> x </span>
-      <span class="pull-right" ion-text color="light"><strong>yyyy</strong> <span ion-text  class="text-green bold"> Preenchidos </span></span>
-    </div>
-</div>
+  <ion-list>  
+    <button ion-item  *ngFor="let order of ticketsCallback" no-lines (click)="goPageTicket(order)">
+      <h2>{{order._billing_first_name}} {{order._billing_last_name}} </h2>
+      <p>Tipo de ingresso: {{order.order_items}}</p>
+      <p>Data da compra: {{order.post_date}}</p>        
+    </button>                    
+  </ion-list>
 
-<div class="trip card" tappable (click)="goPageOrders()" margin-bottom>
-  <div class="background border-bottom" [ngStyle]="{'background-image': 'url(assets/imgs/agenda.jpg'}">
-    <div class="background-filter rlt">
-      <div class="align-bottom" padding-left padding-right>
-        <h6 class="pull-right text-white" ion-text>Todos pedidos</h6>
-        <div class="clear"></div>
-      </div>
-    </div>
-  </div>
-  <div class="padding-sm primary-bg">
-    <ion-icon name="alert" class="text-white" *ngIf="totalWorks === 0"></ion-icon>
-    <ion-icon name="checkmark-circle" class="text-white" *ngIf="totalWorks !== 0"></ion-icon>
-    <span ion-text class="text-white"> Confirmados </span>          
-    <span class="pull-right" ion-text color="light"><strong>x</strong> <span ion-text  class="text-green bold"> Agendamentos </span></span>
-  </div>
-</div> 
-
-  <div class="trip card" tappable (click)="goPageOrders()" margin-bottom *ngIf="false">
-      <div class="background border-bottom" [ngStyle]="{'background-image': 'url(assets/imgs/clientes.jpg'}">
-        <div class="background-filter rlt">
-          <div class="align-bottom" padding-left padding-right>
-            <h6 class="pull-right text-white" ion-text>Pedidos confirmados</h6>
-            <div class="clear"></div>
-          </div>
-        </div>
-      </div>
-      <div class="padding-sm primary-bg">
-        <ion-icon name="checkmark-circle" class="text-white"></ion-icon>
-        <span ion-text class="text-white">  </span>
-        <span class="pull-right" ion-text color="light"><strong>yy</strong> <span ion-text  class="text-green bold"> diaristas online </span></span>
-      </div>
-    </div>
-
-
-  </ion-content>
+</ion-content>

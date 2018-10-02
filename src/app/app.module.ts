@@ -3,24 +3,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { CategoriesPageModule } from '../pages/categories/categories.module';
-import { OrdersPageModule } from '../pages/orders/orders.module';
+import { HistoryPageModule } from '../pages/history/history.module';
+import { SettingsPageModule } from '../pages/settings/settings.module';
+import { TicketsPageModule } from '../pages/tickets/tickets.module';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpdProvider } from '../providers/httpd/httpd';
 import { HttpClientModule } from '@angular/common/http';
+import { UiUtilsProvider } from '../providers/ui-utils/ui-utils';
 
 @NgModule({
   declarations: [
-    MyApp,
-    AboutPage,
-    ContactPage,
+    MyApp,    
     HomePage,
     TabsPage
   ],
@@ -32,20 +31,22 @@ import { HttpClientModule } from '@angular/common/http';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
+    
     HomePage,
     TabsPage
   ],
   exports: [
-    CategoriesPageModule,
-    OrdersPageModule
+    CategoriesPageModule,    
+    HistoryPageModule,
+    SettingsPageModule,
+    TicketsPageModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    HttpdProvider
+    HttpdProvider,
+    UiUtilsProvider
   ]
 })
 export class AppModule {}

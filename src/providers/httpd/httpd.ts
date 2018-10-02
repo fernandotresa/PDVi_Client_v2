@@ -19,7 +19,6 @@ export class HttpdProvider {
   }
 
   getCategories(){
-
     let myData = JSON.stringify({id: this.totemId});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/getCategories", myData, {headers: headers})
@@ -31,18 +30,22 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/getProductsCategory", myData, {headers: headers})
   }
 
-  getAllOrders(){
-    
-    let myData = JSON.stringify({id: this.totemId});
+  getAllOrders(start_, end_){    
+    let myData = JSON.stringify({id: this.totemId, start: start_, end: end_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/getAllOrders", myData, {headers: headers})
   }
 
-  getBillingOrders(){
-    let myData = JSON.stringify({id: this.totemId});
+  getAllOrdersByName(str_, start_, end_){    
+    let myData = JSON.stringify({id: this.totemId, name: str_, start: start_, end: end_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
-    return this.http.post(this.address  + "/getBillingOrders", myData, {headers: headers})
+    return this.http.post(this.address  + "/getAllOrdersByName", myData, {headers: headers})
   }
 
- 
+  getOrdersNotCompleted(){    
+    let myData = JSON.stringify({id: this.totemId});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getOrdersNotCompleted", myData, {headers: headers})
+  }
+
 }
