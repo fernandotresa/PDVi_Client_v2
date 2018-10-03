@@ -11,8 +11,6 @@ import { HistoryPageModule } from '../pages/history/history.module';
 import { SettingsPageModule } from '../pages/settings/settings.module';
 import { TicketsPageModule } from '../pages/tickets/tickets.module';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpdProvider } from '../providers/httpd/httpd';
 import { HttpClientModule } from '@angular/common/http';
 import { UiUtilsProvider } from '../providers/ui-utils/ui-utils';
@@ -41,9 +39,7 @@ import { UiUtilsProvider } from '../providers/ui-utils/ui-utils';
     SettingsPageModule,
     TicketsPageModule
   ],
-  providers: [
-    StatusBar,
-    SplashScreen,
+  providers: [    
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpdProvider,
     UiUtilsProvider
