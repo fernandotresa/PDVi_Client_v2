@@ -5,6 +5,7 @@ import { HttpdProvider } from '../../providers/httpd/httpd';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
 import 'rxjs/add/operator/debounceTime';
 import * as moment from 'moment-timezone';
+import { TicketsPage } from '../../pages/tickets/tickets';
 
 @IonicPage()
 @Component({
@@ -68,6 +69,10 @@ export class HistoryPage {
 
       console.log(this.ticketsCallback)
     })
+  }
+
+  goPageTicket(data){
+    this.navCtrl.push(TicketsPage, {orders: data})
   }
 
 }

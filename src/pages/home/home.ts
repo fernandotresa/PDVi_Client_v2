@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpdProvider } from '../../providers/httpd/httpd';
+import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
 import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 import * as moment from 'moment-timezone';
@@ -23,8 +24,14 @@ export class HomePage {
   dayEnd: any
 
   ticketsCallback: any = []
+  listMultiple: Boolean = false
 
-  constructor(public navCtrl: NavController, public httpd: HttpdProvider) {
+  ticketsChecked: any = []
+
+  constructor(public navCtrl: NavController, 
+    public uiUtils: UiUtilsProvider,
+    public httpd: HttpdProvider) {
+
     moment.locale('pt-br');    
     this.dayBegin = moment().startOf('day').format()
     this.dayEnd = moment().endOf('day').format()
@@ -41,6 +48,10 @@ export class HomePage {
 
   ionViewDidLoad() {        
     this.getAllOrders()
+  }
+
+  changeListType(){
+    this.listMultiple = !this.listMultiple
   }
 
   getAllOrders(){
@@ -76,6 +87,38 @@ export class HomePage {
 
   goPageTicket(data){
     this.navCtrl.push(TicketsPage, {orders: data})
+  }
+
+  insertMultiplePrint(data){
+    let id = data.id;    
+
+    for(var i = this.ticketsChecked.length - 1; i >= 0; i--) {
+      if(this.ticketsChecked[i] === id) {
+        console.log('Removendo:', this.ticketsChecked[i])
+        this.ticketsChecked.splice(i, 1);
+        id = 0
+      }
+   }
+
+   console.log(this.ticketsChecked)
+   if(id > 0)
+    this.ticketsChecked.push(id)
+    
+  }
+
+  printMultiple(){
+    console.log("Imprimindo multiplos...  ")
+
+    this.uiUtils.showConfirm("Impressão multipla", "Deseja imprimir os ingressos selecionados?")
+      .then(res => {
+        if(res){
+          this.printMultipleContinue()
+        }
+      })    
+  }
+
+  printMultipleContinue(){
+    console.log("Continuando impressão")
   }
     
 }

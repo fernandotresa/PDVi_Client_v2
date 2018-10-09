@@ -1,60 +1,19 @@
 page-home {
 
-    .primary-bg {
-        background-color: color($colors, primary) !important;
-      }
-    
-      .trips {
-        .card {
-            margin: 5px;
-            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  .item-checkbox{
+    ion-checkbox{
+        button.item-cover{
+            width: 15%;
         }
-    
-      .trip {
-        overflow: hidden;
-    
-        .background {
-          background-size: 100% auto;
-          background-position: center;
-    
-          .background-filter {
-            height: 16rem;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
-    
-            .align-bottom {
-              width: 100%;
-    
-              h6 {
-                margin-top: 0;
-              }
-            }
-          }
-        }
-      }
-     }
-    
-    .detail-bg {
-        background-color: #f1f1f5;
-     }
-    
-    .card {
-      background: #FFF;
-      border-radius: 1rem;  
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-      transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-    }
-    
-    .border-bottom {
-        border-bottom: 1px solid rgba(86, 61, 124, 0.1);
     }
 
-    .text-white {
-        color: #fff;
-      }
-
-      .pull-right{
-        float: right;
+    ion-label{
+        button.item-cover{
+            width: 85%;
+            right: 0;
+            left: auto;
+        }
     }
-  
+  }
     
 }
