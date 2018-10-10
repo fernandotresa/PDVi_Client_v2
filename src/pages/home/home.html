@@ -36,6 +36,7 @@
   <ion-list *ngIf="!listMultiple">  
     <button ion-item  *ngFor="let order of ticketsCallback" no-lines (click)="goPageTicket(order)">
       <h2>{{order._billing_first_name}} {{order._billing_last_name}} </h2>
+      <p>CPF: {{order._billing_cpf}}</p>
       <p>Tipo de ingresso: {{order.order_items}}</p>
       <p>Data da compra: {{order.post_date}}</p>        
     </button>                    
