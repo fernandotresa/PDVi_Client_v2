@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar text-center no-border-bottom color="primary">      
-      <ion-title> Opções ingresso </ion-title>  
+      <ion-title>{{dataInfo.titleTicketOptions}}</ion-title>  
   </ion-navbar>  
 </ion-header>
 
@@ -9,31 +9,30 @@
   <ion-list>      
 
       <ion-item-group>
-        <ion-item-divider color="light"> Básico </ion-item-divider>
+        <ion-item-divider color="light">{{dataInfo.titleBasic} </ion-item-divider>
           <h3>{{orders._billing_first_name}} {{orders._billing_last_name}}</h3>
-          <p><b>Tipo de ingresso:</b> {{orders.order_items}}</p>
-          <p><b>Data da compra:</b> {{orders.post_date}}</p>    
-          <p><b>E-mail:</b> {{orders.billing_email}}</p>
+          <p><b>{{dataInfo.titleTicketType}}:</b> {{order.order_items}}</p>
+          <p><b>{{dataInfo.titleDayPurschase}}:</b> {{order.post_date}}</p>     
+          <p><b>{{dataInfo.titleEmail}}:</b> {{orders.billing_email}}</p>
       </ion-item-group>
 
 
       <ion-item-group>
-        <ion-item-divider color="light"> Ingresso </ion-item-divider>
-          <p><b>Ingresso:</b> {{orders.id_estoque_utilizavel}}</p>
-          <p><b>Número do pedido:</b> {{orders.order_id}}</p>
-          <p><b>Valor da compra:</b> {{orders.order_total}}</p>
-          <p><b>Data do pagamento:</b> {{orders.paid_date}}</p>
-          <p><b>Data da postagem:</b> {{orders.post_date}}</p>
+        <ion-item-divider color="light">{{dataInfo.titleTicket}}</ion-item-divider>
+          <p><b>{{dataInfo.titleTicket}}:</b> {{orders.id_estoque_utilizavel}}</p>
+          <p><b>{{dataInfo.titleTicket}}:</b> {{orders.order_id}}</p>
+          <p><b>{{dataInfo.titleTicketValue}}:</b> {{orders.order_total}}</p>
+          <p><b>{{dataInfo.titleTicketPayDay}}:</b> {{orders.paid_date}}</p>
+          <p><b>{{dataInfo.titleTicketPostDay}}:</b> {{orders.post_date}}</p>
       </ion-item-group>
 
       <ion-item-group>
-        <ion-item-divider color="light"> Endereço comprador </ion-item-divider>            
-          <p><b>Rua:</b> {{orders._billing_address_1}}</p>
-          <p><b>Número:</b> {{orders._billing_address_2}}</p>
-          <p><b>Cidade:</b> {{orders._billing_city}}</p>
-          <p><b>CEP:</b> {{orders._billing_postcode}}</p>
-          <p><b>Estado:</b> {{orders._billing_state}}</p>
-          <p><b>E-mail:</b> {{orders.billing_email}}</p>
+        <ion-item-divider color="light">{{dataInfo.titleClientAddress}}</ion-item-divider>            
+          <p><b>{{dataInfo.titleTicket}}:</b> {{orders._billing_address_1}}</p>
+          <p><b>{{dataInfo.titleNumber}}:</b> {{orders._billing_address_2}}</p>
+          <p><b>{{dataInfo.titleCity}}:</b> {{orders._billing_city}}</p>
+          <p><b>{{dataInfo.titleCEP}}:</b> {{orders._billing_postcode}}</p>
+          <p><b>{{dataInfo.titleState}}:</b> {{orders._billing_state}}</p>
       </ion-item-group>
       
   </ion-list>

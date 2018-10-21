@@ -1,6 +1,6 @@
   <ion-header>
     <ion-navbar text-center no-border-bottom color="primary">      
-        <ion-title> Vendas Online </ion-title>  
+        <ion-title>{{dataInfo.titleAppName}}</ion-title>  
 
       <ion-buttons start *ngIf="!listMultiple">
           <button ion-button icon-only color="royal" (click)="changeListType()">
@@ -36,9 +36,9 @@
   <ion-list *ngIf="!listMultiple">  
     <button ion-item  *ngFor="let order of ticketsCallback" no-lines (click)="goPageTicket(order)">
       <h2>{{order._billing_first_name}} {{order._billing_last_name}} </h2>
-      <p>CPF: {{order._billing_cpf}}</p>
-      <p>Tipo de ingresso: {{order.order_items}}</p>
-      <p>Data da compra: {{order.post_date}}</p>        
+      <p>{{dataInfo.titleCPF}}: {{order._billing_cpf}}</p>
+      <p>{{dataInfo.titleTicketType}}: {{order.order_items}}</p>
+      <p>{{dataInfo.titleDayPurschase}}: {{order.post_date}}</p>        
     </button>                    
   </ion-list>
 
@@ -46,9 +46,9 @@
       <ion-item  *ngFor="let order of ticketsCallback" no-lines>  
           <ion-label>
               <h2>{{order._billing_first_name}} {{order._billing_last_name}} </h2>
-              <p>CPF: {{order._billing_cpf}}</p>
-              <p>Tipo de ingresso: {{order.order_items}}</p>
-              <p>Data da compra: {{order.post_date}}</p>
+              <p>{{dataInfo.titleCPF}}: {{order._billing_cpf}}</p>
+              <p>{{dataInfo.titleTicketType}}: {{order.order_items}}</p>
+              <p>{{dataInfo.titleDayPurschase}}: {{order.post_date}}</p>
               <button class="item-cover disable-hover" ion-button="item-cover" type="button">
                   <span class="button-inner"></span>
                   <div class="button-effect"></div>

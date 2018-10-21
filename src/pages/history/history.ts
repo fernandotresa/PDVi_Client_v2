@@ -10,6 +10,7 @@ import { TicketsPage } from '../../pages/tickets/tickets';
 import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 
+
 @IonicPage()
 @Component({
   selector: 'page-history',
@@ -40,12 +41,9 @@ export class HistoryPage {
         this.searching = false;
         this.setFilteredItems();
       });
-
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HistoryPage');
-    
+  ionViewDidLoad() {    
     this.dayBegin = moment().subtract(5, "days").startOf('day').format()
     this.dayEnd = moment().endOf('day').format()
   }

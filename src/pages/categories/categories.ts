@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpdProvider } from '../../providers/httpd/httpd';
+import { DataInfoProvider } from '../../providers/data-info/data-info';0
 
 @IonicPage()
 @Component({
@@ -13,12 +14,11 @@ export class CategoriesPage {
   allCategories: Observable<any>;
 
   constructor(public navCtrl: NavController,
+    public dataInfo: DataInfoProvider,
     public httpd: HttpdProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CategoriesPage');
-
     this.startInterface()
   }
 

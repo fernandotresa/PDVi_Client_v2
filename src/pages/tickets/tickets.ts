@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
+import { DataInfoProvider } from '../../providers/data-info/data-info';
 
 @IonicPage()
 @Component({
@@ -15,22 +16,19 @@ export class TicketsPage {
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
      public uiUtils: UiUtilsProvider,
+     public dataInfo: DataInfoProvider,
      public httpd: HttpdProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TicketsPage');
-
     this.orders = this.navParams.get("orders")
-    console.log(this.orders)
   }
 
   print(){
     let ticket = this.orders.id_estoque_utilizavel
-    let msg = "Confirmar impressão " + ticket
+    let msg = this.dataInfo.titleConfirmPrint + ticket
 
-    this.uiUtils.showConfirm("Impressão", msg).then( res => {
-      console.log(res)
+    this.uiUtils.showConfirm(this.dataInfo.titleAtention, msg).then( res => {
 
       if(res){
         this.printConfirm()
@@ -43,16 +41,15 @@ export class TicketsPage {
 
     this.httpd.printTicket(ticket).subscribe(data => {
       this.navCtrl.popToRoot()
-      this.uiUtils.showAlert('aviso', 'Impressão enviada com sucesso')
+      this.uiUtils.showAlert(this.dataInfo.titleAtention, this.dataInfo.titlePrintSendSuccess).present()
     })
   }
 
   sendEmail(){
     let email = this.orders.billing_email
-    let msg = "Enviar e-mail para " + email
+    let msg = this.dataInfo.titleSendEmailTo + email
 
-    this.uiUtils.showConfirm("Enviar e-mail", msg).then( res => {
-      console.log(res)
+    this.uiUtils.showConfirm(this.dataInfo.titleAtention, msg).then( res => {
 
       if(res){
         this.sendEmailConfirm()
@@ -66,7 +63,7 @@ export class TicketsPage {
 
     this.httpd.sendEmail(ticket, email).subscribe(data => {
       this.navCtrl.popToRoot()
-      this.uiUtils.showAlert('aviso', 'Email enviado com sucesso')      
+      this.uiUtils.showAlert(this.dataInfo.titleAtention, this.dataInfo.titleEmailSendSuccess).present()
     })
   }
 

@@ -7,6 +7,7 @@ import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 import * as moment from 'moment-timezone';
 import { TicketsPage } from '../../pages/tickets/tickets';
+import { DataInfoProvider } from '../../providers/data-info/data-info';
 
 @Component({
   selector: 'page-home',
@@ -30,6 +31,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, 
     public uiUtils: UiUtilsProvider,
+    public dataInfo: DataInfoProvider,
     public httpd: HttpdProvider) {
 
     moment.locale('pt-br'); 
@@ -56,7 +58,7 @@ export class HomePage {
   }
 
   getAllOrders(){
-    let loading = this.uiUtils.showLoading("Favor aguarde")    
+    let loading = this.uiUtils.showLoading(this.dataInfo.titlePleaseWait)    
     loading.present() 
 
     this.ticketsCallback = []
@@ -81,11 +83,10 @@ export class HomePage {
       this.getByName()
     else
       this.getByCPF()
-
   }
 
   getByName(){
-    let loading = this.uiUtils.showLoading("Procurando pelo nome do cliente, favor aguarde")    
+    let loading = this.uiUtils.showLoading(this.dataInfo.titleSearchingClientName)    
     loading.present() 
     
     this.ticketsCallback = []
@@ -102,7 +103,7 @@ export class HomePage {
   }
 
   getByCPF(){
-    let loading = this.uiUtils.showLoading("Procurando pelo CPF do cliente, favor aguarde")    
+    let loading = this.uiUtils.showLoading(this.dataInfo.titleSearchingClientCPF)    
     loading.present() 
     
     this.ticketsCallback = []
@@ -127,22 +128,18 @@ export class HomePage {
 
     for(var i = this.ticketsChecked.length - 1; i >= 0; i--) {
       if(this.ticketsChecked[i] === id) {
-        console.log('Removendo:', this.ticketsChecked[i])
         this.ticketsChecked.splice(i, 1);
         id = 0
       }
    }
 
-   console.log(this.ticketsChecked)
    if(id > 0)
     this.ticketsChecked.push(id)
     
   }
 
   printMultiple(){
-    console.log("Imprimindo multiplos...  ")
-
-    this.uiUtils.showConfirm("Impressão multipla", "Deseja imprimir os ingressos selecionados?")
+    this.uiUtils.showConfirm(this.dataInfo.titleAtention, this.dataInfo.titleConfirmMultiPrint)
       .then(res => {
         if(res){
           this.printMultipleContinue()

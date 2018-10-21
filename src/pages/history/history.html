@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar text-center no-border-bottom color="primary">      
-        <ion-title> Historico </ion-title>  
+        <ion-title>{{dataInfo.titleHistory}}</ion-title>  
     </ion-navbar>  
 
 </ion-header>
@@ -15,12 +15,12 @@
 
     <ion-list>
         <ion-item>
-          <ion-label>Data inicial</ion-label>
+          <ion-label>{{dataInfo.titleDayStart}}}</ion-label>
           <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="dayBegin"></ion-datetime>
         </ion-item>
       
         <ion-item>
-          <ion-label>Data final</ion-label>
+          <ion-label>{{dataInfo.titleEndStart}}</ion-label>
           <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="dayEnd"></ion-datetime>
         </ion-item>
         
@@ -33,8 +33,8 @@
     <ion-list>  
         <button ion-item  *ngFor="let order of ticketsCallback" no-lines (click)="goPageTicket(order)">
           <h2>{{order._billing_first_name}} {{order._billing_last_name}} </h2>
-          <p>Tipo de ingresso: {{order.order_items}}</p>
-          <p>Data da compra: {{order.post_date}}</p>        
+          <p>{{dataInfo.titleTicketType}}: {{order.order_items}}</p>
+          <p>{{dataInfo.titleDayBo}} {{order.post_date}}</p>        
         </button>                    
       </ion-list>
         
