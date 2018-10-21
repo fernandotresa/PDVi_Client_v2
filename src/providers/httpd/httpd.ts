@@ -5,7 +5,6 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class HttpdProvider {
   
-  //address : string = 'http://suporte.dbltecnologia.com.br:8085'    
   address : string = 'http://localhost:8085'
   contentHeader: Headers = new Headers({'Content-Type': 'application/json'});
   totemId: number = 1
