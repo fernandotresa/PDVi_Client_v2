@@ -7,6 +7,12 @@
 
 <ion-content padding>
 
+    <ion-searchbar *ngIf="dayBegin && dayEnd"
+    [(ngModel)]="searchTerm"
+    (ionInput)="setFilteredItems()"
+    placeholder= "Procurar...">    
+  </ion-searchbar>
+
     <ion-list>
         <ion-item>
           <ion-label>Data inicial</ion-label>

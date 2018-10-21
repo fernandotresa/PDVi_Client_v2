@@ -33,6 +33,7 @@
           <p><b>Cidade:</b> {{orders._billing_city}}</p>
           <p><b>CEP:</b> {{orders._billing_postcode}}</p>
           <p><b>Estado:</b> {{orders._billing_state}}</p>
+          <p><b>E-mail:</b> {{orders.billing_email}}</p>
       </ion-item-group>
       
   </ion-list>
@@ -42,6 +43,7 @@
 <ion-footer no-border color="transparent">
 
     <ion-toolbar transparent>
+      <button ion-button full text-uppercase (click)="sendEmail()">E-mail</button>
       <button ion-button full text-uppercase (click)="print()">Imprimir</button>
   </ion-toolbar>
 

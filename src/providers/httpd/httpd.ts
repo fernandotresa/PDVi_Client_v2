@@ -42,10 +42,28 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/getAllOrdersByName", myData, {headers: headers})
   }
 
+  getAllOrdersByCPF(str_, start_, end_){    
+    let myData = JSON.stringify({id: this.totemId, name: str_, start: start_, end: end_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getAllOrdersByCPF", myData, {headers: headers})
+  }
+
   getOrdersNotCompleted(){    
     let myData = JSON.stringify({id: this.totemId});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/getOrdersNotCompleted", myData, {headers: headers})
+  }
+
+  sendEmail(idTicket_, email_){    
+    let myData = JSON.stringify({idTicket: idTicket_, email: email_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/sendEmail", myData, {headers: headers})
+  }
+
+  printTicket(idTicket_){    
+    let myData = JSON.stringify({idTicket: idTicket_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/printTicket", myData, {headers: headers})
   }
 
 }

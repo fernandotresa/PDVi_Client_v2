@@ -45,12 +45,16 @@
   <ion-list *ngIf="listMultiple">  
       <ion-item  *ngFor="let order of ticketsCallback" no-lines>  
           <ion-label>
-              {{order._billing_first_name}} {{order._billing_last_name}} - {{order.order_items}} 
+              <h2>{{order._billing_first_name}} {{order._billing_last_name}} </h2>
+              <p>CPF: {{order._billing_cpf}}</p>
+              <p>Tipo de ingresso: {{order.order_items}}</p>
+              <p>Data da compra: {{order.post_date}}</p>
               <button class="item-cover disable-hover" ion-button="item-cover" type="button">
                   <span class="button-inner"></span>
                   <div class="button-effect"></div>
               </button>
           </ion-label>
+          
           <ion-checkbox color="royal" checked="false" (ionChange)="insertMultiplePrint(order)"></ion-checkbox>                  
       </ion-item>                    
     </ion-list>

@@ -14,6 +14,7 @@ import { TicketsPageModule } from '../pages/tickets/tickets.module';
 import { HttpdProvider } from '../providers/httpd/httpd';
 import { HttpClientModule } from '@angular/common/http';
 import { UiUtilsProvider } from '../providers/ui-utils/ui-utils';
+import { DataInfoProvider } from '../providers/data-info/data-info';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { UiUtilsProvider } from '../providers/ui-utils/ui-utils';
   providers: [    
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpdProvider,
-    UiUtilsProvider
+    UiUtilsProvider,
+    DataInfoProvider
   ]
 })
 export class AppModule {}

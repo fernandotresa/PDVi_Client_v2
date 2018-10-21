@@ -32,7 +32,8 @@ export class HomePage {
     public uiUtils: UiUtilsProvider,
     public httpd: HttpdProvider) {
 
-    moment.locale('pt-br');    
+    moment.locale('pt-br'); 
+
     this.dayBegin = moment().startOf('day').format()
     this.dayEnd = moment().endOf('day').format()
 
@@ -55,6 +56,9 @@ export class HomePage {
   }
 
   getAllOrders(){
+    let loading = this.uiUtils.showLoading("Favor aguarde")    
+    loading.present() 
+
     this.ticketsCallback = []
 
     this.allOrders = this.httpd.getAllOrders(this.dayBegin, this.dayEnd)
@@ -65,12 +69,24 @@ export class HomePage {
         this.ticketsCallback.push(element)
       });
 
-      console.log(this.ticketsCallback)
+      loading.dismiss()
     })
   }
 
   setFilteredItems(){
-    console.log("Procurando por...", this.searchTerm)
+    let number = isNaN(+this.searchTerm)
+    console.log(number)
+
+    if(!number)
+      this.getByName()
+    else
+      this.getByCPF()
+
+  }
+
+  getByName(){
+    let loading = this.uiUtils.showLoading("Procurando pelo nome do cliente, favor aguarde")    
+    loading.present() 
     
     this.ticketsCallback = []
     this.allOrders = this.httpd.getAllOrdersByName(this.searchTerm, this.dayBegin, this.dayEnd)
@@ -81,7 +97,24 @@ export class HomePage {
         this.ticketsCallback.push(element)
       });
 
-      console.log(this.ticketsCallback)
+      loading.dismiss()
+    })
+  }
+
+  getByCPF(){
+    let loading = this.uiUtils.showLoading("Procurando pelo CPF do cliente, favor aguarde")    
+    loading.present() 
+    
+    this.ticketsCallback = []
+    this.allOrders = this.httpd.getAllOrdersByCPF(this.searchTerm, this.dayBegin, this.dayEnd)
+    this.allOrders.subscribe(data => {      
+
+      data.success.forEach(element => {        
+        element.post_date = moment(element.post_date).tz('America/Sao_Paulo').format("L")        
+        this.ticketsCallback.push(element)
+      });
+
+      loading.dismiss()
     })
   }
 
