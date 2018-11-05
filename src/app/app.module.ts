@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { ErrorHandler, Injectable, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -6,21 +6,26 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { CategoriesPageModule } from '../pages/categories/categories.module';
 import { HistoryPageModule } from '../pages/history/history.module';
+import { ProductsPageModule } from '../pages/products/products.module';
+import { ShopPageModule } from '../pages/shop/shop.module';
 import { SettingsPageModule } from '../pages/settings/settings.module';
 import { TicketsPageModule } from '../pages/tickets/tickets.module';
+import { ParkingPageModule } from '../pages/parking/parking.module';
 
 import { HttpdProvider } from '../providers/httpd/httpd';
 import { HttpClientModule } from '@angular/common/http';
 import { UiUtilsProvider } from '../providers/ui-utils/ui-utils';
 import { DataInfoProvider } from '../providers/data-info/data-info';
 
+import { SideMenuContentComponent } from '../shared/side-menu-content/side-menu-content.component';
+
 @NgModule({
   declarations: [
     MyApp,    
     HomePage,
-    TabsPage
+    TabsPage,
+    SideMenuContentComponent
   ],
   imports: [
     BrowserModule,
@@ -29,16 +34,17 @@ import { DataInfoProvider } from '../providers/data-info/data-info';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    
+    MyApp,    
     HomePage,
     TabsPage
   ],
   exports: [
-    CategoriesPageModule,    
     HistoryPageModule,
     SettingsPageModule,
-    TicketsPageModule
+    TicketsPageModule,
+    ShopPageModule,
+    ProductsPageModule,
+    ParkingPageModule
   ],
   providers: [    
     {provide: ErrorHandler, useClass: IonicErrorHandler},
@@ -47,4 +53,10 @@ import { DataInfoProvider } from '../providers/data-info/data-info';
     DataInfoProvider
   ]
 })
-export class AppModule {}
+export class AppModule {
+  static injector: Injector;
+
+  constructor(injector: Injector) {
+    AppModule.injector = injector;
+  }
+}

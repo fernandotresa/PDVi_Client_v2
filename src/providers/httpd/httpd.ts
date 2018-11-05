@@ -16,13 +16,7 @@ export class HttpdProvider {
   GET(url) {
     return this.http.get(url);
   }
-
-  getCategories(){
-    let myData = JSON.stringify({id: this.totemId});
-    const headers = new HttpHeaders({'Content-Type':'application/json'});
-    return this.http.post(this.address  + "/getCategories", myData, {headers: headers})
-  }
-
+  
   getProductsCategory(){
     let myData = JSON.stringify({id: this.totemId});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
@@ -63,6 +57,18 @@ export class HttpdProvider {
     let myData = JSON.stringify({idTicket: idTicket_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/printTicket", myData, {headers: headers})
+  }
+
+  getAreas(){    
+    let myData = JSON.stringify({id: this.totemId});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getAreas", myData, {headers: headers})
+  }
+
+  getProductsArea(idArea_){    
+    let myData = JSON.stringify({id: this.totemId, idArea: idArea_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getProductsArea", myData, {headers: headers})
   }
 
 }

@@ -3,8 +3,7 @@
   "short_name": "Ionic",
   "start_url": "index.html",
   "display": "standalone",
-  "icons": [{
-    "src": "assets/imgs/logo.png",
+  "icons": [{    
     "sizes": "512x512",
     "type": "image/png"
   }],

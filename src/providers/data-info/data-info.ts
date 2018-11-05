@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class DataInfoProvider {
 
-  titleAppName: string = "Vendas Online"
+  userType: any = {name: 'Atendente', email: 'falecom@megaticket.com.br', photo: "assets/imgs/100x100.png"}
+
+  titleAppName: string = "3A PDVi"
+  titleOnlineSales: string = "Vendas Online"
   titleCPF: string = "CPF"
   titleAtention: string = "Atenção"
   titleStartDateEmpty: string = "Data inicial vazia"
@@ -37,6 +40,12 @@ export class DataInfoProvider {
   titleCity: string = "Cidade"
   titleCEP: string = "CEP"
   titleState: string = "Estado"
+  titleLoadingInformations: string = "Carregando informações"
+  titleWarning: string = "Atenção"
+  titleLimit: string = "Limite atingido"
+  titleValue: string = "Valor"
+  titleDiscount: string = "Desconto"
+  
   titleBasic: string = "Básico"
   titleClientAddress: string = "Endereço comprador"
 

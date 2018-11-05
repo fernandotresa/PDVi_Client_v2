@@ -1,0 +1,66 @@
+<ion-header>
+    <ion-navbar text-center no-border-bottom color="primary">      
+        <ion-title>{{dataInfo.titleAppName}}</ion-title>  
+
+      <ion-buttons start>
+        <button ion-button icon-only color="royal" (click)="goPageParking()">
+          <ion-icon name="car"></ion-icon>
+        </button>
+      </ion-buttons>   
+    </ion-navbar>      
+  </ion-header>
+
+
+<ion-content padding>
+
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Atualizando informações" 
+            refreshingSpinner="circles">
+        </ion-refresher-content>
+    </ion-refresher>
+
+<ion-list>      
+
+    <ion-item *ngFor="let product of products" no-lines>      
+      
+        <h2> {{product.nome_produto}}</h2>
+      
+        <button style="vertical-align: 5%;" ion-button item-right icon-only color="secondary" clear outline (click)="increment(product)">
+            <ion-icon name="add-circle"></ion-icon>
+        </button>
+  
+        <span *ngIf="product.quantity" style="vertical-align: 5%;" item-right>{{product.quantity}}</span>
+        <span *ngIf="! product.quantity" style="vertical-align: 5%;" item-right>0</span>
+          
+        <button style="vertical-align: 5%;" ion-button item-right icon-only color="danger" clear outline (click)="decrement(product)">
+          <ion-icon name="remove-circle"></ion-icon>
+        </button>                  
+                   
+    </ion-item>          
+    
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+    <ion-card class="bdra-0 stroke-3 stroke-cyan mg-0 full-width main-event ani-bottom-to-top">
+      <ion-row class="wrapper-item-line">
+        
+        <div class="right-content pd-15 pdr-10" col-9>
+         <h3 class="fs-15 fw-600 mgb-10">Totais</h3>
+          
+          <ion-list no-border no-lines lst-small class="lst-no-background">
+            <ion-item class="text-cyan fs-15 fw-600 pdl-0">
+              <ion-icon name='md-contact' class="fs-16" color="secondary" item-start></ion-icon>                        
+              <h3 class="fs-15 fw-600 mgb-10">{{dataInfo.titleValue}}: {{finalValue}}</h3>            
+            </ion-item>
+            <ion-item class="text-green fs-13 pdl-0">
+              <ion-icon name='ios-checkmark-circle' class="fs-16" item-start></ion-icon>
+              <h3 class="fs-15 fw-600 mgb-10">{{dataInfo.titleDiscount}}: {{discount}}%</h3>                        
+            </ion-item>
+          </ion-list>        
+        </div>
+      </ion-row>
+    </ion-card>      
+    
+  </ion-footer>

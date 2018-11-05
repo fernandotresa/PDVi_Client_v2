@@ -2,28 +2,13 @@
     <ion-navbar text-center no-border-bottom color="primary">      
         <ion-title>{{dataInfo.titleAppName}}</ion-title>  
 
-      <ion-buttons start *ngIf="!listMultiple">
-          <button ion-button icon-only color="royal" (click)="changeListType()">
-            <ion-icon name="flash"></ion-icon>
-          </button>
-        </ion-buttons>
-
-        <ion-buttons end *ngIf="listMultiple && this.ticketsChecked.length > 0">
-            <button ion-button icon-only color="royal" (click)="printMultiple()">
-              <ion-icon name="ios-print"></ion-icon>
-            </button>
-          </ion-buttons>
-  
-        <ion-buttons end *ngIf="listMultiple">
-          <button ion-button icon-only color="royal" (click)="changeListType()">
-            <ion-icon name="ios-information-circle"></ion-icon>
-          </button>
-        </ion-buttons>
-    
+      <ion-buttons start>
+        <button ion-button icon-only color="royal" (click)="goPageParking()">
+          <ion-icon name="car"></ion-icon>
+        </button>
+      </ion-buttons>   
     </ion-navbar>      
-
   </ion-header>
-
   
 <ion-content padding>  
             
@@ -33,30 +18,15 @@
     placeholder= "Procurar...">    
   </ion-searchbar>
 
-  <ion-list *ngIf="!listMultiple">  
-    <button ion-item  *ngFor="let order of ticketsCallback" no-lines (click)="goPageTicket(order)">
-      <h2>{{order._billing_first_name}} {{order._billing_last_name}} </h2>
-      <p>{{dataInfo.titleCPF}}: {{order._billing_cpf}}</p>
-      <p>{{dataInfo.titleTicketType}}: {{order.order_items}}</p>
-      <p>{{dataInfo.titleDayPurschase}}: {{order.post_date}}</p>        
-    </button>                    
+
+  <ion-list>      
+
+    <button ion-item *ngFor="let area of areas" (click)="areaSelected(area)">
+
+        {{ area.nome_area_acesso }}
+      </button>  
+  
   </ion-list>
 
-  <ion-list *ngIf="listMultiple">  
-      <ion-item  *ngFor="let order of ticketsCallback" no-lines>  
-          <ion-label>
-              <h2>{{order._billing_first_name}} {{order._billing_last_name}} </h2>
-              <p>{{dataInfo.titleCPF}}: {{order._billing_cpf}}</p>
-              <p>{{dataInfo.titleTicketType}}: {{order.order_items}}</p>
-              <p>{{dataInfo.titleDayPurschase}}: {{order.post_date}}</p>
-              <button class="item-cover disable-hover" ion-button="item-cover" type="button">
-                  <span class="button-inner"></span>
-                  <div class="button-effect"></div>
-              </button>
-          </ion-label>
-          
-          <ion-checkbox color="royal" checked="false" (ionChange)="insertMultiplePrint(order)"></ion-checkbox>                  
-      </ion-item>                    
-    </ion-list>
 
 </ion-content>

@@ -101,8 +101,6 @@ export class HistoryPage {
         this.ticketsCallback.push(element)
       });
 
-      console.log(this.ticketsCallback)
-
       if(this.ticketsCallback.length == 0)
         this.uiUtils.showAlert(this.dataInfo.titleAtention, this.dataInfo.titleResultEmpty).present()
     })
