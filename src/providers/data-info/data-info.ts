@@ -44,7 +44,10 @@ export class DataInfoProvider {
   titleWarning: string = "Atenção"
   titleLimit: string = "Limite atingido"
   titleValue: string = "Valor"
-  titleDiscount: string = "Desconto"
+  titleTotalSelected: string = "Total selecionado"
+  titleSave: string = "Salvar"
+  titlePay: string = "Pagar"
+  titlePaymentSuccess: string = "Pagamento realizado com sucesso!"
   
   titleBasic: string = "Básico"
   titleClientAddress: string = "Endereço comprador"

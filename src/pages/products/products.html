@@ -23,7 +23,8 @@
 
     <ion-item *ngFor="let product of products" no-lines>      
       
-        <h2> {{product.nome_produto}}</h2>
+        <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}}</h2>
+        <h2 *ngIf="product.quantity === 0">{{product.nome_produto}}</h2>
       
         <button style="vertical-align: 5%;" ion-button item-right icon-only color="secondary" clear outline (click)="increment(product)">
             <ion-icon name="add-circle"></ion-icon>
@@ -56,11 +57,13 @@
             </ion-item>
             <ion-item class="text-green fs-13 pdl-0">
               <ion-icon name='ios-checkmark-circle' class="fs-16" item-start></ion-icon>
-              <h3 class="fs-15 fw-600 mgb-10">{{dataInfo.titleDiscount}}: {{discount}}%</h3>                        
+              <h3 class="fs-15 fw-600 mgb-10">{{dataInfo.titleTotalSelected}}: {{totalSelected}}%</h3>                        
             </ion-item>
           </ion-list>        
         </div>
       </ion-row>
-    </ion-card>      
+    </ion-card>    
+    
+    <button ion-button full large (click)="payment()" color="positive">{{dataInfo.titlePay}}</button>
     
   </ion-footer>

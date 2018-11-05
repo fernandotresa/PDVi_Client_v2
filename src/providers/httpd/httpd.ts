@@ -16,12 +16,6 @@ export class HttpdProvider {
   GET(url) {
     return this.http.get(url);
   }
-  
-  getProductsCategory(){
-    let myData = JSON.stringify({id: this.totemId});
-    const headers = new HttpHeaders({'Content-Type':'application/json'});
-    return this.http.post(this.address  + "/getProductsCategory", myData, {headers: headers})
-  }
 
   getAllOrders(start_, end_){    
     let myData = JSON.stringify({id: this.totemId, start: start_, end: end_});
@@ -65,10 +59,22 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/getAreas", myData, {headers: headers})
   }
 
+  getAreasByName(name_){    
+    let myData = JSON.stringify({id: this.totemId, name: name_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getAreasByName", myData, {headers: headers})
+  }
+
   getProductsArea(idArea_){    
     let myData = JSON.stringify({id: this.totemId, idArea: idArea_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/getProductsArea", myData, {headers: headers})
+  }
+
+  payProducts(idPayment_, products_){
+    let myData = JSON.stringify({id: this.totemId, idPayment: idPayment_, products: products_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/payProducts", myData, {headers: headers})
   }
 
 }

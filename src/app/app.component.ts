@@ -2,12 +2,15 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, MenuController} from 'ionic-angular';
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
+import { ShopPage } from '../pages/shop/shop';
+import { SettingsPage } from '../pages/settings/settings';
+import { ParkingPage } from '../pages/parking/parking';
 
 import { SideMenuSettings } from './../shared/side-menu-content/models/side-menu-settings';
 import { SideMenuOption } from './../shared/side-menu-content/models/side-menu-option';
 import { SideMenuContentComponent } from './../shared/side-menu-content/side-menu-content.component';
 
-import { ParkingPage } from '../pages/parking/parking';
+import { HomePage } from '../pages/home/home';
 
 @Component({
   templateUrl: 'app.html'
@@ -24,8 +27,8 @@ export class MyApp {
 		selectedOptionClass: 'active-side-menu-option'		
   };
 
-  rootPage:any = TabsPage;
-  //rootPage:any = ParkingPage;
+  //rootPage:any = TabsPage;
+  rootPage:any = HomePage;
 
   constructor(platform: Platform, private menuCtrl: MenuController) {
     platform.ready().then(() => {
@@ -81,26 +84,19 @@ export class MyApp {
 		this.options.push({
 			iconName: 'cart',
 			displayText: 'Vendas online',
-			component: TabsPage			
+			component: ShopPage			
 		});						
 
 		this.options.push({
 			iconName: 'car',
 			displayText: 'Estacionamento',
-			component: TabsPage			
+			component: ParkingPage			
     });	
-    
-    this.options.push({
-			iconName: 'folder-open',
-			displayText: 'Histórico',
-			component: TabsPage			
-    });	
-    
-    
+
     this.options.push({
 			iconName: 'cog',
 			displayText: 'Configurações',
-			component: TabsPage			
+			component: SettingsPage			
 		});	
 		
 		this.options.push({

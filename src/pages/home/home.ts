@@ -31,6 +31,7 @@ export class HomePage {
 
     this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
       this.searching = false;
+      this.setFilteredItems()
     });
 
     this.events.publish('userInfo:menu', this.dataInfo.userType);
@@ -41,7 +42,10 @@ export class HomePage {
   }
 
   setFilteredItems(){
-
+    this.allAreas = this.httpd.getAreasByName(this.searchTerm)
+    this.allAreas.subscribe(data => {      
+      console.log(data)
+    })
   }
  
   getAllAreas(){
