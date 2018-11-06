@@ -7,23 +7,24 @@
           <ion-icon name="car"></ion-icon>
         </button>
       </ion-buttons>   
-    </ion-navbar>      
-  </ion-header>
+    </ion-navbar>   
+    
+    <ion-toolbar color="primary">
+      <ion-searchbar
+        [(ngModel)]="searchTerm"
+        (ionInput)="setFilteredItems()"
+        placeholder= "Procurar...">    
+      </ion-searchbar>
+   </ion-toolbar>
+
+ </ion-header>
   
 <ion-content padding>  
-            
-  <ion-searchbar
-    [(ngModel)]="searchTerm"
-    (ionInput)="setFilteredItems()"
-    placeholder= "Procurar...">    
-  </ion-searchbar>
-
+             
   <ion-list>      
-
     <button ion-item *ngFor="let area of areas" (click)="areaSelected(area)">
         {{ area.nome_area_venda }}
-    </button>  
-  
+    </button>    
   </ion-list>
 
 

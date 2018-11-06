@@ -42,9 +42,10 @@ export class HomePage {
   }
 
   setFilteredItems(){
+    this.areas = []
     this.allAreas = this.httpd.getAreasByName(this.searchTerm)
     this.allAreas.subscribe(data => {      
-      console.log(data)
+      this.areas = data.success
     })
   }
  
@@ -52,9 +53,7 @@ export class HomePage {
     this.allAreas = this.httpd.getAreas()
 
     this.allAreas.subscribe(data => {     
-
-      this.areas = data.success 
-      console.log(this.areas)
+      this.areas = data.success
     })
   }
 

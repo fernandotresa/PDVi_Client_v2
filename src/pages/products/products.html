@@ -7,8 +7,17 @@
           <ion-icon name="car"></ion-icon>
         </button>
       </ion-buttons>   
-    </ion-navbar>      
-  </ion-header>
+  </ion-navbar>  
+
+    <ion-toolbar color="primary">
+      <ion-searchbar
+        [(ngModel)]="searchTerm"
+        (ionInput)="setFilteredItems()"
+        placeholder= "Procurar...">    
+      </ion-searchbar>
+   </ion-toolbar>
+
+</ion-header>
 
 
 <ion-content padding>
@@ -43,27 +52,28 @@
 
 </ion-content>
 
-<ion-footer>
+<ion-footer no-border color="transparent">
     <ion-card class="bdra-0 stroke-3 stroke-cyan mg-0 full-width main-event ani-bottom-to-top">
       <ion-row class="wrapper-item-line">
         
         <div class="right-content pd-15 pdr-10" col-9>
-         <h3 class="fs-15 fw-600 mgb-10">Totais</h3>
           
           <ion-list no-border no-lines lst-small class="lst-no-background">
-            <ion-item class="text-cyan fs-15 fw-600 pdl-0">
-              <ion-icon name='md-contact' class="fs-16" color="secondary" item-start></ion-icon>                        
-              <h3 class="fs-15 fw-600 mgb-10">{{dataInfo.titleValue}}: {{finalValue}}</h3>            
+            <ion-item class="text-green fs-15 fw-600 pdl-0">
+              <ion-icon name='cash' class="fs-30" color="secondary" item-start></ion-icon>
+              <ion-label class="fs-15 fw-600 mgb-10">{{dataInfo.titleValue}}: {{finalValue}}</ion-label>            
             </ion-item>
-            <ion-item class="text-green fs-13 pdl-0">
-              <ion-icon name='ios-checkmark-circle' class="fs-16" item-start></ion-icon>
-              <h3 class="fs-15 fw-600 mgb-10">{{dataInfo.titleTotalSelected}}: {{totalSelected}}%</h3>                        
+            
+            <ion-item class="text-green fs-13 fw-600 pdl-0">
+              <ion-icon name='checkbox' class="fs-30" item-start></ion-icon>
+              <ion-label class="fs-15 fw-600 mgb-10">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</ion-label>
             </ion-item>
+
           </ion-list>        
         </div>
       </ion-row>
     </ion-card>    
     
-    <button ion-button full large (click)="payment()" color="positive">{{dataInfo.titlePay}}</button>
+    <button ion-button full large (click)="goPagePayment()" color="positive">{{dataInfo.titlePay}}</button>
     
-  </ion-footer>
+</ion-footer>

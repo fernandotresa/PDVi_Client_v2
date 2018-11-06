@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, NavParams, ActionSheetController } from 'ionic-angular';
+import { NavController, IonicPage, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
 import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
-
+import { CheckoutPage } from '../checkout/checkout';
 import { ParkingPage } from '../parking/parking';
 
 @IonicPage()
@@ -31,7 +31,6 @@ export class ProductsPage {
     public uiUtils: UiUtilsProvider,
     public dataInfo: DataInfoProvider,
     public navParams: NavParams,
-    public actionSheetCtrl: ActionSheetController,
     public httpd: HttpdProvider) {
 
     this.searchControl = new FormControl();
@@ -51,7 +50,11 @@ export class ProductsPage {
   }
 
   setFilteredItems(){
-
+    this.products = []
+    this.allProducts = this.httpd.getProductsAreaByName(this.searchTerm, this.idArea)
+    this.allProducts.subscribe(data => {      
+      this.products = data.success
+    })
   }
 
   goPageParking(){
@@ -59,14 +62,10 @@ export class ProductsPage {
   }
  
   getAllProducts(){
-    console.log(this.idArea)
-
     this.allProducts = this.httpd.getProductsArea(this.idArea)
 
     this.allProducts.subscribe(data => {     
-
       this.products = data.success 
-      console.log(this.products)
     })
   }
 
@@ -77,8 +76,6 @@ export class ProductsPage {
  
 
   increment(product){
-    console.log(product)
-
     let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
     loading.present()   
 
@@ -94,8 +91,6 @@ export class ProductsPage {
   }
 
   decrement(product){
-    console.log(product)
-
     let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
     loading.present()   
     
@@ -113,52 +108,9 @@ export class ProductsPage {
     loading.dismiss()
   }
 
-  payment() {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Selecionar forma de pagamento',
-      buttons: [
-        {
-          text: 'Dinheiro',
-          role: 'destructive',
-          handler: () => {
-            this.payProduct(1)
-          }
-        },
-        {
-          text: 'Débito',
-          handler: () => {
-            this.payProduct(2)
-          }
-        },
-        {
-          text: 'Crédito',
-          handler: () => {
-            this.payProduct(3)
-          }
-        },
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
-    });
- 
-    actionSheet.present();
-  }
-
-  payProduct(id){
-    let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
-    loading.present() 
-
-    this.httpd.payProducts(id, this.products).subscribe(data => {
-      loading.dismiss()
-
-      this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titlePaymentSuccess).present()
-    })
-  }
- 
   
+  goPagePayment(){
+    this.navCtrl.push(CheckoutPage, {products: this.products})
+  }
+
 }

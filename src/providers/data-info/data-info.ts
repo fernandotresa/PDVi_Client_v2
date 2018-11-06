@@ -47,6 +47,8 @@ export class DataInfoProvider {
   titleTotalSelected: string = "Total selecionado"
   titleSave: string = "Salvar"
   titlePay: string = "Pagar"
+  titleReceived:  string = "Recebido"
+  titleCheckout: string = "Conferir compras"
   titlePaymentSuccess: string = "Pagamento realizado com sucesso!"
   
   titleBasic: string = "Básico"

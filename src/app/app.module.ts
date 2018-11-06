@@ -9,6 +9,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { HistoryPageModule } from '../pages/history/history.module';
 import { ProductsPageModule } from '../pages/products/products.module';
 import { ShopPageModule } from '../pages/shop/shop.module';
+import { CheckoutPageModule } from '../pages/checkout/checkout.module';
 import { SettingsPageModule } from '../pages/settings/settings.module';
 import { TicketsPageModule } from '../pages/tickets/tickets.module';
 import { ParkingPageModule } from '../pages/parking/parking.module';
@@ -44,6 +45,7 @@ import { SideMenuContentComponent } from '../shared/side-menu-content/side-menu-
     TicketsPageModule,
     ShopPageModule,
     ProductsPageModule,
+    CheckoutPageModule,
     ParkingPageModule
   ],
   providers: [    

@@ -71,6 +71,12 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/getProductsArea", myData, {headers: headers})
   }
 
+  getProductsAreaByName(name_, idArea_){    
+    let myData = JSON.stringify({id: this.totemId, name: name_, idArea: idArea_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getProductsAreaByName", myData, {headers: headers})
+  }
+
   payProducts(idPayment_, products_){
     let myData = JSON.stringify({id: this.totemId, idPayment: idPayment_, products: products_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
