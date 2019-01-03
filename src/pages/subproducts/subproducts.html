@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-navbar text-center no-border-bottom color="primary">            
+    <ion-title>{{dataInfo.titleSubproducts}}</ion-title> 
+    </ion-navbar>   
+  </ion-header>
+  
+  <ion-content padding>
+
+  <ion-list>
+  
+    <button ion-item no-lines *ngFor="let type of subtypes" (click)="selectedType(type)">
+        {{type.nome_subtipo_produto}}   
+   </button >                             
+
+  </ion-list>
+  
+  </ion-content>    

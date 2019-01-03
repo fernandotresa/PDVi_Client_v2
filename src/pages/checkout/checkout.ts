@@ -7,12 +7,15 @@ import 'rxjs/add/operator/debounceTime';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
 
 @IonicPage()
+
 @Component({
   selector: 'page-checkout',
   templateUrl: 'checkout.html',
 })
 export class CheckoutPage {
 
+  finalValue: number = 0
+  totalSelected: number = 0
   products: any = []
   productsSelect: any = []
 
@@ -29,10 +32,14 @@ export class CheckoutPage {
   ionViewDidLoad() {
     
     this.productsSelect = []
+    this.finalValue = 0
+    this.totalSelected = 0
 
     for(var i = this.products.length - 1; i >= 0; i--) {
-      if(this.products[i].quantity === 0) {        
+      if(this.products[i].quantity > 0) {        
         this.productsSelect.push(this.products[i])
+        this.finalValue += this.products[i].valor_produto
+        this.totalSelected++
       }
     }
 

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, NavParams } from 'ionic-angular';
+import { NavController, IonicPage, NavParams, ModalController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
 import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
-import { CheckoutPage } from '../checkout/checkout';
-import { ParkingPage } from '../parking/parking';
+//import { CheckoutPage } from '../checkout/checkout';
+//import { SubproductsPage } from '../subproducts/subproducts';
 
 @IonicPage()
 @Component({
@@ -31,6 +31,7 @@ export class ProductsPage {
     public uiUtils: UiUtilsProvider,
     public dataInfo: DataInfoProvider,
     public navParams: NavParams,
+    public modalCtrl: ModalController,
     public httpd: HttpdProvider) {
 
     this.searchControl = new FormControl();
@@ -45,8 +46,15 @@ export class ProductsPage {
   ionViewDidLoad() {      
     console.log(this.area)
 
-    this.idArea = this.area.id_area_venda  
+    this.idArea = this.area.id_area_venda 
+    this.resetValues() 
     this.getAllProducts()
+  }
+
+  resetValues(){
+    this.finalValue = 0
+    this.totalSelected = 0
+    this.products = []
   }
 
   setFilteredItems(){
@@ -55,11 +63,7 @@ export class ProductsPage {
     this.allProducts.subscribe(data => {      
       this.products = data.success
     })
-  }
-
-  goPageParking(){
-    this.navCtrl.push(ParkingPage)
-  }
+  }  
  
   getAllProducts(){
     this.allProducts = this.httpd.getProductsArea(this.idArea)
@@ -110,7 +114,15 @@ export class ProductsPage {
 
   
   goPagePayment(){
-    this.navCtrl.push(CheckoutPage, {products: this.products})
+    this.navCtrl.push('CheckoutPage', {products: this.products})
+  }
+
+  presentModal(product){
+    let modal = this.modalCtrl.create('SubproductsPage', {productSelected: product});
+    modal.onDidDismiss(data => {
+      console.log(data);
+    });
+    modal.present();
   }
 
 }

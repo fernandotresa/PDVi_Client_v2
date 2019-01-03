@@ -13,6 +13,7 @@ import { CheckoutPageModule } from '../pages/checkout/checkout.module';
 import { SettingsPageModule } from '../pages/settings/settings.module';
 import { TicketsPageModule } from '../pages/tickets/tickets.module';
 import { ParkingPageModule } from '../pages/parking/parking.module';
+import { SubproductsPageModule } from '../pages/subproducts/subproducts.module';
 
 import { HttpdProvider } from '../providers/httpd/httpd';
 import { HttpClientModule } from '@angular/common/http';
@@ -46,7 +47,8 @@ import { SideMenuContentComponent } from '../shared/side-menu-content/side-menu-
     ShopPageModule,
     ProductsPageModule,
     CheckoutPageModule,
-    ParkingPageModule
+    ParkingPageModule,
+    SubproductsPageModule
   ],
   providers: [    
     {provide: ErrorHandler, useClass: IonicErrorHandler},

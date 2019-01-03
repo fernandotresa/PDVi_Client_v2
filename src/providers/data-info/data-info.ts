@@ -8,6 +8,7 @@ export class DataInfoProvider {
   titleAppName: string = "3A PDVi"
   titleOnlineSales: string = "Vendas Online"
   titleCPF: string = "CPF"
+  titleModuleOnline: string = "Módulo vendas online"
   titleAtention: string = "Atenção"
   titleStartDateEmpty: string = "Data inicial vazia"
   titleEndDateEmpty: string = "Data final vazia"
@@ -50,7 +51,9 @@ export class DataInfoProvider {
   titleReceived:  string = "Recebido"
   titleCheckout: string = "Conferir compras"
   titlePaymentSuccess: string = "Pagamento realizado com sucesso!"
+  titleSelectOption: string = "Selecione uma opção"
   
+  titleSubproducts: string = "Subtipos de produto"
   titleBasic: string = "Básico"
   titleClientAddress: string = "Endereço comprador"
 
