@@ -49,7 +49,6 @@ export class PaymentPage {
   }
 
   setFocus(){  
-    console.log('focus') 
 
     if(this.inputEnd)
       this.inputEnd.setFocus();          
@@ -99,7 +98,8 @@ export class PaymentPage {
     loading.present() 
     let self = this
 
-    this.httpd.payProducts(this.paymentType, this.productSelected).subscribe( () => {
+    this.httpd.payProducts(this.paymentType, this.productSelected, this.dataInfo.userInfo.id_usuarios)
+    .subscribe( () => {
       loading.dismiss()
 
       let alert = this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titlePaymentSuccess)

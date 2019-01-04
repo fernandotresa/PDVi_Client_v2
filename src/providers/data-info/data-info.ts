@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class DataInfoProvider {
+    
 
   userType: any = {name: 'Atendente', email: 'falecom@megaticket.com.br', photo: "assets/imgs/100x100.png"}
+  userInfo: any;
 
   titleAppName: string = "3A PDVi"
   titleOnlineSales: string = "Vendas Online"

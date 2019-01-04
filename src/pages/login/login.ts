@@ -59,16 +59,27 @@ export class LoginPage {
 
     .subscribe( data => {
 
-      console.log(data)
-      
-      self.goHome()
-      loading.dismiss().then( () => {                                
-
-      });
+      this.loginFinish(data)
+      loading.dismiss()      
     }, error => {
       loading.dismiss().then( () => {
         self.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleAuthError).present()
       });
     });    
   }  
+
+  loginFinish(data){
+    console.log("callback auth")
+    console.log(data)
+
+    if(data.success.length > 0){
+      this.dataInfo.userInfo = data.success[0]
+      this.goHome()
+    }
+      
+    else  
+      this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleAuthError).present()
+
+        
+  }
 }
