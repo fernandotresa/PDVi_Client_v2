@@ -25,9 +25,10 @@ export class SubproductsPage {
 
   ionViewDidLoad() {
     this.productSelected = this.navParams.get('productSelected') 
+
     //console.log(this.productSelected)
 
-    this.allSubtypes = this.httpd.getSubtypesProducts(this.productSelected.id_produto)
+    this.allSubtypes = this.httpd.getSubtypesProducts(this.productSelected.fk_id_tipo_produto)
 
     this.allSubtypes.subscribe(data => {      
       this.subtypes = data.success
@@ -35,10 +36,10 @@ export class SubproductsPage {
   }
 
   selectedType(type){
-    //console.log(type)
+    console.log(type)
     
     this.productSelected.nome_subtipo_produto = type.nome_subtipo_produto
-    this.productSelected.fk_id_subtipo_produto = type.fk_id_subtipo_produto
+    this.productSelected.fk_id_subtipo_produto = type.id_subtipo_produto
     this.viewCtrl.dismiss(this.productSelected)
   }
 
