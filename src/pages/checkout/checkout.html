@@ -12,6 +12,11 @@
           
             <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}}</h2>
             <h2 *ngIf="product.quantity === 0">{{product.nome_produto}}</h2>
+
+            <button *ngIf="product.quantity !== 0" ion-button item-right color="secondary" (click)="presentModal(product)">          
+              <ion-icon name="ios-folder-open"></ion-icon>
+              {{product.nome_subtipo_produto}}
+           </button>
           
             <button style="vertical-align: 5%;" ion-button item-right icon-only color="secondary" clear outline (click)="increment(product)">
                 <ion-icon name="add-circle"></ion-icon>
@@ -43,7 +48,7 @@
           </ion-item>
           
           <ion-item class="text-green fs-13 fw-600 pdl-0">
-            <ion-icon name='checkbox' class="fs-30" item-start></ion-icon>
+            <ion-icon name='checkbox' class="fs-30" color="secondary" item-start></ion-icon>
             <ion-label class="fs-15 fw-600 mgb-10">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</ion-label>
           </ion-item>
 

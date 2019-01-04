@@ -6,8 +6,6 @@ import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
 import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
-//import { CheckoutPage } from '../checkout/checkout';
-//import { SubproductsPage } from '../subproducts/subproducts';
 
 @IonicPage()
 @Component({
@@ -79,25 +77,17 @@ export class ProductsPage {
    } 
  
 
-  increment(product){
-    let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
-    loading.present()   
-
+  increment(product){    
     if(product.quantity == undefined)
       product.quantity = 0
     
     product.quantity++
     product.valor_total = product.valor_produto * product.quantity    
     this.totalSelected++
-    this.finalValue += product.valor_produto
-  
-    loading.dismiss()
+    this.finalValue += product.valor_produto      
   }
 
-  decrement(product){
-    let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
-    loading.present()   
-    
+  decrement(product){        
     if(product.quantity > 0){   
 
       if(product.quantity == undefined)
@@ -107,11 +97,8 @@ export class ProductsPage {
       product.valor_total = product.valor_produto * product.quantity               
       this.totalSelected--
       this.finalValue -= product.valor_produto
-    } 
-    
-    loading.dismiss()
+    }         
   }
-
   
   goPagePayment(){
     this.navCtrl.push('CheckoutPage', {products: this.products})
@@ -120,9 +107,13 @@ export class ProductsPage {
   presentModal(product){
     let modal = this.modalCtrl.create('SubproductsPage', {productSelected: product});
     modal.onDidDismiss(data => {
-      console.log(data);
+      this.replaceProductSubtype(data);
     });
     modal.present();
+  }
+
+  replaceProductSubtype(data){
+    console.log(data)
   }
 
 }

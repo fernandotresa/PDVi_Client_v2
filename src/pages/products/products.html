@@ -1,12 +1,6 @@
 <ion-header>
     <ion-navbar text-center no-border-bottom color="primary">      
-        <ion-title>{{dataInfo.titleAppName}}</ion-title>  
-
-      <ion-buttons start>
-        <button ion-button icon-only color="royal" (click)="goPageParking()">
-          <ion-icon name="ios-folder-open"></ion-icon>
-        </button>
-      </ion-buttons>   
+        <ion-title>{{dataInfo.titleAppName}}</ion-title>      
   </ion-navbar>  
 
     <ion-toolbar color="primary">
@@ -19,9 +13,7 @@
 
 </ion-header>
 
-
 <ion-content padding>
-
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Atualizando informações" 
             refreshingSpinner="circles">
@@ -35,8 +27,7 @@
         <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}}</h2>       
         <h2 *ngIf="product.quantity === 0">{{product.nome_produto}}</h2>
 
-        <button ion-button item-right color="secondary" (click)="presentModal(product)">
-          
+        <button *ngIf="product.quantity !== 0" ion-button item-right color="secondary" (click)="presentModal(product)">          
             <ion-icon name="ios-folder-open"></ion-icon>
             {{product.nome_subtipo_produto}}
         </button>

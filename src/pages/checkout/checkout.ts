@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, NavParams, ActionSheetController } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
+import { NavController, IonicPage, NavParams, ModalController } from 'ionic-angular';
 import { HttpdProvider } from '../../providers/httpd/httpd';
-import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
-import 'rxjs/add/operator/debounceTime';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
 
 @IonicPage()
@@ -19,11 +16,10 @@ export class CheckoutPage {
   products: any = []
   productsSelect: any = []
 
-  constructor(public navCtrl: NavController, 
-    public actionSheetCtrl: ActionSheetController,
-    public uiUtils: UiUtilsProvider,
+  constructor(public navCtrl: NavController,     
     public dataInfo: DataInfoProvider,    
     public httpd: HttpdProvider,
+    public modalCtrl: ModalController,
     public navParams: NavParams) {
       
       this.products = navParams.get("products")
@@ -41,52 +37,57 @@ export class CheckoutPage {
         this.finalValue += this.products[i].valor_produto
         this.totalSelected++
       }
-    }
-
-    console.log(this.productsSelect)
+    }    
   }
 
-  payment() {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Selecionar forma de pagamento',
-      buttons: [
-        {
-          text: 'Dinheiro',
-          handler: () => {
-            this.payProduct(1)
-          }
-        },
-        {
-          text: 'Débito',
-          handler: () => {
-            this.payProduct(2)
-          }
-        },
-        {
-          text: 'Crédito',
-          handler: () => {
-            this.payProduct(3)
-          }
-        },
-        {
-          text: 'Cancelar',
-          role: 'cancel'         
-        }
-      ]
+  presentModal(product){
+    let modal = this.modalCtrl.create('SubproductsPage', {productSelected: product});
+    modal.onDidDismiss(data => {
+      this.replaceProductSubtype(data);
     });
- 
-    actionSheet.present();
+    modal.present();
   }
 
-    payProduct(id){
-      let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
-      loading.present() 
+  replaceProductSubtype(data){
+    console.log(data)
+  }
 
-      this.httpd.payProducts(id, this.products).subscribe(data => {
-        loading.dismiss()
+  increment(product){    
+    if(product.quantity == undefined)
+      product.quantity = 0
+    
+    product.quantity++
+    product.valor_total = product.valor_produto * product.quantity    
+    this.totalSelected++
+    this.finalValue += product.valor_produto      
+  }
 
-        this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titlePaymentSuccess).present()
-      })
-    }
+  decrement(product){    
+    if(product.quantity > 0){   
+
+      if(product.quantity == undefined)
+        product.quantity = 0
+        
+      product.quantity--         
+      product.valor_total = product.valor_produto * product.quantity               
+      this.totalSelected--
+      this.finalValue -= product.valor_produto
+    }         
+  }
+  
+  goPagePayment(){
+    let modal = this.modalCtrl.create('PaymentPage', {productSelected: this.productsSelect, 
+      totalSelected: this.totalSelected, finalValue: this.finalValue});
+
+    modal.onDidDismiss(data => {
+      this.paymentFinish(data);
+    });
+    modal.present();
+  }
+
+  paymentFinish(data){
+    console.log(data)
+  }
+
 
 }
