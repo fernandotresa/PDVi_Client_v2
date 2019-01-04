@@ -101,7 +101,8 @@ export class ProductsPage {
   }
   
   goPagePayment(){
-    this.navCtrl.push('CheckoutPage', {products: this.products})
+    this.navCtrl.push('CheckoutPage', {products: this.products, 
+      finalValue: this.finalValue, totalSelected: this.totalSelected})
   }
 
   presentModal(product){

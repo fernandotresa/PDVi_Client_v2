@@ -20,24 +20,22 @@ export class CheckoutPage {
     public dataInfo: DataInfoProvider,    
     public httpd: HttpdProvider,
     public modalCtrl: ModalController,
-    public navParams: NavParams) {
-      
-      this.products = navParams.get("products")
+    public navParams: NavParams) {            
   }
 
-  ionViewDidLoad() {
-    
+  ionViewDidLoad() {       
+    this.products = this.navParams.get("products")
+    this.totalSelected = this.navParams.get("totalSelected")
+    this.finalValue = this.navParams.get("finalValue")
+
     this.productsSelect = []
-    this.finalValue = 0
-    this.totalSelected = 0
+    
 
     for(var i = this.products.length - 1; i >= 0; i--) {
       if(this.products[i].quantity > 0) {        
         this.productsSelect.push(this.products[i])
-        this.finalValue += this.products[i].valor_produto
-        this.totalSelected++
       }
-    }    
+    } 
   }
 
   presentModal(product){
@@ -87,6 +85,8 @@ export class CheckoutPage {
 
   paymentFinish(data){
     console.log(data)
+
+    this.navCtrl.popToRoot()
   }
 
 

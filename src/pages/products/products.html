@@ -33,14 +33,14 @@
         </button>
       
         <button style="vertical-align: 5%;" ion-button item-right icon-only color="secondary" clear outline (click)="increment(product)">
-            <ion-icon name="add-circle"></ion-icon>
+            <ion-icon class="fs-30" name="add-circle"></ion-icon>
         </button>
   
         <span *ngIf="product.quantity" style="vertical-align: 5%;" item-right>{{product.quantity}}</span>
         <span *ngIf="! product.quantity" style="vertical-align: 5%;" item-right>0</span>
           
         <button style="vertical-align: 5%;" ion-button item-right icon-only color="danger" clear outline (click)="decrement(product)">
-          <ion-icon name="remove-circle"></ion-icon>
+          <ion-icon class="fs-30" name="remove-circle"></ion-icon>
         </button>                  
                    
     </ion-item>          
@@ -58,12 +58,13 @@
           <ion-list no-border no-lines lst-small class="lst-no-background">
             <ion-item class="text-green fs-15 fw-600 pdl-0">
               <ion-icon name='cash' class="fs-30" color="secondary" item-start></ion-icon>
-              <ion-label class="fs-15 fw-600 mgb-10">{{dataInfo.titleValue}}: {{finalValue}}</ion-label>            
+              <ion-label class="fs-30 fw-600 mgb-10">{{dataInfo.titleValue}}: {{finalValue}}</ion-label>            
             </ion-item>
             
+
             <ion-item class="text-green fs-13 fw-600 pdl-0">
               <ion-icon name='checkbox' class="fs-30" item-start></ion-icon>
-              <ion-label class="fs-15 fw-600 mgb-10">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</ion-label>
+              <ion-label class="fs-30 fw-600 mgb-10">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</ion-label>
             </ion-item>
 
           </ion-list>        

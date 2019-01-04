@@ -15,7 +15,7 @@ export class PaymentPage {
   totalSelected: number = 0
   totalReceived: number = 0
   totalChange: number = 0
-  
+
   productSelected: any = []  
   paymentForm: string = "Dinheiro"
   paymentType: number = 1
@@ -87,6 +87,10 @@ export class PaymentPage {
         this.navCtrl.pop()
       })
     })
+  }
+
+  totalChanged(){
+    this.totalChange = this.totalReceived - this.finalValue
   }
      
 }
