@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
 import { HttpdProvider } from '../../providers/httpd/httpd';
@@ -10,6 +10,8 @@ import { DataInfoProvider } from '../../providers/data-info/data-info';
   templateUrl: 'payment.html',
 })
 export class PaymentPage {
+
+  @ViewChild('inputEnd') inputEnd;
 
   finalValue: number = 0
   totalSelected: number = 0
@@ -34,11 +36,28 @@ export class PaymentPage {
     this.productSelected = this.navParams.get('productSelected') 
     this.totalSelected = this.navParams.get('totalSelected') 
     this.finalValue = this.navParams.get('finalValue') 
+
+    this.setIntervalFocus()
+  }
+
+  setIntervalFocus(){
+    let self = this
+
+      setInterval(function(){ 
+        self.setFocus();
+      }, 1000);      
+  }
+
+  setFocus(){  
+    console.log('focus') 
+
+    if(this.inputEnd)
+      this.inputEnd.setFocus();          
   }
 
   goBack(){
     this.navCtrl.pop()
-  }
+  }  
 
   payment() {
     let actionSheet = this.actionSheetCtrl.create({
@@ -78,13 +97,19 @@ export class PaymentPage {
   finishPayment(){
     let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
     loading.present() 
+    let self = this
 
     this.httpd.payProducts(this.paymentType, this.productSelected).subscribe( () => {
       loading.dismiss()
 
-      this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titlePaymentSuccess).present()
+      let alert = this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titlePaymentSuccess)
+      
+      alert.present()
       .then( () => {
-        this.navCtrl.pop()
+        setTimeout(function(){
+          alert.dismiss();
+          self.navCtrl.pop()
+        }, 3000);        
       })
     })
   }

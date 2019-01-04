@@ -10,7 +10,9 @@
 
     <ion-item class="text-green fs-15 fw-600 pdl-0">
       <ion-label color="primary">{{dataInfo.titleTotalPayment}}</ion-label>
-       <ion-input type="number" [(ngModel)]="totalReceived" (ngModelChange) ="totalChanged()"></ion-input>
+      
+       <ion-input type="number" [(ngModel)]="totalReceived" (keyup.enter)="finishPayment()"
+       (ngModelChange) ="totalChanged()" #inputEnd></ion-input>
     </ion-item>
 
     <ion-item class="text-green fs-15 fw-600 pdl-0">
@@ -35,7 +37,7 @@
 </ion-content>   
 
 <ion-footer no-border color="transparent">   
-  <button ion-button full large (click)="payment()" color="positive">{{dataInfo.titlePaymentForm}}</button>
-  <button *ngIf="! totalReceived || totalReceived === 0" ion-button full large (click)="goBack()" color="positive">{{dataInfo.titleCancel}}</button>
-  <button *ngIf="totalReceived >= finalValue" ion-button full large (click)="finishPayment()" color="positive">{{dataInfo.titlePay}}</button>  
+  <button ion-button full large (click)="payment()" color="positive">{{dataInfo.titlePaymentForm}}</button>  
+  <button ion-button full large (click)="finishPayment()" color="positive">{{dataInfo.titlePay}}</button>  
+  <button ion-button full large (click)="goBack()" color="positive">{{dataInfo.titleCancel}}</button>
 </ion-footer>

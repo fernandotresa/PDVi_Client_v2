@@ -1,3 +1,268 @@
 page-login {
+  
+  .login-content { 
+    position: relative;
+    background: url('../assets/imgs/background.jpg') no-repeat transparent;
+    
+    background-size: cover;
+    height: 100%;
+    z-index: 1;
+    background-repeat: repeat-x;
+    animation: animatedBackground 40s linear alternate infinite;
+
+    .wrapper-page{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .bg-img{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img{
+        height: 100%;
+        max-width: unset !important;
+      }
+    }
+  
+  
+    .stroke-grey-3   {
+      border-color: $grey-3 !important;
+    }
+    
+    .stroke-1{
+      border-width: 1px !important;
+    }
+      
+    .logo-img{
+      img{        
+        margin-bottom: 12px;
+      }
+    }
+
+    .section{
+      position: relative;
+      &:after{
+        content: "";
+        display: block;
+        height: 1px;
+        background: $white-opct-1;
+        right: 0;
+        top: 50%;
+        position: absolute;
+      }
+      &:before{
+        content: "";
+        display: block;
+        height: 1px;
+        background: $white-opct-1;
+        width: 30%;
+        left: 0;
+        top: 50%;
+        position: absolute;
+      }
+    }
+  
+    
+    .text-center{
+      text-align: center;
+    }
+  
+    .black-opct-1{
+      background: $black-opct-1 !important;
+    }
+  
+    .text-grey-3{
+      color: $grey-3 !important;
+      .p, span, i, a, div, ion-icon, b, small, strong{
+        color: $grey-3 !important;
+      }
+      input::placeholder{
+        color: $grey-3 !important;
+      }
+    }
+  
+    .button{
+      text-transform: capitalize;
+      height: 36px;
+      &.button-circle{
+        width: 36px;
+        border-radius: 50% !important;
+      }
+      &.button-small{
+        height: 25px;
+        &.button-circle{
+          width: 25px;
+          border-radius: 50% !important;
+        }
+      }
+      &.button-large{
+        height: 55px;
+        &.button-circle{
+          width: 55px;
+          border-radius: 50% !important;
+        }
+      }
+    }
+
+    .indigo   {
+      background: $indigo !important;
+    }
+
+    .red {
+      background: $red !important;
+    }
+
+    .green    {
+      background: $green !important;
+    }
+  
+    .mgb-30{
+      margin-bottom: 30px !important;
+    }
+  
+    .mgt-20{
+      margin-top: 20px !important;
+    }
+    
+    .ani-left-to-right{
+      animation-name: left-to-right;
+      animation-duration: 1s;
+      animation-timing-function: linear;
+      animation-direction: alternate;
+    }
+  
+    .mg-auto{
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+  
+    .mgt-0{
+      margin-top: 0px !important;
+    }
+  
+    .pdl-15{
+      padding-left: 15px !important;
+    }
+  
+    .pdr-15{
+      padding-right: 15px !important;
+    }
+  
+    .ani-bottom-to-top{
+      animation-name: bottom-to-top;
+      animation-duration: 1s;
+      animation-timing-function: linear;
+      animation-direction: alternate;
+    }
+  
+    .text-white{
+      color: $white !important;
+      .p, span, i, a, div, ion-icon, b, small, strong{
+        color: $white !important;
+      }
+      input::placeholder{
+        color: $white !important;
+      }
+    }
+  
+    .white-opct{
+      background: $white-opct !important;
+    }
+  
+    .bdra-20{
+      border-radius: 20px;
+    }
+  
+    .stroke-2{
+      border-width: 2px !important;
+    }
+  
+    .stroke-white    {
+      border-color: $white !important;
+    }
+  
+    .uppercase{
+      text-transform: uppercase !important;
+    }
+  
+    .fw-600{
+      font-weight: 600 !important;
+    }
+  
+    .spacing-1{
+      letter-spacing: 1px;
+    }
+  
+    .ani-bottom-to-top{
+      animation-name: bottom-to-top;
+      animation-duration: 1s;
+      animation-timing-function: linear;
+      animation-direction: alternate;
+    }
+  
+    .fs-13{
+      font-size: 13px !important;
+      // line-height: 19px !important;
+    }
+  
+    .mgt-40{
+      margin-top: 40px !important;
+    }
+  
+    .mgb-20{
+      margin-bottom: 20px !important;
+    }
+  
+    .ani-right-to-left{
+      animation-name: right-to-left;
+      animation-duration: 1s;
+      animation-timing-function: linear;
+      animation-direction: alternate;
+    }
+  
+    .ani-fade-out{
+      animation-name: fade-out;
+      animation-duration: 1s;
+      animation-timing-function: linear;
+      animation-direction: alternate;
+    }
+  
+    .mgb--5{
+      margin-bottom: -5px !important;
+    }
+  
+    .pull-left{
+      float: left;
+    }
+  
+    .text-grey-3{
+      color: $grey-3 !important;
+      .p, span, i, a, div, ion-icon, b, small, strong{
+        color: $grey-3 !important;
+      }
+      input::placeholder{
+        color: $grey-3 !important;
+      }
+    }
+
+    @keyframes animatedBackground {
+      from { background-position: 0 0; }
+      to { background-position: 100% 0; }
+    }
+    
+
+  }
+
+  
+
+
 
 }

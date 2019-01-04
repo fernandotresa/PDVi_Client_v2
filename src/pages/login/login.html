@@ -1,18 +1,30 @@
-<!--
-  Generated template for the LoginPage page.
+<ion-content class="login-content wrapper-page text-center black-opct-1 ani-fade-out">  
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
+  <div padding>
 
-  <ion-navbar>
-    <ion-title>login</ion-title>
-  </ion-navbar>
+        <ion-row class="logo-img mgb-30 mgt-20 ani-left-to-right">
+          <img class="mg-auto" src="assets/imgs/logo.png" alt="">
+        </ion-row>
+        <ion-list class="ani-bottom-to-top">
+          <ion-item class="text-white white-opct bdra-20">
+            <ion-input type="text" placeholder="{{dataInfo.titleEmail}}" [(ngModel)]="username"></ion-input>
+          </ion-item>
+        </ion-list>
+        <ion-list class="ani-bottom-to-top">
+          <ion-item class="text-white white-opct bdra-20">
+            <ion-input type="password" placeholder="{{dataInfo.titlePassword}}" [(ngModel)]="password"></ion-input>
+          </ion-item>
+        </ion-list>
+        
+        <button ion-button block outline round color="light" 
+          class="green mgt-20 stroke-2 stroke-white text-white uppercase fw-600 spacing-1 ani-bottom-to-top" (click)="loginUser()">{{dataInfo.titleLogin}}</button>
+  
+        <ion-row>
+          <button ion-button block outline round icon-left color="light" class="indigo ani-fade-out stroke-2 stroke-white text-white uppercase fw-600 spacing-1" (click)="loginUser()">
+            {{dataInfo.titleForget}}
+          </button>           
+        </ion-row>                
 
-</ion-header>
-
-
-<ion-content padding>
-
+  </div>                
+      
 </ion-content>

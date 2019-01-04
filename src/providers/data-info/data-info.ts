@@ -58,10 +58,15 @@ export class DataInfoProvider {
   titleTotalChange: string = "Troco: "
   titleFinalValue: string = "Valor final: "
   titleSelectOption: string = "Selecione uma opção"
-  
+  titleUsernameMinLenght: string = "Usuário deve ter no mínimo 3 caracteres"
+  titlePasswordMinLenght: string = "Senha deve ter no mínimo 3 caracteres"    
+  titleAuthError: string = "Erro de autenticação"
   titleSubproducts: string = "Subtipos de produto"
   titleBasic: string = "Básico"
   titleClientAddress: string = "Endereço comprador"
+  titleLogin: string = "Login"
+  titleForget: string = "Esqueci a senha"
+  titlePassword: string = "Senha"
 
   constructor() {
     console.log('Hello DataInfoProvider Provider');

@@ -5,7 +5,6 @@ import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-
 import { HistoryPageModule } from '../pages/history/history.module';
 import { ProductsPageModule } from '../pages/products/products.module';
 import { ShopPageModule } from '../pages/shop/shop.module';
@@ -14,6 +13,7 @@ import { SettingsPageModule } from '../pages/settings/settings.module';
 import { TicketsPageModule } from '../pages/tickets/tickets.module';
 import { ParkingPageModule } from '../pages/parking/parking.module';
 import { PaymentPageModule } from '../pages/payment/payment.module';
+import { LoginPageModule } from '../pages/login/login.module';
 import { SubproductsPageModule } from '../pages/subproducts/subproducts.module';
 
 import { HttpdProvider } from '../providers/httpd/httpd';
@@ -50,7 +50,8 @@ import { SideMenuContentComponent } from '../shared/side-menu-content/side-menu-
     CheckoutPageModule,
     PaymentPageModule,
     ParkingPageModule,
-    SubproductsPageModule
+    SubproductsPageModule,
+    LoginPageModule
   ],
   providers: [    
     {provide: ErrorHandler, useClass: IonicErrorHandler},

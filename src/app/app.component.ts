@@ -10,8 +10,6 @@ import { SideMenuSettings } from './../shared/side-menu-content/models/side-menu
 import { SideMenuOption } from './../shared/side-menu-content/models/side-menu-option';
 import { SideMenuContentComponent } from './../shared/side-menu-content/side-menu-content.component';
 
-import { HomePage } from '../pages/home/home';
-
 @Component({
   templateUrl: 'app.html'
 })
@@ -28,7 +26,8 @@ export class MyApp {
   };
 
   //rootPage:any = TabsPage;
-  rootPage:any = HomePage;
+  rootPage:any = LoginPage;
+  
 
   constructor(platform: Platform, private menuCtrl: MenuController) {
     platform.ready().then(() => {

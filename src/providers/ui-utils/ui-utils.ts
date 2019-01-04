@@ -20,6 +20,7 @@ export class UiUtilsProvider {
   }
 
   showAlert(title_: string, subtitle_: string) {
+    
     let alert = this.alertCtrl.create({
       title: title_,
       subTitle: subtitle_,

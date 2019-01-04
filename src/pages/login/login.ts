@@ -1,25 +1,74 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
+import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils'
+import { DataInfoProvider } from '../../providers/data-info/data-info'
+import { Observable } from 'rxjs/Observable';
+import { HttpdProvider } from '../../providers/httpd/httpd';
+import { HomePage } from '../../pages/home/home';
 
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  allConfigs: Observable<any>;
+  autoLogin: Boolean = true
+  username: string
+  password: string
+
+  constructor(public navCtrl: NavController, 
+    public dataInfo: DataInfoProvider,
+    public uiUtils: UiUtilsProvider,
+    public navParams: NavParams,
+    public httpd: HttpdProvider) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+  ionViewDidLoad() {    
+    this.autoLogin = this.navParams.get("autoLogin")
+
+    if(this.autoLogin == undefined)
+      this.autoLogin = true   
+    }
+
+  
+  goHome(){
+    this.navCtrl.setRoot(HomePage);
   }
 
+  loginUser(): void {        
+
+    if (this.username.length < 3){
+      this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleUsernameMinLenght).present()
+
+    } else if (this.password.length < 3){
+      this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titlePasswordMinLenght).present()
+      
+    } else {
+      this.loginContinue(this.username, this.password)    
+    }
+  }
+
+  loginContinue(email, pass){
+    
+    let loading = this.uiUtils.showLoading(this.dataInfo.titlePleaseWait)    
+    loading.present() 
+    var self = this
+
+    this.httpd.getAuth(email, pass)
+
+    .subscribe( data => {
+
+      console.log(data)
+      
+      self.goHome()
+      loading.dismiss().then( () => {                                
+
+      });
+    }, error => {
+      loading.dismiss().then( () => {
+        self.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleAuthError).present()
+      });
+    });    
+  }  
 }
