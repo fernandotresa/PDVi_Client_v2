@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, NavParams, ModalController } from 'ionic-angular';
+import { NavController, IonicPage, NavParams, ModalController, Events } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
@@ -30,6 +30,7 @@ export class ProductsPage {
     public dataInfo: DataInfoProvider,
     public navParams: NavParams,
     public modalCtrl: ModalController,
+    public events: Events,
     public httpd: HttpdProvider) {
 
     this.searchControl = new FormControl();
@@ -49,7 +50,12 @@ export class ProductsPage {
     this.getAllProducts()
   }
 
+  ngOnDestroy() {
+    this.events.unsubscribe(this.dataInfo.eventPaymentOk);    
+  }
+
   resetValues(){
+    console.log("resetValues")
     this.finalValue = 0
     this.totalSelected = 0
     this.products = []
@@ -116,8 +122,6 @@ export class ProductsPage {
 
   replaceProductSubtype(data){    
 
-    console.log(data)
-
     let id_produto = data.id_produto
     let fk_id_subtipo_produto = data.fk_id_subtipo_produto
 
@@ -127,7 +131,6 @@ export class ProductsPage {
       let product_id_produto = product.id_produto
       
       if(id_produto === product_id_produto){
-        console.log("Substituindo ", id_produto, fk_id_subtipo_produto)
         product.fk_id_subtipo_produto = fk_id_subtipo_produto
       }
     }

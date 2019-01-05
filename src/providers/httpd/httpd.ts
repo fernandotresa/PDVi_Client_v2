@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class HttpdProvider {
   
-  address : string = 'http://localhost:8085'
+  address : string = 'http://localhost:8085'    
   contentHeader: Headers = new Headers({'Content-Type': 'application/json'});
   totemId: number = 1
   
@@ -57,6 +57,12 @@ export class HttpdProvider {
     let myData = JSON.stringify({id: this.totemId});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/getAreas", myData, {headers: headers})
+  }
+
+  getPaymentsMethods(){    
+    let myData = JSON.stringify({id: this.totemId});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getPaymentsMethods", myData, {headers: headers})
   }
 
   getAreasByName(name_){    

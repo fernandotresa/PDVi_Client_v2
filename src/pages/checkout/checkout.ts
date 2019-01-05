@@ -85,8 +85,7 @@ export class CheckoutPage {
 
   paymentFinish(data){
     console.log(data)
-
-    this.navCtrl.popToRoot()
+    this.navCtrl.pop()    
   }
 
 

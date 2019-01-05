@@ -13,14 +13,15 @@
       
        <ion-input type="number" [(ngModel)]="totalReceived" (keyup.enter)="finishPayment()"
        (ngModelChange) ="totalChanged()" #inputEnd></ion-input>
-    </ion-item>
-
-    <ion-item class="text-green fs-15 fw-600 pdl-0">
-        <ion-icon *ngIf="paymentType === 1" name='cash' class="fs-30" color="secondary" item-start></ion-icon>
-        <ion-icon *ngIf="paymentType === 2" name='md-card' class="fs-30" color="secondary" item-start></ion-icon>
-        <ion-icon *ngIf="paymentType === 3" name='md-card' class="fs-30" color="primary" item-start></ion-icon>
-        <ion-label class="fs-15 fw-600 mgb-10">{{dataInfo.titlePaymentForm}} {{paymentForm}}</ion-label>            
     </ion-item>    
+    
+    <ion-item class="text-green fs-15 fw-600 pdl-0">    
+      
+      <ion-label stacked>{{dataInfo.titlePaymentForm}}</ion-label>  
+        <ion-select [(ngModel)]="paymentForm" (ionChange)="paymentChanged($event)">
+        <ion-option *ngFor="let pay of (payments | async)?.success">{{pay.nome_tipo_pagamento}}</ion-option>                                                  
+      </ion-select>                          
+    </ion-item>
 
     <ion-item class="text-green fs-15 fw-600 pdl-0">
       <ion-icon name='cash' class="fs-30" color="secondary" item-start></ion-icon>
@@ -37,7 +38,6 @@
 </ion-content>   
 
 <ion-footer no-border color="transparent">   
-  <button ion-button full large (click)="payment()" color="positive">{{dataInfo.titlePaymentForm}}</button>  
   <button ion-button full large (click)="finishPayment()" color="positive">{{dataInfo.titlePay}}</button>  
   <button ion-button full large (click)="goBack()" color="positive">{{dataInfo.titleCancel}}</button>
 </ion-footer>

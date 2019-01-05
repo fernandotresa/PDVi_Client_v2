@@ -1,8 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
+import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
@@ -17,27 +18,34 @@ export class PaymentPage {
   totalSelected: number = 0
   totalReceived: number = 0
   totalChange: number = 0
-
+  payments: Observable<any>;
   productSelected: any = []  
   paymentForm: string = "Dinheiro"
-  paymentType: number = 1
 
   constructor(
     public navCtrl: NavController, 
-    public actionSheetCtrl: ActionSheetController,
     public dataInfo: DataInfoProvider,    
     public httpd: HttpdProvider,
     public uiUtils: UiUtilsProvider,
-    public navParams: NavParams) {
+    public events: Events,
+    public navParams: NavParams) {      
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PaymentPage');
+  ionViewDidLoad() {    
     this.productSelected = this.navParams.get('productSelected') 
     this.totalSelected = this.navParams.get('totalSelected') 
     this.finalValue = this.navParams.get('finalValue') 
-
     this.setIntervalFocus()
+
+    this.payments = this.httpd.getPaymentsMethods()
+    this.payments.subscribe( data => {
+      this.setPaymentDefault(data)      
+    })    
+  }  
+
+  setPaymentDefault(data){    
+    this.paymentForm = data.success[0].nome_tipo_pagamento
+    console.log(this.paymentForm)
   }
 
   setIntervalFocus(){
@@ -49,7 +57,6 @@ export class PaymentPage {
   }
 
   setFocus(){  
-
     if(this.inputEnd)
       this.inputEnd.setFocus();          
   }
@@ -57,48 +64,13 @@ export class PaymentPage {
   goBack(){
     this.navCtrl.pop()
   }  
-
-  payment() {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Selecionar forma de pagamento',
-      buttons: [
-        {
-          text: 'Dinheiro',
-          handler: () => {
-            this.paymentForm = 'Dinheiro'
-            this.paymentType = 1
-          }
-        },
-        {
-          text: 'Débito',
-          handler: () => {
-            this.paymentForm = 'Débito'
-            this.paymentType = 2
-          }
-        },
-        {
-          text: 'Crédito',
-          handler: () => {
-            this.paymentForm = 'Crédito'
-            this.paymentType = 3
-          }
-        },
-        {
-          text: 'Cancelar',
-          role: 'cancel'         
-        }
-      ]
-    });
  
-    actionSheet.present();
-  }  
-
   finishPayment(){
     let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
     loading.present() 
     let self = this
 
-    this.httpd.payProducts(this.paymentType, this.productSelected, this.dataInfo.userInfo.id_usuarios)
+    this.httpd.payProducts(this.paymentForm, this.productSelected, this.dataInfo.userInfo.id_usuarios)
     .subscribe( () => {
       loading.dismiss()
 
@@ -109,6 +81,8 @@ export class PaymentPage {
         setTimeout(function(){
           alert.dismiss();
           self.navCtrl.pop()
+
+          self.events.publish(self.dataInfo.eventPaymentOk, 1);
         }, 3000);        
       })
     })
@@ -116,6 +90,10 @@ export class PaymentPage {
 
   totalChanged(){
     this.totalChange = this.totalReceived - this.finalValue
+  }
+
+  paymentChanged(event){
+    console.log(event)
   }
      
 }
