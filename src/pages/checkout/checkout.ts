@@ -46,8 +46,20 @@ export class CheckoutPage {
     modal.present();
   }
 
-  replaceProductSubtype(data){
-    console.log(data)
+  replaceProductSubtype(data){    
+
+    let id_produto = data.id_produto
+    let fk_id_subtipo_produto = data.fk_id_subtipo_produto
+
+    for(var i = 0; i < this.products.length; ++i){
+      let product = this.products[i]
+
+      let product_id_produto = product.id_produto
+      
+      if(id_produto === product_id_produto){
+        product.fk_id_subtipo_produto = fk_id_subtipo_produto
+      }
+    }
   }
 
   increment(product){    

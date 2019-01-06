@@ -48,6 +48,10 @@ export class ProductsPage {
     this.idArea = this.area.id_area_venda 
     this.resetValues() 
     this.getAllProducts()
+
+    this.events.subscribe(this.dataInfo.eventPaymentOk, data => {        
+      this.getAllProducts()
+    });
   }
 
   ngOnDestroy() {
@@ -55,7 +59,6 @@ export class ProductsPage {
   }
 
   resetValues(){
-    console.log("resetValues")
     this.finalValue = 0
     this.totalSelected = 0
     this.products = []
