@@ -70,7 +70,8 @@ export class PaymentPage {
     loading.present() 
     let self = this
 
-    this.httpd.payProducts(this.paymentForm, this.productSelected, this.dataInfo.userInfo.id_usuarios)
+    this.httpd.payProducts(this.paymentForm, this.productSelected, 
+      this.dataInfo.userInfo.id_usuarios, this.dataInfo.userInfo.login_usuarios, this.finalValue)
     .subscribe( () => {
       loading.dismiss()
 
