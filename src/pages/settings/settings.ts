@@ -8,6 +8,8 @@ import { DataInfoProvider } from '../../providers/data-info/data-info';
   templateUrl: 'settings.html',
 })
 export class SettingsPage {
+  
+  appType: number = 1
 
   constructor(public navCtrl: NavController,
     public dataInfo: DataInfoProvider,

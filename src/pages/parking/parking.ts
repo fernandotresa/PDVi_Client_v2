@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ParkingPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { DataInfoProvider } from '../../providers/data-info/data-info';
 
 @IonicPage()
 @Component({
@@ -15,7 +9,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ParkingPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, 
+    public dataInfo: DataInfoProvider,
+    public navParams: NavParams) {
   }
 
   ionViewDidLoad() {

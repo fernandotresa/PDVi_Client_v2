@@ -29,10 +29,15 @@ export class LoginPage {
 
     if(this.autoLogin == undefined)
       this.autoLogin = true   
+
+    if(this.autoLogin)
+      this.loginContinue("admin", "123456")
     }
 
   
   goHome(){
+    console.log("goHome()")
+    
     this.navCtrl.setRoot(HomePage);
   }
 
@@ -69,9 +74,7 @@ export class LoginPage {
   }  
 
   loginFinish(data){
-    console.log("callback auth")
-    console.log(data)
-
+    
     if(data.success.length > 0){
       this.dataInfo.userInfo = data.success[0]
       this.goHome()

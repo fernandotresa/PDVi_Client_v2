@@ -9,7 +9,9 @@ export class DataInfoProvider {
   eventPaymentOk: string = 'eventPaymentOk'
 
   titleAppName: string = "3A PDVi"
-  titleOnlineSales: string = "Vendas Online"
+  titlePdvi: string = "PDVi"
+  titleParking: string = "Estacionamento"
+  titleOnlineSales: string = "Vendas Online"  
   titleCPF: string = "CPF"
   titleModuleOnline: string = "Módulo vendas online"
   titleAtention: string = "Atenção"

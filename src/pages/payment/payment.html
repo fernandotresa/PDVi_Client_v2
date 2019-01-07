@@ -9,29 +9,27 @@
 <ion-list>
 
     <ion-item class="text-green fs-15 fw-600 pdl-0">
-      <ion-label color="primary">{{dataInfo.titleTotalPayment}}</ion-label>
-      
+      <ion-label color="primary">{{dataInfo.titleTotalPayment}}</ion-label>      
        <ion-input type="number" [(ngModel)]="totalReceived" (keyup.enter)="finishPayment()"
        (ngModelChange) ="totalChanged()" #inputEnd></ion-input>
     </ion-item>    
     
-    <ion-item class="text-green fs-15 fw-600 pdl-0">    
-      
+    <ion-item class="text-green fs-15 fw-600 pdl-0">          
       <ion-label stacked>{{dataInfo.titlePaymentForm}}</ion-label>  
         <ion-select [(ngModel)]="paymentForm" (ionChange)="paymentChanged($event)">
         <ion-option *ngFor="let pay of (payments | async)?.success">{{pay.nome_tipo_pagamento}}</ion-option>                                                  
       </ion-select>                          
-    </ion-item>
+    </ion-item>   
+    
+    <ion-item class="text-green fs-15 fw-600 pdl-0">
+        <ion-label color="primary">{{dataInfo.titleFinalValue}}</ion-label>      
+         <ion-input type="number" [(ngModel)]="finalValue"></ion-input>
+      </ion-item>     
 
     <ion-item class="text-green fs-15 fw-600 pdl-0">
-      <ion-icon name='cash' class="fs-30" color="secondary" item-start></ion-icon>
-      <ion-label class="fs-15 fw-600 mgb-10">{{dataInfo.titleFinalValue}} {{finalValue}}</ion-label>            
-    </ion-item>
-
-    <ion-item class="text-green fs-15 fw-600 pdl-0">
-      <ion-icon name='cash' class="fs-30" color="primary" item-start></ion-icon>
-      <ion-label class="fs-15 fw-600 mgb-10">{{dataInfo.titleTotalChange}} {{totalChange}}</ion-label>
-    </ion-item>
+        <ion-label color="primary">{{dataInfo.titleTotalChange}}</ion-label>      
+          <ion-input type="number" [(ngModel)]="totalChange"></ion-input>
+      </ion-item> 
 
 </ion-list>
 

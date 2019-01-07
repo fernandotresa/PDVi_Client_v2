@@ -4,7 +4,6 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
 import { HistoryPageModule } from '../pages/history/history.module';
 import { ProductsPageModule } from '../pages/products/products.module';
 import { ShopPageModule } from '../pages/shop/shop.module';
@@ -27,7 +26,6 @@ import { SideMenuContentComponent } from '../shared/side-menu-content/side-menu-
   declarations: [
     MyApp,    
     HomePage,
-    TabsPage,
     SideMenuContentComponent
   ],
   imports: [
@@ -38,8 +36,7 @@ import { SideMenuContentComponent } from '../shared/side-menu-content/side-menu-
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,    
-    HomePage,
-    TabsPage
+    HomePage
   ],
   exports: [
     HistoryPageModule,

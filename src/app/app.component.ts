@@ -1,11 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, MenuController} from 'ionic-angular';
 import { LoginPage } from '../pages/login/login';
-import { TabsPage } from '../pages/tabs/tabs';
-import { ShopPage } from '../pages/shop/shop';
-import { SettingsPage } from '../pages/settings/settings';
-import { ParkingPage } from '../pages/parking/parking';
-
+import { HomePage } from '../pages/home/home';
 import { SideMenuSettings } from './../shared/side-menu-content/models/side-menu-settings';
 import { SideMenuOption } from './../shared/side-menu-content/models/side-menu-option';
 import { SideMenuContentComponent } from './../shared/side-menu-content/side-menu-content.component';
@@ -48,7 +44,7 @@ export class MyApp {
 				this.nav.setRoot(LoginPage, { autoLogin: false })
 
 			} else if (option.custom && option.custom.isHome)
-				  this.nav.setRoot(TabsPage)
+				  this.nav.setRoot(HomePage)
 	
 			else if (option.custom && option.custom.isExternalLink) {
 				let url = option.custom.externalUrl;
@@ -70,32 +66,30 @@ export class MyApp {
 
   private initializeOptionsClient(): void {
 
-    this.options = new Array<SideMenuOption>();
-    
+    this.options = new Array<SideMenuOption>();    	
+
 		this.options.push({
-			iconName: 'map',
-			displayText: 'Início',			
-			custom: {
-				isHome: true
-			}			
-		});								
+			iconName: 'ios-print',
+			displayText: 'PDVi',
+			component: HomePage			
+		});
 		
 		this.options.push({
 			iconName: 'cart',
 			displayText: 'Vendas online',
-			component: ShopPage			
+			component: "ShopPage"			
 		});						
 
 		this.options.push({
 			iconName: 'car',
 			displayText: 'Estacionamento',
-			component: ParkingPage			
+			component: "ParkingPage"			
     });	
 
     this.options.push({
 			iconName: 'cog',
 			displayText: 'Configurações',
-			component: SettingsPage			
+			component: "SettingsPage"			
 		});	
 		
 		this.options.push({
