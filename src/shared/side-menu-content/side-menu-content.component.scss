@@ -1,13 +1,5 @@
-// ------------------------------------ //
-// Global variables                     //
-// ------------------------------------ //
-
-
-// ------------------------------------ //
-// Hide scroll bar in the side menu     //
-// ------------------------------------ //
-ion-menu ion-content .scroll-content::-webkit-scrollbar { 
-   
+ion-content .scroll-content {
+    overflow : hidden !important;
 }
 
 .lst-menu {

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, MenuController} from 'ionic-angular';
+import { Nav, Platform, MenuController	} from 'ionic-angular';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { SideMenuSettings } from './../shared/side-menu-content/models/side-menu-settings';
@@ -21,6 +21,7 @@ export class MyApp {
 		selectedOptionClass: 'active-side-menu-option'		
   };
 
+	
   //rootPage:any = TabsPage;
   rootPage:any = LoginPage;
   

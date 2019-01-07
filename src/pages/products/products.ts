@@ -46,7 +46,6 @@ export class ProductsPage {
     console.log(this.area)
 
     this.idArea = this.area.id_area_venda 
-    this.resetValues() 
     this.getAllProducts()
 
     this.events.subscribe(this.dataInfo.eventPaymentOk, data => {        
@@ -59,9 +58,16 @@ export class ProductsPage {
   }
 
   resetValues(){
+
     this.finalValue = 0
     this.totalSelected = 0
     this.products = []
+
+    
+    console.log(this.finalValue)
+    console.log(this.totalSelected)
+    console.log(this.products)
+
   }
 
   setFilteredItems(){
@@ -73,6 +79,8 @@ export class ProductsPage {
   }  
  
   getAllProducts(){
+    this.resetValues() 
+
     this.allProducts = this.httpd.getProductsArea(this.idArea)
 
     this.allProducts.subscribe(data => {     

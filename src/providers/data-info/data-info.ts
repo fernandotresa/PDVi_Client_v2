@@ -52,7 +52,7 @@ export class DataInfoProvider {
   titleWarning: string = "Atenção"
   titleLimit: string = "Limite atingido"
   titleValue: string = "Valor"
-  titleTotalSelected: string = "Total selecionado"
+  titleTotalSelected: string = "Limpar total selecionado"
   titleSave: string = "Salvar"
   titlePay: string = "Pagar"
   titleReceived:  string = "Recebido"

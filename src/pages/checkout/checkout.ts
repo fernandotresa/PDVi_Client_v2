@@ -38,6 +38,11 @@ export class CheckoutPage {
     } 
   }
 
+  goBack(){
+    
+    this.navCtrl.pop()
+  }
+
   presentModal(product){
     let modal = this.modalCtrl.create('SubproductsPage', {productSelected: product});
     modal.onDidDismiss(data => {

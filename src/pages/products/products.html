@@ -49,28 +49,7 @@
 
 </ion-content>
 
-<ion-footer no-border color="transparent">
-    <ion-card class="bdra-0 stroke-3 stroke-cyan mg-0 full-width main-event ani-bottom-to-top">
-      <ion-row class="wrapper-item-line">
-        
-        <div class="right-content pd-15 pdr-10" col-9>
-          
-          <ion-list no-border no-lines lst-small class="lst-no-background">
-            <ion-item class="text-green fs-15 pdl-0">
-              <ion-icon name='cash' class="fs-30" color="secondary" item-start></ion-icon>
-              <ion-label class="fs-30 mgb-10">{{dataInfo.titleValue}}: {{finalValue}}</ion-label>            
-            </ion-item>            
-
-            <ion-item class="text-green fs-13 pdl-0">
-              <ion-icon name='checkbox' class="fs-30" item-start></ion-icon>
-              <ion-label class="fs-30 mgb-10">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</ion-label>
-            </ion-item>
-
-          </ion-list>        
-        </div>
-      </ion-row>
-    </ion-card>    
-    
-    <button ion-button full large (click)="goPagePayment()" color="positive">{{dataInfo.titlePay}}</button>
-    
+<ion-footer no-border color="transparent" *ngIf="finalValue > 0" class="ani-bottom-to-top">     
+    <button ion-button full large (click)="getAllProducts()" style="text-transform: uppercase;">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</button>   
+    <button ion-button full large (click)="goPagePayment()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titlePay}}  R$ {{finalValue}}</button>    
 </ion-footer>
