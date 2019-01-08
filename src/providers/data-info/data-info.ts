@@ -79,6 +79,9 @@ export class DataInfoProvider {
   titleServer: string = "Servidor"
   titlePrint: string = "Impressão"
   titleRePrint: string = "Reimpressão"
+  titleSuccess: string = "Sucesso"
+  titlePrintSuccess: string = "Impressão enviada com sucesso"
+  titleSelectList: string = "Favor selecionar na lista"
   titlePrintModelA: string = "Impressão modelo A"
   titlePrintModelB: string = "Impressão modelo B"
 

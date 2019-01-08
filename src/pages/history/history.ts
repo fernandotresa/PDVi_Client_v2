@@ -22,6 +22,7 @@ export class HistoryPage {
   ticketsCallback: any = []
   dayBegin: string = "";
   dayEnd: string = ""
+  ticketsSelect: any = []
 
   searchTerm: string = '';
   searching: any = false;
@@ -184,21 +185,26 @@ export class HistoryPage {
   }
 
   printSelecteds(){
-    let ticketsSelect = []    
+    this.ticketsSelect = []    
 
     for(var i = 0; i < this.ticketsCallback.length; ++i) {
 
       if(this.ticketsCallback[i].checked)
-        ticketsSelect.push(this.ticketsCallback[i])    
-    } 
+        this.ticketsSelect.push(this.ticketsCallback[i])    
+    }     
 
-    console.log(ticketsSelect)
-
-    this.httpd.printTicketMultiple(ticketsSelect, this.dataInfo.userInfo.login_usuarios)
-    .subscribe(() => {
-      this.goBack()
-    })
+    console.log(this.ticketsSelect.length)
     
+    if(this.ticketsSelect.length === 0)
+      this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleSelectList).present()
+    
+    else {
+
+      this.httpd.printTicketMultiple(this.ticketsSelect, this.dataInfo.userInfo.login_usuarios)
+      .subscribe(() => {
+        this.goBack()
+      })
+    }        
   }
 
   goBack(){

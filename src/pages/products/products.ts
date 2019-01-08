@@ -57,7 +57,13 @@ export class ProductsPage {
   }
 
   goPageTicket(){    
-    this.navCtrl.push("HistoryPage")
+    let modal = this.modalCtrl.create('HistoryPage');
+    
+    modal.onDidDismiss( () => {
+      this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePrintSuccess).present()
+    });
+    
+    modal.present();
   }
 
   logout(){
