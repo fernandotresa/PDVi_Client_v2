@@ -6,6 +6,7 @@ import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
 import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
+import { LoginPage } from '../../pages/login/login';
 
 @IonicPage()
 @Component({
@@ -51,14 +52,13 @@ export class ProductsPage {
     });
   }
 
-
   goPageSettings(){
     this.navCtrl.push("SettingsPage")
   }
 
   goPageTicket(){    
     let modal = this.modalCtrl.create('HistoryPage');
-    
+
     modal.onDidDismiss( () => {
       this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePrintSuccess).present()
     });
@@ -67,7 +67,8 @@ export class ProductsPage {
   }
 
   logout(){
-    this.navCtrl.setRoot("LoginPage")
+
+    this.navCtrl.setRoot(LoginPage)
   }
 
   ngOnDestroy() {

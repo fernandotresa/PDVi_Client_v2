@@ -137,9 +137,6 @@ export class HistoryPage {
   searchHistoryPDVi(){
     this.ticketsCallback = []
 
-
-    console.log(this.dataInfo.userInfo.id_usuarios, this.dayBegin, this.dayEnd)
-
     this.allOrders = this.httpd.getTicketOperator(this.dataInfo.userInfo.id_usuarios, this.dayBegin, this.dayEnd)
     this.allOrders.subscribe(data => {      
 
@@ -192,8 +189,6 @@ export class HistoryPage {
       if(this.ticketsCallback[i].checked)
         this.ticketsSelect.push(this.ticketsCallback[i])    
     }     
-
-    console.log(this.ticketsSelect.length)
     
     if(this.ticketsSelect.length === 0)
       this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleSelectList).present()

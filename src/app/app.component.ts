@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, MenuController	} from 'ionic-angular';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
-import { SettingsPage } from '../pages/settings/settings';
 import { SideMenuSettings } from './../shared/side-menu-content/models/side-menu-settings';
 import { SideMenuOption } from './../shared/side-menu-content/models/side-menu-option';
 import { SideMenuContentComponent } from './../shared/side-menu-content/side-menu-content.component';
