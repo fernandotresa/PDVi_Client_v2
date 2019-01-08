@@ -4,12 +4,16 @@ import { Injectable } from '@angular/core';
 export class DataInfoProvider {
     
 
+  appType: number = 1
+
+  titleGoBack: string = "Voltar"
   userType: any = {name: 'Atendente', email: 'falecom@megaticket.com.br', photo: "assets/imgs/100x100.png"}
   userInfo: any;
   eventPaymentOk: string = 'eventPaymentOk'
 
   titleAppName: string = "3A PDVi"
   titlePdvi: string = "PDVi"
+  titleAddress: string = "Endereço"
   titleParking: string = "Estacionamento"
   titleOnlineSales: string = "Vendas Online"  
   titleCPF: string = "CPF"
@@ -72,6 +76,11 @@ export class DataInfoProvider {
   titleLogin: string = "Login"
   titleForget: string = "Esqueci a senha"
   titlePassword: string = "Senha"
+  titleServer: string = "Servidor"
+  titlePrint: string = "Impressão"
+  titleRePrint: string = "Reimpressão"
+  titlePrintModelA: string = "Impressão modelo A"
+  titlePrintModelB: string = "Impressão modelo B"
 
   constructor() {
     console.log('Hello DataInfoProvider Provider');

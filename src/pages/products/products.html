@@ -1,6 +1,21 @@
 <ion-header>
     <ion-navbar text-center no-border-bottom color="primary">      
         <ion-title>{{dataInfo.titleAppName}}</ion-title>      
+
+        <ion-buttons end>
+            <button ion-button color="white_" (click)="goPageSettings()">
+                <ion-icon class="fs-30" name="md-cog"></ion-icon>
+            </button>
+
+            <button ion-button color="white_" (click)="goPageTicket()">
+                <ion-icon class="fs-30" name="ios-print"></ion-icon>
+            </button>
+
+            <button ion-button color="white_" (click)="logout()">
+                <ion-icon class="fs-30" name="log-out"></ion-icon>
+            </button>            
+        </ion-buttons>
+
   </ion-navbar>  
 
     <ion-toolbar color="primary">
@@ -49,7 +64,7 @@
 
 </ion-content>
 
-<ion-footer no-border color="transparent" *ngIf="finalValue > 0" class="ani-bottom-to-top">     
+<ion-footer no-border color="transparent" *ngIf="totalSelected > 0" class="ani-bottom-to-top">     
     <button ion-button full large (click)="getAllProducts()" style="text-transform: uppercase;">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</button>   
     <button ion-button full large (click)="goPagePayment()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titlePay}}  R$ {{finalValue}}</button>    
 </ion-footer>

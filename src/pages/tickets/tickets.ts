@@ -37,9 +37,9 @@ export class TicketsPage {
   }
 
   printConfirm(){
-    let ticket = this.orders.id_estoque_utilizavel
-
-    this.httpd.printTicket(ticket).subscribe(data => {
+    console.log(this.orders)
+    
+    this.httpd.printTicket(this.orders).subscribe(data => {
       this.navCtrl.popToRoot()
       this.uiUtils.showAlert(this.dataInfo.titleAtention, this.dataInfo.titlePrintSendSuccess).present()
     })

@@ -5,6 +5,28 @@
   </ion-header>
 
 <ion-content padding>
-       
+
+    <ion-list>
+        <ion-item-divider color="light">{{dataInfo.titleServer}}</ion-item-divider>
+
+        <ion-item no-lines>
+            <ion-label color="primary">{{dataInfo.titleAddress}}</ion-label>      
+            <ion-input type="text" [(ngModel)]="serverAddress"></ion-input>
+        </ion-item>    
+
+        <ion-item-divider color="light">{{dataInfo.titlePrint}}</ion-item-divider>
+
+        <ion-item no-lines>
+            <ion-label color="primary">{{dataInfo.titlePrintModelA}}</ion-label>      
+            <ion-toggle checked="true"></ion-toggle>
+        </ion-item>    
+
+        <ion-item no-lines>
+           <ion-label color="primary">{{dataInfo.titlePrintModelB}}</ion-label>      
+           <ion-toggle checked="false"></ion-toggle>
+        </ion-item>    
+
+    </ion-list>
+    
               
 </ion-content>

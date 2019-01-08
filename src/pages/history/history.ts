@@ -44,8 +44,21 @@ export class HistoryPage {
   }
 
   ionViewDidLoad() {    
-    this.dayBegin = moment().subtract(5, "days").startOf('day').format()
-    this.dayEnd = moment().endOf('day').format()
+
+    console.log(this.dataInfo.appType)
+
+
+    if(this.dataInfo.appType === 1){
+      this.dayBegin = moment().startOf('day').format()      
+      this.dayEnd = moment().endOf('day').format()
+
+      this.searchContinue()
+    }
+      
+    else if(this.dataInfo.appType === 2){
+      this.dayBegin = moment().subtract(5, "days").startOf('day').format()          
+      this.dayEnd = moment().endOf('day').format()
+    }      
   }
 
   checkInputs(){
@@ -67,7 +80,32 @@ export class HistoryPage {
     
   }
 
-  setFilteredItems(){    
+  setFilteredItems(){   
+    
+    console.log(this.dataInfo.appType)
+
+    if(this.dataInfo.appType === 1)
+      this.searchHistoryPDViByName()    
+   else
+      this.searchHistoryOnlineByName()
+  }
+
+  searchHistoryPDViByName(){
+    this.ticketsCallback = []
+
+    this.allOrders = this.httpd.getTicketOperator(this.dataInfo.userInfo.id_usuario, this.dayBegin, this.dayEnd)
+    this.allOrders.subscribe(data => {      
+
+      data.success.forEach(element => {        
+        element.data_log_venda = moment(element.data_log_venda).tz('America/Sao_Paulo').format("L")        
+        this.ticketsCallback.push(element)
+      });
+
+      console.log(this.ticketsCallback)
+    })
+  }
+
+  searchHistoryOnlineByName(){
     this.ticketsCallback = []
     this.allOrders = this.httpd.getAllOrdersByName(this.searchTerm, this.dayBegin, this.dayEnd)
     this.allOrders.subscribe(data => {      
@@ -87,7 +125,30 @@ export class HistoryPage {
   searchContinue(){
     this.dayBegin = moment(this.dayBegin).startOf('day').format()
     this.dayEnd = moment(this.dayEnd).endOf('day').format()
-    this.getAllOrders()
+
+
+    if(this.dataInfo.appType === 1)
+      this.searchHistoryPDVi()    
+   else
+      this.getAllOrders()
+  }
+  
+  searchHistoryPDVi(){
+    this.ticketsCallback = []
+
+
+    console.log(this.dataInfo.userInfo.id_usuarios, this.dayBegin, this.dayEnd)
+
+    this.allOrders = this.httpd.getTicketOperator(this.dataInfo.userInfo.id_usuarios, this.dayBegin, this.dayEnd)
+    this.allOrders.subscribe(data => {      
+
+      data.success.forEach(element => {        
+        element.data_log_venda = moment(element.data_log_venda).tz('America/Sao_Paulo').format("L")        
+        this.ticketsCallback.push(element)
+      });
+
+      console.log(this.ticketsCallback)
+    })
   }
 
   getAllOrders(){
@@ -108,6 +169,40 @@ export class HistoryPage {
 
   goPageTicket(data){
     this.navCtrl.push(TicketsPage, {orders: data})
+  }
+
+  ticketClicked(ticket){
+    let id_estoque = ticket.fk_id_estoque_utilizavel
+
+    for(var i = 0; i < this.ticketsCallback.length; ++i){
+      let ticket = this.ticketsCallback[i]
+      let fk_id_estoque_utilizavel = ticket.fk_id_estoque_utilizavel
+      
+      if(id_estoque === fk_id_estoque_utilizavel)
+        ticket.checked = !ticket.checked    
+    }
+  }
+
+  printSelecteds(){
+    let ticketsSelect = []    
+
+    for(var i = 0; i < this.ticketsCallback.length; ++i) {
+
+      if(this.ticketsCallback[i].checked)
+        ticketsSelect.push(this.ticketsCallback[i])    
+    } 
+
+    console.log(ticketsSelect)
+
+    this.httpd.printTicketMultiple(ticketsSelect, this.dataInfo.userInfo.login_usuarios)
+    .subscribe(() => {
+      this.goBack()
+    })
+    
+  }
+
+  goBack(){
+    this.navCtrl.pop()
   }
 
 }

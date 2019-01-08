@@ -47,10 +47,23 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/sendEmail", myData, {headers: headers})
   }
 
+  getTicketOperator(idUser_: number, start_: string , end_: string){    
+
+    let myData = JSON.stringify({idUser: idUser_, start: start_, end: end_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getTicketOperator", myData, {headers: headers})
+  }
+
   printTicket(idTicket_){    
     let myData = JSON.stringify({idTicket: idTicket_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/printTicket", myData, {headers: headers})
+  }
+
+  printTicketMultiple(tickets_, userName_){    
+    let myData = JSON.stringify({tickets: tickets_, userName: userName_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/printTicketMultiple", myData, {headers: headers})
   }
 
   getAreas(){    

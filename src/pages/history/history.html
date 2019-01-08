@@ -13,7 +13,7 @@
     placeholder= "Procurar...">    
   </ion-searchbar>
 
-    <ion-list>
+    <ion-list *ngIf="dataInfo.appType === 2">
         <ion-item>
           <ion-label>{{dataInfo.titleDayStart}}</ion-label>
           <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="dayBegin"></ion-datetime>
@@ -25,19 +25,31 @@
         </ion-item>
         
       <ion-item>
-          <button ion-button full large text-uppercase (click)="search()">Pesquisar</button>          
+          <button ion-button full large text-uppercase (click)="search()">{{dataInfo.titleSearch}}</button>          
       </ion-item>
 
     </ion-list>
 
-    <ion-list>  
+    <ion-list *ngIf="dataInfo.appType === 1">  
+        <ion-item no-lines *ngFor="let ticket of ticketsCallback">                      
+            <ion-checkbox (click)="ticketClicked(ticket)" [checked]=ticket.checked></ion-checkbox>
+            <ion-label>{{ticket.fk_id_estoque_utilizavel}} - {{ticket.nome_produto}} - {{ticket.data_log_venda}} </ion-label>          
+        </ion-item>  
+    </ion-list>
+
+    <ion-list *ngIf="dataInfo.appType === 2">  
         <button ion-item  *ngFor="let order of ticketsCallback" no-lines (click)="goPageTicket(order)">
           <h2>{{order._billing_first_name}} {{order._billing_last_name}} </h2>
           <p>{{dataInfo.titleTicketType}}: {{order.order_items}}</p>
           <p>{{dataInfo.titleDayBo}} {{order.post_date}}</p>        
         </button>                    
-      </ion-list>
+    </ion-list>
         
 
 </ion-content>
+
+<ion-footer no-border color="transparent" *ngIf="dataInfo.appType === 1" class="ani-bottom-to-top">  
+    <button ion-button full large (click)="goBack()" style="text-transform: uppercase;">{{dataInfo.titleGoBack}}</button>   
+      <button ion-button full large (click)="printSelecteds()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titleRePrint}}</button>    
+  </ion-footer>
 

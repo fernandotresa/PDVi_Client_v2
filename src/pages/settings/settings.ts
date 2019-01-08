@@ -10,6 +10,7 @@ import { DataInfoProvider } from '../../providers/data-info/data-info';
 export class SettingsPage {
   
   appType: number = 1
+  serverAddress: string = "localhost"
 
   constructor(public navCtrl: NavController,
     public dataInfo: DataInfoProvider,

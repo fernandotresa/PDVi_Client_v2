@@ -43,8 +43,6 @@ export class ProductsPage {
   }
 
   ionViewDidLoad() {      
-    console.log(this.area)
-
     this.idArea = this.area.id_area_venda 
     this.getAllProducts()
 
@@ -53,21 +51,27 @@ export class ProductsPage {
     });
   }
 
+
+  goPageSettings(){
+    this.navCtrl.push("SettingsPage")
+  }
+
+  goPageTicket(){    
+    this.navCtrl.push("HistoryPage")
+  }
+
+  logout(){
+    this.navCtrl.setRoot("LoginPage")
+  }
+
   ngOnDestroy() {
     this.events.unsubscribe(this.dataInfo.eventPaymentOk);    
   }
 
   resetValues(){
-
     this.finalValue = 0
     this.totalSelected = 0
-    this.products = []
-
-    
-    console.log(this.finalValue)
-    console.log(this.totalSelected)
-    console.log(this.products)
-
+    this.products = []    
   }
 
   setFilteredItems(){

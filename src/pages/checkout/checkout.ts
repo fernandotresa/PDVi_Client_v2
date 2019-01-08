@@ -28,8 +28,7 @@ export class CheckoutPage {
     this.totalSelected = this.navParams.get("totalSelected")
     this.finalValue = this.navParams.get("finalValue")
 
-    this.productsSelect = []
-    
+    this.productsSelect = []    
 
     for(var i = this.products.length - 1; i >= 0; i--) {
       if(this.products[i].quantity > 0) {        
