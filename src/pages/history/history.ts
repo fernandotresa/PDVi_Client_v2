@@ -141,7 +141,8 @@ export class HistoryPage {
     this.allOrders.subscribe(data => {      
 
       data.success.forEach(element => {        
-        element.data_log_venda = moment(element.data_log_venda).tz('America/Sao_Paulo').format("L")        
+        element.data_log_venda = moment(element.data_log_venda).tz('America/Sao_Paulo').format("DD/MM/YYYY hh:mm:ss")        
+
         this.ticketsCallback.push(element)
       });
 
@@ -189,13 +190,13 @@ export class HistoryPage {
       if(this.ticketsCallback[i].checked)
         this.ticketsSelect.push(this.ticketsCallback[i])    
     }     
-    
+        
     if(this.ticketsSelect.length === 0)
       this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleSelectList).present()
     
     else {
 
-      this.httpd.printTicketMultiple(this.ticketsSelect, this.dataInfo.userInfo.login_usuarios)
+      this.httpd.printTicketMultiple(this.ticketsSelect, this.dataInfo.userInfo.login_usuarios, 1)
       .subscribe(() => {
         this.goBack()
       })

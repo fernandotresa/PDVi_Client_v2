@@ -60,8 +60,8 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/printTicket", myData, {headers: headers})
   }
 
-  printTicketMultiple(tickets_, userName_){    
-    let myData = JSON.stringify({tickets: tickets_, userName: userName_});
+  printTicketMultiple(tickets_, userName_, reprint_){    
+    let myData = JSON.stringify({tickets: tickets_, userName: userName_, reprint: reprint_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/printTicketMultiple", myData, {headers: headers})
   }
