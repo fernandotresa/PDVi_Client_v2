@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
@@ -32,6 +32,7 @@ export class HistoryPage {
     public httpd: HttpdProvider,
     public uiUtils: UiUtilsProvider,
     public dataInfo: DataInfoProvider,
+    public viewCtrl: ViewController,
     public navParams: NavParams) {
 
       moment.locale('pt-br');    
@@ -101,8 +102,6 @@ export class HistoryPage {
         element.data_log_venda = moment(element.data_log_venda).tz('America/Sao_Paulo').format("L")        
         this.ticketsCallback.push(element)
       });
-
-      console.log(this.ticketsCallback)
     })
   }
 
@@ -127,7 +126,6 @@ export class HistoryPage {
     this.dayBegin = moment(this.dayBegin).startOf('day').format()
     this.dayEnd = moment(this.dayEnd).endOf('day').format()
 
-
     if(this.dataInfo.appType === 1)
       this.searchHistoryPDVi()    
    else
@@ -141,7 +139,7 @@ export class HistoryPage {
     this.allOrders.subscribe(data => {      
 
       data.success.forEach(element => {        
-        element.data_log_venda = moment(element.data_log_venda).tz('America/Sao_Paulo').format("DD/MM/YYYY hh:mm:ss")        
+        element.data_log_venda = moment(element.data_log_venda).format("DD/MM/YYYY hh:mm:ss")        
 
         this.ticketsCallback.push(element)
       });
@@ -198,13 +196,13 @@ export class HistoryPage {
 
       this.httpd.printTicketMultiple(this.ticketsSelect, this.dataInfo.userInfo.login_usuarios, 1)
       .subscribe(() => {
-        this.goBack()
+        this.viewCtrl.dismiss(true);
       })
     }        
   }
 
   goBack(){
-    this.navCtrl.pop()
+    this.viewCtrl.dismiss(false);
   }
 
 }

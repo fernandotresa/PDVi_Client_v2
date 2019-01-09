@@ -59,17 +59,22 @@ export class ProductsPage {
   goPageTicket(){    
     let modal = this.modalCtrl.create('HistoryPage');    
 
-    modal.onDidDismiss( () => {
+    modal.onDidDismiss( data => {
 
-      let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePrintSuccess)
+      console.log(data)
       
-      alert.present()
-      .then( () => {
-        setTimeout(function(){
-          alert.dismiss();
-        }, 3000);        
-      })
 
+      if(data){
+
+        let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePrintSuccess)
+      
+        alert.present()
+        .then( () => {
+          setTimeout(function(){
+            alert.dismiss();
+          }, 3000);        
+        })
+      }      
     });
     
     modal.present();
