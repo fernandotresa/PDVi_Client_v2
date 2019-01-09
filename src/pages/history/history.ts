@@ -133,7 +133,7 @@ export class HistoryPage {
     this.allOrders.subscribe(data => {      
 
       data.success.forEach(element => {        
-        element.data_log_venda = moment(element.data_log_venda).tz('America/Sao_Paulo').format("DD/MM/YYYY hh:mm:ss")        
+        element.data_log_venda = moment(element.data_log_venda).tz('America/Sao_Paulo').format("DD.MM.YYYY kk:mm")        
 
         this.ticketsCallback.push(element)
       });

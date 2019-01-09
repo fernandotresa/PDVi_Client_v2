@@ -80,21 +80,21 @@ export class ProductsPage {
 
   presentPrompt() {
     let alert = this.alertCtrl.create({
-      title: 'Digite a sua senha',
+      title: this.dataInfo.titleEnterPassword,
       inputs: [
         {
           name: 'username',
-          placeholder: 'Usuário'
+          placeholder: this.dataInfo.titleUsername
         },
         {
           name: 'password',
-          placeholder: 'Senha',
+          placeholder: this.dataInfo.titlePassword,
           type: 'password'
         }
       ],
       buttons: [
         {
-          text: 'Cancelar',
+          text: this.dataInfo.titleCancel,
           role: 'cancel',
           handler: data => {
             console.log('Cancel clicked');
