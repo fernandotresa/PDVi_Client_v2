@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Events, IonicPage } from 'ionic-angular';
+import { NavController, Events, IonicPage, ModalController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
@@ -9,6 +9,7 @@ import * as moment from 'moment-timezone';
 import { TicketsPage } from '../../pages/tickets/tickets';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
 import { HistoryPage } from '../history/history';
+
 
 @IonicPage()
 @Component({
@@ -35,6 +36,7 @@ export class ShopPage {
     public uiUtils: UiUtilsProvider,
     public dataInfo: DataInfoProvider,
     public events: Events,
+    public modalCtrl: ModalController,
     public httpd: HttpdProvider) {
 
     moment.locale('pt-br'); 
@@ -54,7 +56,7 @@ export class ShopPage {
     this.events.publish('userInfo:menu', this.dataInfo.userType);
   }
 
-  ionViewDidLoad() {        
+  ionViewDidLoad() {            
     this.getAllOrders()
   }
 
@@ -84,7 +86,6 @@ export class ShopPage {
     if(this.searchTerm.length > 5){
 
       let number = Number(this.searchTerm)     
-      console.log(number, this.searchTerm)
 
       if(number)
         this.getByCPF()      
@@ -136,7 +137,7 @@ export class ShopPage {
     this.navCtrl.push(TicketsPage, {orders: data})
   }
 
-  goPageHistory(){
+  goPageHistory(){    
     this.navCtrl.push(HistoryPage)
   }
 

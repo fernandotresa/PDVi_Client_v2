@@ -43,11 +43,8 @@
           <p>{{dataInfo.titleTicketType}}: {{order.order_items}}</p>
           <p>{{dataInfo.titleDayBo}} {{order.post_date}}</p>        
         </button>                    
-    </ion-list>
-        
-
+    </ion-list>        
 </ion-content>
-
 
 <ion-footer no-border color="transparent" *ngIf="dataInfo.appType === 1" class="ani-bottom-to-top">  
     <button ion-button full large (click)="goBack()" style="text-transform: uppercase;">{{dataInfo.titleGoBack}}</button>   

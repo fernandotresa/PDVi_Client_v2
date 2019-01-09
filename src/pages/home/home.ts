@@ -58,7 +58,6 @@ export class HomePage {
   }
 
   areaSelected(area_){
-    console.log(area_)
     this.navCtrl.push(ProductsPage, {area: area_})
   }
       

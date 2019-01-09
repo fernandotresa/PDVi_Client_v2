@@ -47,9 +47,6 @@ export class HistoryPage {
 
   ionViewDidLoad() {    
 
-    console.log(this.dataInfo.appType)
-
-
     if(this.dataInfo.appType === 1){
       this.dayBegin = moment().startOf('day').format()      
       this.dayEnd = moment().endOf('day').format()
@@ -83,9 +80,6 @@ export class HistoryPage {
   }
 
   setFilteredItems(){   
-    
-    console.log(this.dataInfo.appType)
-
     if(this.dataInfo.appType === 1)
       this.searchHistoryPDViByName()    
    else
@@ -139,12 +133,10 @@ export class HistoryPage {
     this.allOrders.subscribe(data => {      
 
       data.success.forEach(element => {        
-        element.data_log_venda = moment(element.data_log_venda).format("DD/MM/YYYY hh:mm:ss")        
+        element.data_log_venda = moment(element.data_log_venda).tz('America/Sao_Paulo').format("DD/MM/YYYY hh:mm:ss")        
 
         this.ticketsCallback.push(element)
       });
-
-      console.log(this.ticketsCallback)
     })
   }
 

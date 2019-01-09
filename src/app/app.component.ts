@@ -29,7 +29,8 @@ export class MyApp {
 
   constructor(platform: Platform, private menuCtrl: MenuController) {
     platform.ready().then(() => {
-      this.initializeOptionsClient()
+			this.initializeOptionsClient()
+			this.menuCtrl.enable(false)
     });
   }
 

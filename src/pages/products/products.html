@@ -3,11 +3,12 @@
         <ion-title>{{dataInfo.titleAppName}}</ion-title>      
 
         <ion-buttons end>
-            <button ion-button color="white_" (click)="goPageSettings()">
+            <button ion-button color="white_" (click)="goPageSettings()" *ngIf="false">
+
                 <ion-icon class="fs-30" name="md-cog"></ion-icon>
             </button>
 
-            <button ion-button color="white_" (click)="goPageTicket()">
+            <button ion-button color="white_" (click)="presentPrompt()">
                 <ion-icon class="fs-30" name="ios-print"></ion-icon>
             </button>
 

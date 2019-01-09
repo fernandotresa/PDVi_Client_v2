@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, NavParams, ModalController, Events } from 'ionic-angular';
+import { NavController, IonicPage, NavParams, ModalController, Events, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
@@ -32,6 +32,7 @@ export class ProductsPage {
     public navParams: NavParams,
     public modalCtrl: ModalController,
     public events: Events,
+    private alertCtrl: AlertController,
     public httpd: HttpdProvider) {
 
     this.searchControl = new FormControl();
@@ -60,10 +61,7 @@ export class ProductsPage {
     let modal = this.modalCtrl.create('HistoryPage');    
 
     modal.onDidDismiss( data => {
-
-      console.log(data)
       
-
       if(data){
 
         let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePrintSuccess)
@@ -80,8 +78,45 @@ export class ProductsPage {
     modal.present();
   }
 
-  logout(){
+  presentPrompt() {
+    let alert = this.alertCtrl.create({
+      title: 'Digite a sua senha',
+      inputs: [
+        {
+          name: 'username',
+          placeholder: 'Usuário'
+        },
+        {
+          name: 'password',
+          placeholder: 'Senha',
+          type: 'password'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Login',
+          handler: data => {
+            console.log(data)
+            if(data.username === "Admin" && data.password === "jabaquara")            
+              this.goPageTicket()
+            else
+              this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleAccessDenied)
+              .present()
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
 
+  logout(){
     this.navCtrl.setRoot(LoginPage)
   }
 

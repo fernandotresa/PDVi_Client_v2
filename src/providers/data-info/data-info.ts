@@ -3,14 +3,12 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class DataInfoProvider {
     
-
   appType: number = 1
-
   titleGoBack: string = "Voltar"
   userType: any = {name: 'Atendente', email: 'falecom@megaticket.com.br', photo: "assets/imgs/100x100.png"}
   userInfo: any;
+  titleAccessDenied: string = "Acesso negado"
   eventPaymentOk: string = 'eventPaymentOk'
-
   titleAppName: string = "3A PDVi"
   titlePdvi: string = "PDVi"
   titleAddress: string = "Endereço"
@@ -43,6 +41,7 @@ export class DataInfoProvider {
   titleTicketPayDay: string = "Data do pagamento"
   titleTicketPostDay: string = "Data da postagem"
   titleConfirmPrint: string = "Confirmar impressão "
+  titleSearch: string = "Pesquisar"
   titleSearchingClientName: string = "Procurando pelo nome do cliente, favor aguarde"
   titleSearchingClientCPF: string = "Procurando pelo CPF do cliente, favor aguarde"
   titleConfirmMultiPrint: string = "Deseja confirmar impressão multipla?"

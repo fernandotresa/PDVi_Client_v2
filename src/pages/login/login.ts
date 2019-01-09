@@ -30,15 +30,19 @@ export class LoginPage {
     if(this.autoLogin == undefined)
       this.autoLogin = true   
 
-    /*if(this.autoLogin)
-      this.loginContinue("admin", "123456")*/
+    if(this.autoLogin)
+      this.loginContinue("admin", "123456")
     }
 
   
   goHome(){
-    console.log("goHome()")
+    console.log("goHome()", this.dataInfo.appType)
     
-    this.navCtrl.setRoot(HomePage);
+    if(this.dataInfo.appType === 1)
+      this.navCtrl.setRoot(HomePage);
+
+    else if(this.dataInfo.appType === 2)
+      this.navCtrl.setRoot("ShopPage");
   }
 
   loginUser(): void {        
