@@ -182,6 +182,15 @@ export class ProductsPage {
       finalValue: this.finalValue, totalSelected: this.totalSelected})
   }
 
+  presentPromptParking(){
+    let modal = this.modalCtrl.create('ParkingPage');
+    modal.onDidDismiss(data => {
+      console.log(data)
+    });
+    
+    modal.present();
+  }
+
   presentModal(product){
     let modal = this.modalCtrl.create('SubproductsPage', {productSelected: product});
     modal.onDidDismiss(data => {

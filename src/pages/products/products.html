@@ -3,9 +3,13 @@
         <ion-title>{{dataInfo.titleAppName}}</ion-title>      
 
         <ion-buttons end>
-            <button ion-button color="white_" (click)="goPageSettings()" *ngIf="false">
 
+            <button ion-button color="white_" (click)="goPageSettings()" *ngIf="false">
                 <ion-icon class="fs-30" name="md-cog"></ion-icon>
+            </button>
+            
+            <button ion-button icon-only color="royal" (click)="presentPromptParking()">                
+                <ion-icon class="fs-30" name="car"></ion-icon>
             </button>
 
             <button ion-button color="white_" (click)="presentPrompt()">
@@ -64,6 +68,7 @@
   </ion-list>
 
 </ion-content>
+
 
 <ion-footer no-border color="transparent" *ngIf="totalSelected > 0" class="ani-bottom-to-top">     
     <button ion-button full large (click)="getAllProducts()" style="text-transform: uppercase;">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</button>   
