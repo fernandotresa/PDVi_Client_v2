@@ -116,4 +116,11 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/getAuth", myData, {headers: headers})
   }
 
+  getTicketParking(idTicket_){  
+      
+    let myData = JSON.stringify({id: this.totemId, idTicket: idTicket_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getTicketParking", myData, {headers: headers})
+  }
+
 }

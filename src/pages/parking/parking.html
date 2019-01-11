@@ -2,13 +2,35 @@
     <ion-navbar text-center no-border-bottom color="primary">      
         <ion-title>{{dataInfo.titleParking}}</ion-title>  
     </ion-navbar>  
+
+    <ion-toolbar color="primary">
+        <ion-searchbar
+          [(ngModel)]="searchTerm"
+          (ionInput)="setFilteredItems()"
+          placeholder= "Procurar...">    
+        </ion-searchbar>
+     </ion-toolbar>
+
   </ion-header>
 
 <ion-content padding>
        
               
+    <ion-list>      
+
+        <ion-item *ngFor="let park of ticketParking" no-lines text-center> 
+            <h1 text-center>{{park.nome_produto}} - R$ {{park.valor_produto}}</h1>       
+            <h1 text-center>{{park.data_inclusao_utilizavel}}</h1>       
+            <h1 text-center *ngIf="park.data_log_venda">{{park.nome_ponto_acesso}} {{dataInfo.titlePayed}}</h1>                   
+            <h1 text-center *ngIf="park.data_log_venda">{{park.nome_ponto_acesso}} {{dataInfo.titleNotPayed}}</h1>                   
+        </ion-item>          
+        
+    </ion-list>
+      
 </ion-content>
 
-<ion-content padding>
+<ion-footer no-border color="transparent">   
+    <button ion-button full large (click)="addParking()" color="positive">{{dataInfo.titleConfirm}}</button>  
+    <button ion-button full large (click)="goBack()" color="positive">{{dataInfo.titleCancel}}</button>
+  </ion-footer>
 
-</ion-content>
