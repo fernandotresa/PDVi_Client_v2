@@ -7,6 +7,7 @@
         <ion-searchbar
           [(ngModel)]="searchTerm"
           (ionInput)="setFilteredItems()"
+          type="number"
           placeholder= "Procurar...">    
         </ion-searchbar>
      </ion-toolbar>
@@ -16,21 +17,39 @@
 <ion-content padding>
        
               
-    <ion-list>      
+    <ion-list no-lines>      
 
         <ion-item *ngFor="let park of ticketParking" no-lines text-center> 
-            <h1 text-center>{{park.nome_produto}} - R$ {{park.valor_produto}}</h1>       
-            <h1 text-center>{{park.data_inclusao_utilizavel}}</h1>       
-            <h1 text-center *ngIf="park.data_log_venda">{{park.nome_ponto_acesso}} {{dataInfo.titlePayed}}</h1>                   
-            <h1 text-center *ngIf="park.data_log_venda">{{park.nome_ponto_acesso}} {{dataInfo.titleNotPayed}}</h1>                   
-        </ion-item>          
+
+        <ion-card>
+            <ion-card-header>
+                <h1 text-center>{{park.nome_produto}} - R$ {{park.valor_produto}}</h1>       
+            </ion-card-header>
+
+            <button ion-item>
+                <ion-icon name="calendar" item-start></ion-icon>
+                {{park.data_inclusao_utilizavel}}
+            </button>
+
+            <button ion-item *ngIf="park.data_log_venda">
+               <ion-icon name="cash" item-start color="secondary"></ion-icon>
+                  {{park.nome_ponto_acesso}} - {{dataInfo.titlePayed}}
+            </button>
+
+            <button ion-item *ngIf="! park.data_log_venda">
+              <ion-icon name="cash" item-start color="danger"></ion-icon>
+                 {{park.nome_ponto_acesso}} - {{dataInfo.titleNotPayed}}
+            </button>    
+
+        </ion-card>
+    </ion-item>          
         
     </ion-list>
       
 </ion-content>
 
 <ion-footer no-border color="transparent">   
-    <button ion-button full large (click)="addParking()" color="positive">{{dataInfo.titleConfirm}}</button>  
-    <button ion-button full large (click)="goBack()" color="positive">{{dataInfo.titleCancel}}</button>
+    <button ion-button full large (click)="goBack()" color="positive" style="text-transform: uppercase;">{{dataInfo.titleCancel}}</button>
+    <button ion-button full large (click)="addParking()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titleConfirm}}</button>      
   </ion-footer>
 

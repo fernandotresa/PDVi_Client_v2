@@ -10,22 +10,23 @@
 
         <ion-item *ngFor="let product of productsSelect" no-lines>      
           
-            <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}}</h2>
+            <h2 *ngIf="product.quantity !== 0 && !product.parking">{{product.nome_produto}} - R$ {{product.valor_total}}</h2>
+            <h2 *ngIf="product.quantity !== 0 && product.parking">{{product.nome_produto}}</h2>
             <h2 *ngIf="product.quantity === 0">{{product.nome_produto}}</h2>
 
-            <button *ngIf="product.quantity !== 0" ion-button item-right color="secondary" (click)="presentModal(product)">          
+            <button *ngIf="product.quantity !== 0 && !product.parking" ion-button item-right color="secondary" (click)="presentModal(product)">          
               <ion-icon name="ios-folder-open"></ion-icon>
               {{product.nome_subtipo_produto}}
            </button>
           
-            <button style="vertical-align: 5%;" ion-button item-right icon-only color="secondary" clear outline (click)="increment(product)">
+            <button *ngIf="!product.parking" style="vertical-align: 5%;" ion-button item-right icon-only color="secondary" clear outline (click)="increment(product)">
                 <ion-icon name="add-circle" class="fs-30"></ion-icon>
             </button>
       
-            <span *ngIf="product.quantity" style="vertical-align: 5%;" item-right>{{product.quantity}}</span>
-            <span *ngIf="! product.quantity" style="vertical-align: 5%;" item-right>0</span>
+            <span *ngIf="product.quantity && !product.parking" style="vertical-align: 5%;" item-right>{{product.quantity}}</span>
+            <span *ngIf="! product.quantity && !product.parking" style="vertical-align: 5%;" item-right>0</span>
               
-            <button style="vertical-align: 5%;" ion-button item-right icon-only color="danger" clear outline (click)="decrement(product)">
+            <button *ngIf="!product.parking" style="vertical-align: 5%;" ion-button item-right icon-only color="danger" clear outline (click)="decrement(product)">
                <ion-icon name="remove-circle" class="fs-30"></ion-icon>
 
             </button>                  

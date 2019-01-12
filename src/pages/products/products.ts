@@ -26,6 +26,8 @@ export class ProductsPage {
   searching: any = false;
   searchControl: FormControl;
 
+  ticketParking: any = []
+
   constructor(public navCtrl: NavController, 
     public uiUtils: UiUtilsProvider,
     public dataInfo: DataInfoProvider,
@@ -103,7 +105,7 @@ export class ProductsPage {
         {
           text: 'Login',
           handler: data => {
-            console.log(data)
+
             if(data.username === "Admin" && data.password === "jabaquara")            
               this.goPageTicket()
             else
@@ -178,18 +180,38 @@ export class ProductsPage {
   }
   
   goPagePayment(){
+
+    for(var i = 0; i < this.ticketParking.length; ++i){
+
+      let element = this.ticketParking[i]
+      element.quantity = 1
+      element.parking = true
+      this.products.push(element)      
+    }
+    
     this.navCtrl.push('CheckoutPage', {products: this.products, 
       finalValue: this.finalValue, totalSelected: this.totalSelected})
   }
 
   presentPromptParking(){
     let modal = this.modalCtrl.create('ParkingPage');
-    modal.onDidDismiss(data => {
-      console.log(data)
+    modal.onDidDismiss(data => {  
+
+      if(data.length > 0)
+        this.parkingInsert(data)
     });
     
     modal.present();
   }
+
+ parkingInsert(data){  
+  let ticket = data[0]
+  let element = this.ticketParking[0]  
+  this.finalValue += ticket.valor_produto
+  this.totalSelected++
+  this.removeParking(element)
+  this.ticketParking.push(ticket)
+ }
 
   presentModal(product){
     let modal = this.modalCtrl.create('SubproductsPage', {productSelected: product});
@@ -213,6 +235,19 @@ export class ProductsPage {
       if(id_produto === product_id_produto){
         product.fk_id_subtipo_produto = fk_id_subtipo_produto
       }
+    }
+  }
+
+  removeParking(ticket){    
+    
+    for(var i = 0; i < this.ticketParking.length; ++i){
+
+      let element = this.ticketParking[i]
+  
+      if(element.id_estoque_utilizavel === ticket.id_estoque_utilizavel)          
+          this.finalValue -= this.ticketParking[i].valor_produto
+          this.totalSelected--          
+          this.ticketParking.splice(i, 1)
     }
   }
 

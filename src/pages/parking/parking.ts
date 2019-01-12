@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
 import { Observable } from 'rxjs/Observable';
 import { FormControl } from '@angular/forms';
+import * as moment from 'moment-timezone';
 
 @IonicPage()
 @Component({
@@ -21,6 +22,7 @@ export class ParkingPage {
   constructor(public navCtrl: NavController, 
     public dataInfo: DataInfoProvider,
     public httpd: HttpdProvider,
+    public viewCtrl: ViewController,
     public navParams: NavParams) {
 
       this.searchControl = new FormControl();
@@ -29,6 +31,8 @@ export class ParkingPage {
         this.searching = false;
         this.setFilteredItems();
       });
+
+      moment.locale('pt-br'); 
   }
 
   ionViewDidLoad() {
@@ -40,14 +44,12 @@ export class ParkingPage {
   }
 
   addParking(){
-
+    this.viewCtrl.dismiss(this.ticketParking)
   }
 
   setFilteredItems(){
 
     if(this.searchTerm.length > 1){
-
-      console.log(this.searchTerm)
 
       this.httpd.getTicketParking(this.searchTerm)
       .subscribe(data => {
@@ -60,7 +62,10 @@ export class ParkingPage {
   getTicketParkingCallback(data){
       
       this.ticketParking = data.success
-      console.log(this.ticketParking)
+
+      this.ticketParking.forEach(element => {
+        element.data_inclusao_utilizavel = moment(element.data_inclusao_utilizavel).tz('America/Sao_Paulo').format("dddd, MMMM Do YYYY, kk:mm:ss")        
+      });
   }
 
 }

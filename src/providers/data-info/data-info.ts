@@ -45,6 +45,7 @@ export class DataInfoProvider {
   titlePayed: string = "Pago"
   titleNotPayed: string = "Não Pago"
   titleSearch: string = "Pesquisar"
+  titleRemove: string = "Remover"
   titleSearchingClientName: string = "Procurando pelo nome do cliente, favor aguarde"
   titleSearchingClientCPF: string = "Procurando pelo CPF do cliente, favor aguarde"
   titleConfirmMultiPrint: string = "Deseja confirmar impressão multipla?"

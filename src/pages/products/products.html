@@ -63,7 +63,18 @@
           <ion-icon class="fs-30" name="remove-circle"></ion-icon>
         </button>                  
                    
-    </ion-item>          
+    </ion-item>    
+    
+    <ion-item *ngFor="let ticket of ticketParking" no-lines>      
+      
+            <h2>{{ticket.nome_produto}}</h2>       
+    
+            <button ion-button item-right color="danger" (click)="removeParking(ticket)">          
+                <ion-icon name="ios-close"></ion-icon>
+                {{dataInfo.titleRemove}}
+            </button>                   
+
+        </ion-item>    
     
   </ion-list>
 
@@ -71,6 +82,7 @@
 
 
 <ion-footer no-border color="transparent" *ngIf="totalSelected > 0" class="ani-bottom-to-top">     
+
     <button ion-button full large (click)="getAllProducts()" style="text-transform: uppercase;">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</button>   
     <button ion-button full large (click)="goPagePayment()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titlePay}}  R$ {{finalValue}}</button>    
 </ion-footer>
