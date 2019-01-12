@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ɵConsole } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
@@ -64,6 +64,7 @@ export class ParkingPage {
       this.ticketParking = data.success
 
       this.ticketParking.forEach(element => {
+        console.log(element)
         element.data_inclusao_utilizavel = moment(element.data_inclusao_utilizavel).tz('America/Sao_Paulo').format("dddd, MMMM Do YYYY, kk:mm:ss")        
       });
   }
