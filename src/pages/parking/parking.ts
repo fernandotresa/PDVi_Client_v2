@@ -18,6 +18,7 @@ export class ParkingPage {
   searching: any = false;
   searchControl: FormControl;
   ticketParking: any = []
+  isSold: Boolean = false
 
   constructor(public navCtrl: NavController, 
     public dataInfo: DataInfoProvider,
@@ -64,8 +65,10 @@ export class ParkingPage {
       this.ticketParking = data.success
 
       this.ticketParking.forEach(element => {
-        console.log(element)
         element.data_inclusao_utilizavel = moment(element.data_inclusao_utilizavel).tz('America/Sao_Paulo').format("dddd, MMMM Do YYYY, kk:mm:ss")        
+
+        if(element.data_log_venda)
+          this.isSold = true
       });
   }
 

@@ -130,6 +130,8 @@ export class ProductsPage {
     this.finalValue = 0
     this.totalSelected = 0
     this.products = []    
+    
+    this.ticketParking = []
   }
 
   setFilteredItems(){
@@ -197,7 +199,7 @@ export class ProductsPage {
     let modal = this.modalCtrl.create('ParkingPage');
     modal.onDidDismiss(data => {  
 
-      if(data.length > 0)
+      if(data)
         this.parkingInsert(data)
     });
     
@@ -210,6 +212,8 @@ export class ProductsPage {
   this.finalValue += ticket.valor_produto
   this.totalSelected++
   this.removeParking(element)
+
+  ticket.isParking = true  
   this.ticketParking.push(ticket)
  }
 
