@@ -55,6 +55,7 @@ export class ParkingPage {
       this.httpd.getTicketParking(this.searchTerm)
       .subscribe(data => {
   
+          console.log(data)
           this.getTicketParkingCallback(data)    
       })
     }    
