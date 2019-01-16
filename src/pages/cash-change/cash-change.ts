@@ -75,7 +75,7 @@ export class CashChangePage {
 
 
     if(! this.checkSupervisorInfo())      
-      this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titleAuthError).present()
+      this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleAuthError).present()
 
     else 
       this.confirm()
@@ -96,7 +96,7 @@ export class CashChangePage {
     }, error => {
       loading.dismiss().then( () => {
 
-        self.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titleCashChangeError).present()
+        self.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleCashChangeError).present()
       });
     });
 
@@ -106,7 +106,7 @@ export class CashChangePage {
 
     var self = this
     
-    let alert = this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleCashChangeSuccess)
+    let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titleCashChangeSuccess)
       
       alert.present()
       .then( () => {

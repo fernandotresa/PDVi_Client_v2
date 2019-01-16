@@ -75,7 +75,7 @@ export class PaymentPage {
     .subscribe( () => {
       loading.dismiss()
 
-      let alert = this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titlePaymentSuccess)
+      let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePaymentSuccess)
       
       alert.present()
       .then( () => {

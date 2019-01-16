@@ -74,7 +74,7 @@ export class CashDrainPage {
   finish(){        
 
     if(! this.checkSupervisorInfo())      
-      this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titleAuthError).present()
+      this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleAuthError).present()
 
     else 
       this.confirm()             
@@ -94,7 +94,7 @@ export class CashDrainPage {
     }, error => {
       loading.dismiss().then( () => {
 
-        self.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titleCashDrainError).present()
+        self.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleCashDrainError).present()
       });
     });
 
@@ -103,7 +103,7 @@ export class CashDrainPage {
   finishOperation(data){
 
     var self = this
-    let alert = this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleCashDrainSuccess)
+    let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titleCashDrainSuccess)
       
       alert.present()
       .then( () => {

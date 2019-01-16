@@ -67,7 +67,7 @@ export class ParkingPage {
 
       this.ticketParking.forEach(element => {
         element.data_inclusao_utilizavel = moment(element.data_inclusao_utilizavel)
-        .tz('America/Sao_Paulo').format("dd/MM/YYYY kk:mm:ss")        
+        .tz('America/Sao_Paulo').format("LLLL")        
 
         if(element.data_log_venda)
           this.isSold = true

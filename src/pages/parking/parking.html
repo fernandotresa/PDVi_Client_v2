@@ -48,9 +48,8 @@
       
 </ion-content>
 
-<ion-footer no-border color="transparent">   
-    
-    <button ion-button full large (click)="goBack()" color="positive" style="text-transform: uppercase;">{{dataInfo.titleCancel}}</button>
+<ion-footer no-border color="transparent">           
     <button ion-button full large (click)="addParking()" color="secondary" style="text-transform: uppercase;" *ngIf="! isSold">{{dataInfo.titleConfirm}}</button>      
+    <button ion-button full large (click)="goBack()" color="positive" style="text-transform: uppercase;">{{dataInfo.titleCancel}}</button>
   </ion-footer>
 
