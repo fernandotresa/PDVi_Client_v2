@@ -35,9 +35,7 @@ export class LoginPage {
     }
 
   
-  goHome(){
-    console.log("goHome()", this.dataInfo.appType)
-    
+  goHome(){    
     if(this.dataInfo.appType === 1)
       this.navCtrl.setRoot(HomePage);
 

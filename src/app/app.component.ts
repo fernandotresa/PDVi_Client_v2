@@ -20,9 +20,8 @@ export class MyApp {
 		showSelectedOption: true,
 		selectedOptionClass: 'active-side-menu-option'		
   };
-
 	
-  //rootPage:any = SettingsPage;
+  //rootPage:any = SupervisorPage;
 	rootPage:any = LoginPage;
 	
   
@@ -30,7 +29,7 @@ export class MyApp {
   constructor(platform: Platform, private menuCtrl: MenuController) {
     platform.ready().then(() => {
 			this.initializeOptionsClient()
-			this.menuCtrl.enable(false)
+			//this.menuCtrl.enable(false)
     });
   }
 
@@ -87,7 +86,13 @@ export class MyApp {
 			iconName: 'car',
 			displayText: 'Estacionamento',
 			component: "ParkingPage"			
-    });	
+		});	
+		
+		this.options.push({
+			iconName: 'people',
+			displayText: 'Supervisão',
+			component: "SupervisorPage"			
+		});
 
     this.options.push({
 			iconName: 'cog',

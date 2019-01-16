@@ -1,0 +1,26 @@
+  <ion-header>
+    <ion-navbar text-center no-border-bottom color="primary">      
+        <ion-title>{{dataInfo.titleSupervisor}}</ion-title>          
+    </ion-navbar>     
+
+ </ion-header>
+  
+<ion-content padding>  
+             
+  <ion-list>      
+    <button ion-item (click)="presentModalBleeding()">
+        {{ dataInfo.titleCashDrain }}
+    </button>    
+
+    <button ion-item (click)="presentModalChange()">
+      {{ dataInfo.titleCashChange }}
+    </button>
+
+    <button ion-item (click)="presentModalExtract()">
+      {{ dataInfo.titleCashStatement }}
+  </button>
+
+  </ion-list>
+
+
+</ion-content>

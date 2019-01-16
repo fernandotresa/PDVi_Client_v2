@@ -1,4 +1,4 @@
-import { ErrorHandler, Injectable, Injector, NgModule } from '@angular/core';
+import { ErrorHandler, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -13,7 +13,12 @@ import { TicketsPageModule } from '../pages/tickets/tickets.module';
 import { ParkingPageModule } from '../pages/parking/parking.module';
 import { PaymentPageModule } from '../pages/payment/payment.module';
 import { LoginPageModule } from '../pages/login/login.module';
+import { CashChangePageModule } from '../pages/cash-change/cash-change.module';
+import { CashDrainPageModule } from '../pages/cash-drain/cash-drain.module';
+import { CashStatementPageModule } from '../pages/cash-statement/cash-statement.module';
+import { SupervisorPageModule } from '../pages/supervisor/supervisor.module';
 import { SubproductsPageModule } from '../pages/subproducts/subproducts.module';
+
 
 import { HttpdProvider } from '../providers/httpd/httpd';
 import { HttpClientModule } from '@angular/common/http';
@@ -48,7 +53,11 @@ import { SideMenuContentComponent } from '../shared/side-menu-content/side-menu-
     PaymentPageModule,
     ParkingPageModule,
     SubproductsPageModule,
-    LoginPageModule
+    LoginPageModule,
+    CashChangePageModule,
+    CashDrainPageModule,
+    CashStatementPageModule,
+    SupervisorPageModule
   ],
   providers: [    
     {provide: ErrorHandler, useClass: IonicErrorHandler},

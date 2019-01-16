@@ -116,11 +116,44 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/getAuth", myData, {headers: headers})
   }
 
-  getTicketParking(idTicket_){  
-      
+  getAuthSupervisor(email_, password_){    
+    let myData = JSON.stringify({id: this.totemId, email: email_, password: password_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getAuthSupervisor", myData, {headers: headers})
+  }
+
+  getTicketParking(idTicket_){        
     let myData = JSON.stringify({id: this.totemId, idTicket: idTicket_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/getTicketParking", myData, {headers: headers})
+  }
+
+  getCashDrain(idUser_){        
+    let myData = JSON.stringify({id: this.totemId, idUser: idUser_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getCashDrain", myData, {headers: headers})
+  }
+
+  confirmCashDrain(idUser_, idSupervisor_, drainValue_){    
+    let myData = JSON.stringify({id: this.totemId, idUser: idUser_,
+      idSupervisor: idSupervisor_, drainValue: drainValue_});
+
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/confirmCashDrain", myData, {headers: headers})
+  }
+
+  getCashChange(idUser_){        
+    let myData = JSON.stringify({id: this.totemId, idUser: idUser_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getCashChange", myData, {headers: headers})
+  }
+
+  confirmCashChange(idUser_, idSupervisor_, changeValue_){    
+    let myData = JSON.stringify({id: this.totemId, idUser: idUser_,
+      idSupervisor: idSupervisor_, changeValue: changeValue_});
+      
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/confirmCashChange", myData, {headers: headers})
   }
 
 }

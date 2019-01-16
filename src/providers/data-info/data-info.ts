@@ -7,6 +7,7 @@ export class DataInfoProvider {
   titleGoBack: string = "Voltar"
   userType: any = {name: 'Atendente', email: 'falecom@megaticket.com.br', photo: "assets/imgs/100x100.png"}
   userInfo: any;
+
   titleAccessDenied: string = "Acesso negado"
   eventPaymentOk: string = 'eventPaymentOk'
   titleAppName: string = "3A PDVi"
@@ -75,6 +76,10 @@ export class DataInfoProvider {
   titleUsername: string = "Usuário"
   titlePasswordMinLenght: string = "Senha deve ter no mínimo 3 caracteres"    
   titleAuthError: string = "Erro de autenticação"
+  titleCashDrainError: string = "Erro ao realizar Sangria"
+  titleCashDrainSuccess: string = "Sangria realizada com sucesso"
+  titleCashChangeError: string = "Erro ao realizar troco"
+  titleCashChangeSuccess: string = "Troco realizado com sucesso"
   titleSubproducts: string = "Subtipos de produto"
   titleBasic: string = "Básico"
   titleClientAddress: string = "Endereço comprador"
@@ -89,6 +94,11 @@ export class DataInfoProvider {
   titleSelectList: string = "Favor selecionar na lista"
   titlePrintModelA: string = "Impressão modelo A"
   titlePrintModelB: string = "Impressão modelo B"
+  titleSupervisor: string = "Supervisão"
+  titleSupervisorPdvi: string = "Supervisor"
+  titleCashDrain: string = "Sangria"  
+  titleCashChange: string = "Troco"
+  titleCashStatement: string = "Extrato"
 
   constructor() {
     console.log('Hello DataInfoProvider Provider');

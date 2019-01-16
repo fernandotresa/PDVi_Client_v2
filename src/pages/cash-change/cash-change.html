@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar text-center no-border-bottom color="primary">            
+  <ion-title>{{dataInfo.titleCashChange}}</ion-title> 
+  </ion-navbar>   
+</ion-header>
+
+<ion-content padding>
+
+<ion-list no-lines>
+
+    <ion-item no-lines class="text-green fs-15 fw-600 pdl-0" *ngIf="supervisorIsOk">
+      <ion-label color="primary" class="text-size">{{dataInfo.titleCashChange}}</ion-label>    
+       <ion-input type="number" [(ngModel)]="cashChangeTotal" (keyup.enter)="finish()" text-center
+       #inputEnd></ion-input>
+    </ion-item>    
+
+    <ion-item no-lines class="text-green fs-15 fw-600 pdl-0">
+        <ion-label color="primary" class="text-size">{{dataInfo.titleSupervisorPdvi}}</ion-label>      
+         <ion-input type="text" [(ngModel)]="supervisorUsername" text-center  (keyup.enter)="focusPassword()"
+         #inputUsername></ion-input>
+      </ion-item>    
+
+      <ion-item no-lines class="text-green fs-15 fw-600 pdl-0">
+          <ion-label color="primary" class="text-size">{{dataInfo.titlePassword}}</ion-label>      
+           <ion-input type="password" [(ngModel)]="supervisorPassword" (keyup.enter)="getSupervisorInfo()" text-center
+           #inputPassword></ion-input>
+      </ion-item>    
+               
+</ion-list>
+
+</ion-content>   
+
+<ion-footer no-border color="transparent">   
+  <button *ngIf="cashChangeTotal > 0 && supervisorIsOk" ion-button full large (click)="finish()" color="positive">{{dataInfo.titleConfirm}}</button>  
+  <button ion-button full large (click)="goBack()" color="positive">{{dataInfo.titleCancel}}</button>
+</ion-footer>
