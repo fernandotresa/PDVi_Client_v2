@@ -1,18 +1,39 @@
-<!--
-  Generated template for the CashStatementPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>cashStatement</ion-title>
-  </ion-navbar>
-
+  <ion-navbar text-center no-border-bottom color="primary">            
+  <ion-title>{{dataInfo.titleCashDrain}}</ion-title> 
+  </ion-navbar>   
 </ion-header>
-
 
 <ion-content padding>
 
-</ion-content>
+<ion-list no-lines>
+
+    <ion-item no-lines class="text-green fs-15 fw-600 pdl-0">
+        <ion-label color="primary" class="text-size">{{dataInfo.titleCashChange}}</ion-label>      
+         <ion-input type="text" [(ngModel)]="totalChange" text-center></ion-input>
+    </ion-item>  
+
+    <ion-item no-lines class="text-green fs-15 fw-600 pdl-0" *ngIf="supervisorIsOk">
+      <ion-label color="primary" class="text-size">{{dataInfo.titleCashDrain}}</ion-label>    
+       <ion-input type="number" [(ngModel)]="totalDrain" text-center
+       #inputEnd></ion-input>
+    </ion-item>         
+
+    <ion-item no-lines class="text-green fs-15 fw-600 pdl-0">
+      <ion-label color="primary" class="text-size">{{dataInfo.titleTicketTotal}}</ion-label>      
+       <ion-input type="text" [(ngModel)]="totalTickets" text-center></ion-input>
+  </ion-item>  
+  
+  <ion-item no-lines class="text-green fs-15 fw-600 pdl-0">
+      <ion-label color="primary" class="text-size">{{dataInfo.titleTotal}}</ion-label>      
+       <ion-input type="text" [(ngModel)]="totalAll" text-center></ion-input>
+  </ion-item>  
+  
+               
+</ion-list>
+
+</ion-content>   
+
+<ion-footer no-border color="transparent">     
+  <button ion-button full large (click)="goBack()" color="positive">{{dataInfo.titleCancel}}</button>
+</ion-footer>

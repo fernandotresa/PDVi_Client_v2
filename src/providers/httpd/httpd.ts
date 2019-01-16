@@ -128,8 +128,8 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/getTicketParking", myData, {headers: headers})
   }
 
-  getCashDrain(idUser_){        
-    let myData = JSON.stringify({id: this.totemId, idUser: idUser_});
+  getCashDrain(idUser_, start_, end_){        
+    let myData = JSON.stringify({id: this.totemId, idUser: idUser_, start: start_, end: end_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/getCashDrain", myData, {headers: headers})
   }
@@ -142,8 +142,8 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/confirmCashDrain", myData, {headers: headers})
   }
 
-  getCashChange(idUser_){        
-    let myData = JSON.stringify({id: this.totemId, idUser: idUser_});
+  getCashChange(idUser_, start_, end_){        
+    let myData = JSON.stringify({id: this.totemId, idUser: idUser_, start: start_, end: end_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/getCashChange", myData, {headers: headers})
   }
@@ -154,6 +154,12 @@ export class HttpdProvider {
       
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/confirmCashChange", myData, {headers: headers})
+  }
+
+  getTotalTickets(idUser_, start_, end_){        
+    let myData = JSON.stringify({id: this.totemId, idUser: idUser_, start: start_, end: end_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getTotalTickets", myData, {headers: headers})
   }
 
 }
