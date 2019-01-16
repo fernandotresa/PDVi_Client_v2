@@ -255,5 +255,68 @@ export class ProductsPage {
     }
   }
 
+  presentModalCashDrain(){
+    let modal = this.modalCtrl.create('CashDrainPage');    
+
+    modal.onDidDismiss( data => {
+      
+      if(data){
+
+        let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePrintSuccess)
+      
+        alert.present()
+        .then( () => {
+          setTimeout(function(){
+            alert.dismiss();
+          }, 3000);        
+        })
+      }      
+    });
+    
+    modal.present();
+  }
+
+  presentModalChange(){
+    let modal = this.modalCtrl.create('CashChangePage');    
+
+    modal.onDidDismiss( data => {
+      
+      if(data){
+
+        let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePrintSuccess)
+      
+        alert.present()
+        .then( () => {
+          setTimeout(function(){
+            alert.dismiss();
+          }, 3000);        
+        })
+      }      
+    });
+    
+    modal.present();
+  }
+
+  presentModalExtract(){
+    let modal = this.modalCtrl.create('CashStatementPage');    
+
+    modal.onDidDismiss( data => {
+      
+      if(data){
+
+        let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePrintSuccess)
+      
+        alert.present()
+        .then( () => {
+          setTimeout(function(){
+            alert.dismiss();
+          }, 3000);        
+        })
+      }      
+    });
+    
+    modal.present();
+  }
+
 }
 

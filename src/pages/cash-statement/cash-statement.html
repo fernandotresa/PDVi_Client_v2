@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar text-center no-border-bottom color="primary">            
-  <ion-title>{{dataInfo.titleCashDrain}}</ion-title> 
+  <ion-title>{{dataInfo.titleCashStatement}}</ion-title> 
   </ion-navbar>   
 </ion-header>
 
@@ -9,25 +9,37 @@
 <ion-list no-lines>
 
     <ion-item no-lines class="text-green fs-15 fw-600 pdl-0">
-        <ion-label color="primary" class="text-size">{{dataInfo.titleCashChange}}</ion-label>      
-         <ion-input type="number" [(ngModel)]="totalChange" text-center></ion-input>
+        <ion-label color="primary" class="text-green">{{dataInfo.titleCashChange}}</ion-label>      
+
+         <ion-input type="number" [(ngModel)]="totalChange" text-right></ion-input>
     </ion-item>  
 
-    <ion-item no-lines class="text-green fs-15 fw-600 pdl-0">
+    <ion-item no-lines class="text-red fs-15 fw-600 pdl-0">
 
-      <ion-label color="primary" class="text-size">{{dataInfo.titleCashDrain}}</ion-label>    
-       <ion-input type="number" [(ngModel)]="totalDrain" text-center
+      <ion-label color="primary" class="text-red">{{dataInfo.titleCashDrain}}</ion-label>    
+       <ion-input type="number" [(ngModel)]="totalDrain" text-right
        #inputEnd></ion-input>
     </ion-item>         
 
-    <ion-item no-lines class="text-green fs-15 fw-600 pdl-0">
-      <ion-label color="primary" class="text-size">{{dataInfo.titleTicketTotal}}</ion-label>      
-       <ion-input type="number" [(ngModel)]="totalTicket" text-center></ion-input>
+    <ion-item no-lines class="text-black fs-15 fw-600 pdl-0">
+      <ion-label color="primary" class="text-black">{{dataInfo.titleTicketTotal}}</ion-label>      
+       <ion-input type="number" [(ngModel)]="totalTicket" text-right></ion-input>
   </ion-item>  
   
-  <ion-item no-lines class="text-green fs-15 fw-600 pdl-0">
-      <ion-label color="primary" class="text-size">{{dataInfo.titleTotal}}</ion-label>      
-       <ion-input type="number" [(ngModel)]="totalAll" text-center></ion-input>
+  <ion-item no-lines class="text-black fs-15 fw-600 pdl-0" *ngIf="totalAll === 0">
+      <ion-label color="primary" class="text-black">{{dataInfo.titleTotal}}</ion-label>      
+       <ion-input type="number" [(ngModel)]="totalAll" text-right></ion-input>
+  </ion-item>  
+
+  <ion-item no-lines class="text-green fs-15 fw-600 pdl-0" *ngIf="totalAll > 0">
+      <ion-label color="primary" class="text-green">{{dataInfo.titleTotal}}</ion-label>      
+     <ion-input type="number" [(ngModel)]="totalAll" text-right></ion-input>
+  </ion-item>  
+
+  <ion-item no-lines class="text-red fs-15 fw-600 pdl-0" *ngIf="totalAll < 0">
+    
+    <ion-label color="primary" class="text-red">{{dataInfo.titleTotal}}</ion-label>      
+    <ion-input type="number" [(ngModel)]="totalAll" text-right></ion-input>
   </ion-item>  
   
                

@@ -4,8 +4,16 @@
 
         <ion-buttons end>
 
-            <button ion-button color="white_" (click)="goPageSettings()" *ngIf="false">
-                <ion-icon class="fs-30" name="md-cog"></ion-icon>
+            <button ion-button color="white_" (click)="presentModalCashDrain()">
+                <ion-icon class="fs-30" name="md-remove-circle"></ion-icon>
+            </button>
+
+            <button ion-button color="white_" (click)="presentModalChange()">
+                <ion-icon class="fs-30" name="cash"></ion-icon>
+            </button>
+
+            <button ion-button color="white_" (click)="presentModalExtract()">
+                <ion-icon class="fs-30" name="ios-clipboard"></ion-icon>
             </button>
             
             <button ion-button icon-only color="royal" (click)="presentPromptParking()">                

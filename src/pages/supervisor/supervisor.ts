@@ -23,7 +23,7 @@ export class SupervisorPage {
     console.log('ionViewDidLoad SupervisorPage');
   }
 
-  presentModalBleeding(){
+  presentModalCashDrain(){
     let modal = this.modalCtrl.create('CashDrainPage');    
 
     modal.onDidDismiss( data => {

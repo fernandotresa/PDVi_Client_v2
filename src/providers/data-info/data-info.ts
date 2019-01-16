@@ -46,6 +46,7 @@ export class DataInfoProvider {
   titlePayed: string = "Pago"
   titleNotPayed: string = "Não Pago"
   titleSearch: string = "Pesquisar"
+  titleCashStatement: string = "Extrato de caixa"
   titleRemove: string = "Remover"
   titleSearchingClientName: string = "Procurando pelo nome do cliente, favor aguarde"
   titleSearchingClientCPF: string = "Procurando pelo CPF do cliente, favor aguarde"
@@ -99,9 +100,9 @@ export class DataInfoProvider {
   titlePrintModelB: string = "Impressão modelo B"
   titleSupervisor: string = "Supervisão"
   titleSupervisorPdvi: string = "Supervisor"
+  
   titleCashDrain: string = "Sangria"  
   titleCashChange: string = "Troco"
-  titleCashStatement: string = "Extrato"
 
   constructor() {
     console.log('Hello DataInfoProvider Provider');

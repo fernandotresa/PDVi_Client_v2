@@ -116,8 +116,8 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/getAuth", myData, {headers: headers})
   }
 
-  getAuthSupervisor(email_, password_){    
-    let myData = JSON.stringify({id: this.totemId, email: email_, password: password_});
+  getAuthSupervisor(){
+    let myData = JSON.stringify({id: this.totemId});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/getAuthSupervisor", myData, {headers: headers})
   }
