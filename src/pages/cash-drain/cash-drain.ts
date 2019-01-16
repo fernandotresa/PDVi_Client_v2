@@ -73,13 +73,11 @@ export class CashDrainPage {
 
   finish(){        
 
-
     if(! this.checkSupervisorInfo())      
       this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titleAuthError).present()
 
     else 
-      this.confirm()
-             
+      this.confirm()             
   }
 
   confirm(){

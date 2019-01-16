@@ -78,45 +78,7 @@ export class ProductsPage {
     });
     
     modal.present();
-  }
-
-  presentPrompt() {
-    let alert = this.alertCtrl.create({
-      title: this.dataInfo.titleEnterPassword,
-      inputs: [
-        {
-          name: 'username',
-          placeholder: this.dataInfo.titleUsername
-        },
-        {
-          name: 'password',
-          placeholder: this.dataInfo.titlePassword,
-          type: 'password'
-        }
-      ],
-      buttons: [
-        {
-          text: this.dataInfo.titleCancel,
-          role: 'cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Login',
-          handler: data => {
-
-            if(data.username === "Admin" && data.password === "jabaquara")            
-              this.goPageTicket()
-            else
-              this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleAccessDenied)
-              .present()
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
+  } 
 
   logout(){
     this.navCtrl.setRoot(LoginPage)

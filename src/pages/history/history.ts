@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpdProvider } from '../../providers/httpd/httpd';
@@ -18,6 +18,9 @@ import 'rxjs/add/operator/debounceTime';
 })
 export class HistoryPage {
 
+  @ViewChild('inputPassword') inputPassword;
+  @ViewChild('inputEnd') inputEnd;
+
   allOrders: Observable<any>;
   ticketsCallback: any = []
   dayBegin: string = "";
@@ -27,6 +30,13 @@ export class HistoryPage {
   searchTerm: string = '';
   searching: any = false;
   searchControl: FormControl;
+
+  supervisorPassword: string = ""
+  supervisorUsername: string = ""
+  supervisorId: number = 0    
+  supervisorInfo: any = []  
+  allSupervisors: Observable<any>;
+  supervisorOk: Boolean = false
 
   constructor(public navCtrl: NavController, 
     public httpd: HttpdProvider,
@@ -50,8 +60,8 @@ export class HistoryPage {
     if(this.dataInfo.appType === 1){
       this.dayBegin = moment().startOf('day').format()      
       this.dayEnd = moment().endOf('day').format()
-
-      this.searchContinue()
+      
+      this.getSupervisorInfo()
     }
       
     else if(this.dataInfo.appType === 2){
@@ -59,6 +69,45 @@ export class HistoryPage {
       this.dayEnd = moment().endOf('day').format()
     }      
   }
+  
+  getSupervisorInfo(){
+    
+    this.allSupervisors = this.httpd.getAuthSupervisor()
+
+    this.allSupervisors
+    .subscribe( data => {
+        console.log(data)
+        this.supervisorInfo = data.success
+    }); 
+  }    
+
+  checkSupervisorInfo(){
+
+    let checked = false
+
+    this.supervisorInfo.forEach(element => {
+      
+      if(element.login_usuarios === this.supervisorUsername) {
+        if(element.senha_usuarios_pdvi == this.supervisorPassword){
+          checked = true      
+          this.supervisorId = element.id_usuarios          
+        }          
+      }
+        
+    });
+
+    return checked;
+  }
+
+  finish(){        
+
+    if(! this.checkSupervisorInfo())      
+      this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titleAuthError).present()
+
+    else 
+      this.searchContinue()            
+  }
+
 
   checkInputs(){
     let inputsok = false
@@ -119,6 +168,7 @@ export class HistoryPage {
   searchContinue(){
     this.dayBegin = moment(this.dayBegin).startOf('day').format()
     this.dayEnd = moment(this.dayEnd).endOf('day').format()
+    this.supervisorOk = true
 
     if(this.dataInfo.appType === 1)
       this.searchHistoryPDVi()    

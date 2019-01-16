@@ -7,7 +7,7 @@
 
 <ion-content padding>
 
-    <ion-searchbar *ngIf="dayBegin && dayEnd"
+    <ion-searchbar *ngIf="dayBegin && dayEnd && supervisorOk"
     [(ngModel)]="searchTerm"
     (ionInput)="setFilteredItems()"
     placeholder= "Procurar...">    
@@ -31,10 +31,27 @@
     </ion-list>
 
     <ion-list *ngIf="dataInfo.appType === 1">  
+
+    <ion-item no-lines class="text-green fs-15 fw-600 pdl-0" *ngIf="! supervisorOk">                  
+        <ion-label color="primary" class="fs-30">{{dataInfo.titleSupervisor}}</ion-label>    
+            <ion-select [(ngModel)]="supervisorUsername">            
+            <ion-option *ngFor="let supervisor of (allSupervisors | async)?.success">{{supervisor.login_usuarios}}</ion-option>                                                  
+        </ion-select>                          
+        </ion-item>      
+
+    <ion-item no-lines class="text-green fs-15 fw-600 pdl-0" *ngIf="! supervisorOk">
+        <ion-label color="primary" class="fs-30">{{dataInfo.titlePassword}}</ion-label>      
+        <ion-input type="password" [(ngModel)]="supervisorPassword" (keyup.enter)="finish()" text-right #inputPassword></ion-input>
+    </ion-item>    
+
+    <ion-item *ngIf="supervisorOk" no-lines>
+
         <ion-item no-lines *ngFor="let ticket of ticketsCallback">                      
             <ion-checkbox (click)="ticketClicked(ticket)" [checked]=ticket.checked></ion-checkbox>
             <ion-label>{{ticket.fk_id_estoque_utilizavel}} - {{ticket.nome_produto}} - {{ticket.data_log_venda}} </ion-label>          
         </ion-item>  
+    </ion-item>
+        
     </ion-list>
 
     <ion-list *ngIf="dataInfo.appType === 2">  

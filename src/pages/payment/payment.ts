@@ -90,7 +90,9 @@ export class PaymentPage {
   }
 
   totalChanged(){
+    
     this.totalChange = this.totalReceived - this.finalValue
+    console.log("totalChanged()", this.totalChange)
   }
 
   paymentChanged(event){
