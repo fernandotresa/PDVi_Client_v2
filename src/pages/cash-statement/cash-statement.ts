@@ -46,34 +46,55 @@ export class CashStatementPage {
   }
 
   startInterface(){
-    this.getChangeUser()
-    this.getDrainUser()
-    this.getTicketUser()
+    this.getChangeUser()        
   }
 
   getChangeUser(){
     this.chage = this.httpd.getCashChange(this.dataInfo.userInfo.id_usuarios, this.dayBegin, this.dayEnd)
 
-    this.chage.subscribe(data => {
-
-      console.log(data)
+    this.chage.subscribe(data => {      
+      this.getChangeUserCallback(data)
     })
+  }
+
+  getChangeUserCallback(data){
+    this.totalChange = data.success[0].TOTAL
+    this.getDrainUser()
   }
 
   getDrainUser(){
     this.drain = this.httpd.getCashDrain(this.dataInfo.userInfo.id_usuarios, this.dayBegin, this.dayEnd)
 
     this.drain.subscribe(data => {
-      console.log(data)
+      this.getDrainUserCallback(data)
     })
+  }
+
+  getDrainUserCallback(data){
+    this.totalDrain = data.success[0].TOTAL
+    this.getTicketUser()
   }
 
   getTicketUser(){
     this.tickets = this.httpd.getTotalTickets(this.dataInfo.userInfo.id_usuarios, this.dayBegin, this.dayEnd)
 
     this.tickets.subscribe(data => {
-      console.log(data)
+      this.getTicketUserCallback(data)
     })
+  }
+
+  getTicketUserCallback(data){
+    this.totalTicket = data.success[0].TOTAL
+
+    this.calcTotal()
+  }
+
+  calcTotal(){
+    
+    this.totalAll = this.totalChange + this.totalTicket - this.totalDrain
+
+    console.log(this.totalChange, this.totalAll)
+
   }
 
 }

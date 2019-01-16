@@ -89,7 +89,7 @@ export class HistoryPage {
   searchHistoryPDViByName(){
     this.ticketsCallback = []
 
-    this.allOrders = this.httpd.getTicketOperator(this.dataInfo.userInfo.id_usuario, this.dayBegin, this.dayEnd)
+    this.allOrders = this.httpd.getTicketOperator(this.dataInfo.userInfo.id_usuarios, this.dayBegin, this.dayEnd)
     this.allOrders.subscribe(data => {      
 
       data.success.forEach(element => {        

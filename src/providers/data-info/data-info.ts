@@ -80,7 +80,8 @@ export class DataInfoProvider {
   titleCashDrainError: string = "Erro ao realizar Sangria"
   titleCashDrainSuccess: string = "Sangria realizada com sucesso"
   titleCashChangeError: string = "Erro ao realizar troco"
-  titleTicketTotal: string = "Total de ingressos"
+  titleTicketTotal: string = "Ingressos"
+  
   titleCashChangeSuccess: string = "Troco realizado com sucesso"
   titleSubproducts: string = "Subtipos de produto"
   titleBasic: string = "Básico"

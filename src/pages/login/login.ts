@@ -31,7 +31,7 @@ export class LoginPage {
       this.autoLogin = true   
 
     if(this.autoLogin)
-      this.loginContinue("admin", "123456") 
+      this.loginContinue("admin", "Mudaragora00") 
     }
 
   
