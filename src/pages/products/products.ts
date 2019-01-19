@@ -184,17 +184,30 @@ export class ProductsPage {
 
     let modal = this.modalCtrl.create('SubproductsPage', {productSelected: product});
     modal.onDidDismiss(data => {
-
-      console.log(data)
       
       if(data)
-        this.replaceProductSubtype(data);
+        this.searchProductSubtype(data);
     });
     
     modal.present();
   }
 
+  searchProductSubtype(data){        
+
+    for(var i = 0; i < data.length; ++i){
+      let subproduct = data[i]
+      
+      let quantity = subproduct.quantity
+
+      if(quantity > 0)
+        this.replaceProductSubtype(subproduct)              
+        
+    }
+  }
+
   replaceProductSubtype(data){    
+
+    console.log(data)
 
     let id_produto = data.id_produto
     let fk_id_subtipo_produto = data.fk_id_subtipo_produto
@@ -205,6 +218,7 @@ export class ProductsPage {
       let product_id_produto = product.id_produto
       
       if(id_produto === product_id_produto){
+        console.log()
         product.fk_id_subtipo_produto = fk_id_subtipo_produto
       }
     }

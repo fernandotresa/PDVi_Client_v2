@@ -1,13 +1,13 @@
 <ion-header>
     <ion-navbar text-center no-border-bottom color="primary">     
 
-      <ion-title>{{dataInfo.titleSubproducts}} - {{dataInfo.titleTotal}}: {{totalTickets}}</ion-title> 
+      <ion-title>{{dataInfo.titleSubproducts}} - {{dataInfo.titleTotal}}: {{totalSelected}}</ion-title> 
     </ion-navbar>   
   </ion-header>
   
   <ion-content padding>
 
-  <ion-list>
+  <ion-list  no-lines>
       
     <ion-item no-lines *ngFor="let type of subtypes">
         
@@ -30,7 +30,7 @@
                     </button>                  
                 </ion-col>
 
-                <ion-col col-2>
+                <ion-col col-3>
                     <h2>{{type.nome_subtipo_produto}} </h2>                           
                 </ion-col>                
                 

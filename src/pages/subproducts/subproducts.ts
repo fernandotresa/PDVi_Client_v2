@@ -16,6 +16,7 @@ export class SubproductsPage {
   subtypes: any = []
   totalSelected: number = 0
   totalTickets: number = 0
+  totalClicked: number = 0
 
   constructor(
     public navCtrl: NavController, 
@@ -39,13 +40,11 @@ export class SubproductsPage {
 
   startInterface(data){
     
-    this.subtypes = data.success
-    let total = this.subtypes.length + 1
-    
-    this.subtypes[0].quantity = total
-    this.totalTickets = total
+    this.subtypes = data.success    
+    this.subtypes[0].quantity = this.totalSelected
+    this.totalTickets = this.totalSelected
 
-    console.log(total, this.totalTickets, this.totalSelected)
+    console.log(this.totalTickets, this.totalSelected)
   }
 
   selectedType(type){    
@@ -55,10 +54,11 @@ export class SubproductsPage {
   }
 
   increment(type){
+
     if(type.quantity == undefined)
       type.quantity = 0
-
-    if(type.quantity < this.totalSelected){           
+    
+    if(this.totalTickets < this.totalSelected){           
       type.quantity++
       this.totalTickets++
     }    
@@ -71,11 +71,12 @@ export class SubproductsPage {
     if(type.quantity > 0){                 
       type.quantity--    
       this.totalTickets--           
-    }
+    }    
   }
   
   finish(){
-
+    
+    this.viewCtrl.dismiss(this.subtypes);
   }
 
   goBack(){
