@@ -1,17 +1,51 @@
 <ion-header>
-    <ion-navbar text-center no-border-bottom color="primary">            
-    <ion-title>{{dataInfo.titleSubproducts}}</ion-title> 
+    <ion-navbar text-center no-border-bottom color="primary">     
+
+      <ion-title>{{dataInfo.titleSubproducts}} - {{dataInfo.titleTotal}}: {{totalTickets}}</ion-title> 
     </ion-navbar>   
   </ion-header>
   
   <ion-content padding>
 
   <ion-list>
-  
-    <button ion-item no-lines *ngFor="let type of subtypes" (click)="selectedType(type)">
-        {{type.nome_subtipo_produto}}   
-   </button >                             
+      
+    <ion-item no-lines *ngFor="let type of subtypes">
+        
+        <ion-grid item-content>
+
+            <ion-row>
+                <ion-col col-2>
+                    <button ion-button icon-only color="secondary" clear outline (click)="increment(type)">
+                       <ion-icon class="fs-30" name="add-circle"></ion-icon>
+                     </button>
+                </ion-col> 
+
+                <ion-col col-2>
+                  <ion-input class="productQuantity" [(ngModel)]="type.quantity"></ion-input>        
+                </ion-col>
+
+                <ion-col col-2>
+                    <button class="productQuantity" ion-button icon-only color="danger" clear outline (click)="decrement(type)">
+                        <ion-icon class="fs-30" name="remove-circle"></ion-icon>
+                    </button>                  
+                </ion-col>
+
+                <ion-col col-2>
+                    <h2>{{type.nome_subtipo_produto}} </h2>                           
+                </ion-col>                
+                
+            </ion-row>
+        </ion-grid>  
+
+    </ion-item>                             
 
   </ion-list>
   
   </ion-content>    
+
+  <ion-footer no-border color="transparent">   
+
+      <button *ngIf="totalTickets === totalSelected" ion-button full large (click)="finish()" color="positive">{{dataInfo.titleConfirm}}</button>  
+
+      <button ion-button full large (click)="goBack()" color="positive">{{dataInfo.titleCancel}}</button>
+    </ion-footer>

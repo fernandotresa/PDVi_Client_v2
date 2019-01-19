@@ -29,6 +29,7 @@ export class ProductsPage {
   ticketParking: any = []
 
   constructor(public navCtrl: NavController, 
+    
     public uiUtils: UiUtilsProvider,
     public dataInfo: DataInfoProvider,
     public navParams: NavParams,
@@ -119,9 +120,7 @@ export class ProductsPage {
    } 
  
 
-  increment(product){    
-
-    console.log(product)
+  increment(product){        
 
     if(product.quantity == undefined)
       product.quantity = 0
@@ -182,9 +181,14 @@ export class ProductsPage {
  }
 
   presentModal(product){
+
     let modal = this.modalCtrl.create('SubproductsPage', {productSelected: product});
     modal.onDidDismiss(data => {
-      this.replaceProductSubtype(data);
+
+      console.log(data)
+      
+      if(data)
+        this.replaceProductSubtype(data);
     });
     
     modal.present();

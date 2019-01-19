@@ -44,8 +44,7 @@
         <ion-input type="password" [(ngModel)]="supervisorPassword" (keyup.enter)="finish()" text-right #inputPassword></ion-input>
     </ion-item>    
 
-    <ion-item *ngIf="supervisorOk" no-lines>
-
+    <ion-item no-lines>
         <ion-item no-lines *ngFor="let ticket of ticketsCallback">                      
             <ion-checkbox (click)="ticketClicked(ticket)" [checked]=ticket.checked></ion-checkbox>
             <ion-label>{{ticket.fk_id_estoque_utilizavel}} - {{ticket.nome_produto}} - {{ticket.data_log_venda}} </ion-label>          

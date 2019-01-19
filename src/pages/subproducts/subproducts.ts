@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavParams, ViewController, NavController } from 'ionic-angular';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
 import { Observable } from 'rxjs/Observable';
 import { HttpdProvider } from '../../providers/httpd/httpd';
@@ -14,8 +14,11 @@ export class SubproductsPage {
   productSelected: any;
   allSubtypes: Observable<any>;
   subtypes: any = []
+  totalSelected: number = 0
+  totalTickets: number = 0
 
   constructor(
+    public navCtrl: NavController, 
     public dataInfo: DataInfoProvider,
     public httpd: HttpdProvider,
     public viewCtrl: ViewController,
@@ -25,23 +28,58 @@ export class SubproductsPage {
 
   ionViewDidLoad() {
     this.productSelected = this.navParams.get('productSelected') 
-
-    //console.log(this.productSelected)
+    this.totalSelected = this.productSelected.quantity    
 
     this.allSubtypes = this.httpd.getSubtypesProducts(this.productSelected.fk_id_tipo_produto)
 
-    this.allSubtypes.subscribe(data => {      
-      this.subtypes = data.success
+    this.allSubtypes.subscribe(data => {            
+      this.startInterface(data)
     })
   }
 
-  selectedType(type){
-    console.log(type)
+  startInterface(data){
     
+    this.subtypes = data.success
+    let total = this.subtypes.length + 1
+    
+    this.subtypes[0].quantity = total
+    this.totalTickets = total
+
+    console.log(total, this.totalTickets, this.totalSelected)
+  }
+
+  selectedType(type){    
     this.productSelected.nome_subtipo_produto = type.nome_subtipo_produto
     this.productSelected.fk_id_subtipo_produto = type.id_subtipo_produto
     this.viewCtrl.dismiss(this.productSelected)
   }
 
+  increment(type){
+    if(type.quantity == undefined)
+      type.quantity = 0
+
+    if(type.quantity < this.totalSelected){           
+      type.quantity++
+      this.totalTickets++
+    }    
+  }
+
+  decrement(type){
+    if(type.quantity == undefined)
+      type.quantity = 0
+
+    if(type.quantity > 0){                 
+      type.quantity--    
+      this.totalTickets--           
+    }
+  }
+  
+  finish(){
+
+  }
+
+  goBack(){
+    this.navCtrl.pop()
+  }  
 
 }

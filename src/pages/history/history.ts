@@ -76,8 +76,8 @@ export class HistoryPage {
 
     this.allSupervisors
     .subscribe( data => {
-        console.log(data)
         this.supervisorInfo = data.success
+        this.searchContinue() 
     }); 
   }    
 
@@ -105,7 +105,7 @@ export class HistoryPage {
       this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titleAuthError).present()
 
     else 
-      this.searchContinue()            
+      this.supervisorOk = true           
   }
 
 
@@ -166,9 +166,10 @@ export class HistoryPage {
   }
 
   searchContinue(){
+    console.log("searchContinue")
+
     this.dayBegin = moment(this.dayBegin).startOf('day').format()
     this.dayEnd = moment(this.dayEnd).endOf('day').format()
-    this.supervisorOk = true
 
     if(this.dataInfo.appType === 1)
       this.searchHistoryPDVi()    
