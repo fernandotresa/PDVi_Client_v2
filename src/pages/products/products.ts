@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, NavParams, ModalController, Events, AlertController } from 'ionic-angular';
+import { NavController, IonicPage, NavParams, ModalController, Events } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
@@ -34,7 +34,6 @@ export class ProductsPage {
     public navParams: NavParams,
     public modalCtrl: ModalController,
     public events: Events,
-    private alertCtrl: AlertController,
     public httpd: HttpdProvider) {
 
     this.searchControl = new FormControl();
@@ -121,6 +120,9 @@ export class ProductsPage {
  
 
   increment(product){    
+
+    console.log(product)
+
     if(product.quantity == undefined)
       product.quantity = 0
     

@@ -27,6 +27,8 @@ import { DataInfoProvider } from '../providers/data-info/data-info';
 
 import { SideMenuContentComponent } from '../shared/side-menu-content/side-menu-content.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     MyApp,    
@@ -37,6 +39,7 @@ import { SideMenuContentComponent } from '../shared/side-menu-content/side-menu-
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
+    BrowserAnimationsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

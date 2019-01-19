@@ -10,26 +10,37 @@
 
         <ion-item *ngFor="let product of productsSelect" no-lines>      
           
-            <h2 *ngIf="product.quantity !== 0 && !product.parking">{{product.nome_produto}} - R$ {{product.valor_total}}</h2>
-            <h2 *ngIf="product.quantity !== 0 && product.parking">{{product.nome_produto}}</h2>
-            <h2 *ngIf="product.quantity === 0">{{product.nome_produto}}</h2>
+        <ion-grid item-content>
+            <ion-row>
+                <ion-col col-2>
+                    <button ion-button icon-only color="secondary" clear outline (click)="increment(product)">
+                        <ion-icon class="fs-30" name="add-circle"></ion-icon>
+                        </button>
+                </ion-col> 
 
-            <button *ngIf="product.quantity !== 0 && !product.parking" ion-button item-right color="secondary" (click)="presentModal(product)">          
-              <ion-icon name="ios-folder-open"></ion-icon>
-              {{product.nome_subtipo_produto}}
-           </button>
-          
-            <button *ngIf="!product.parking" style="vertical-align: 5%;" ion-button item-right icon-only color="secondary" clear outline (click)="increment(product)">
-                <ion-icon name="add-circle" class="fs-30"></ion-icon>
-            </button>
-      
-            <span *ngIf="product.quantity && !product.parking" style="vertical-align: 5%;" item-right>{{product.quantity}}</span>
-            <span *ngIf="! product.quantity && !product.parking" style="vertical-align: 5%;" item-right>0</span>
-              
-            <button *ngIf="!product.parking" style="vertical-align: 5%;" ion-button item-right icon-only color="danger" clear outline (click)="decrement(product)">
-               <ion-icon name="remove-circle" class="fs-30"></ion-icon>
+                <ion-col col-2>
+                    <ion-input class="productQuantity" [(ngModel)]="product.quantity"></ion-input>        
+                </ion-col>
 
-            </button>                  
+                <ion-col col-2>
+                    <button class="productQuantity" ion-button icon-only color="danger" clear outline (click)="decrement(product)">
+                        <ion-icon class="fs-30" name="remove-circle"></ion-icon>
+                    </button>                  
+                </ion-col>
+
+                <ion-col col-2>
+                    <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}}</h2>       
+                    <h2 *ngIf="product.quantity === 0">{{product.nome_produto}}</h2>
+                </ion-col>
+
+                <ion-col>
+                    <button *ngIf="product.quantity !== 0" ion-button item-left color="secondary" (click)="presentModal(product)">          
+                        <ion-icon name="ios-folder-open"></ion-icon> {{product.nome_subtipo_produto}}
+                    </button>                                      
+                </ion-col>
+                
+            </ion-row>
+        </ion-grid>               
                        
         </ion-item>          
         

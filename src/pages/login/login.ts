@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils'
 import { DataInfoProvider } from '../../providers/data-info/data-info'
@@ -11,6 +11,9 @@ import { HomePage } from '../../pages/home/home';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+
+  @ViewChild('inputUsername') inputUsername;
+  @ViewChild('inputEnd') inputEnd;
 
   allConfigs: Observable<any>;
   autoLogin: Boolean = true
@@ -30,10 +33,26 @@ export class LoginPage {
     if(this.autoLogin == undefined)
       this.autoLogin = true   
 
-    /*if(this.autoLogin)
-      this.loginContinue("admin", "Mudaragora00") */
-    }
+    if(this.autoLogin)
+      this.loginContinue("admin", "Mudaragora00")       
 
+    let self = this
+
+    setTimeout(function(){
+      self.focusUsername()
+    }, 3000);      
+  }
+
+
+  focusUsername(){    
+    if(this.inputUsername)
+      this.inputUsername.setFocus()
+  }  
+
+  focusPassword(){    
+    if(this.inputEnd)
+      this.inputEnd.setFocus()
+  }  
   
   goHome(){    
     if(this.dataInfo.appType === 1)
@@ -45,15 +64,14 @@ export class LoginPage {
 
   loginUser(): void {        
 
-    if (this.username.length < 3){
+    if (this.username.length < 3)
       this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleUsernameMinLenght).present()
 
-    } else if (this.password.length < 3){
+    else if (this.password.length < 3)
       this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titlePasswordMinLenght).present()
       
-    } else {
+    else 
       this.loginContinue(this.username, this.password)    
-    }
   }
 
   loginContinue(email, pass){

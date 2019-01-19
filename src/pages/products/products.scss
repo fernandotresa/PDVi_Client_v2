@@ -262,6 +262,10 @@ page-products {
         font-size: 45px !important;
     }
     
+    .productQuantity {
+        vertical-align: 5%;
+        height: 100%;
+    }
 
     .lst-no-background{
 		ion-list-header{
@@ -312,11 +316,11 @@ page-products {
 
     .button{
 		text-transform: capitalize;
-		height: 36px;
+		height: 48px;
 		&.button-circle{
-			width: 36px;
+			width: 48x;
 			border-radius: 50% !important;
-		}
+        }        
 		&.button-small{
 			height: 25px;
 			&.button-circle{
@@ -331,7 +335,12 @@ page-products {
 				border-radius: 50% !important;
 			}
 		}
-	}
+    }
+    
+    .button-hover:hover {
+        
+        background-color: orange !important;
+    }
     
     .back-page{
 		position: absolute;
