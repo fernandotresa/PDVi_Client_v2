@@ -123,13 +123,13 @@ export class CheckoutPage {
 
       if(product.selectedsIds){
         if(product.selectedsIds.length > 0)
-          product.selectedsIds = product.selectedsIds.pop()
+          product.selectedsIds.pop()
       }      
       
       if(product.selectedsName){
         
         if(product.selectedsName.length > 0)
-          product.selectedsName = product.selectedsName.pop()
+          product.selectedsName.pop()
       } 
         
       product.quantity--         

@@ -128,24 +128,27 @@ export class ProductsPage {
     this.finalValue += product.valor_produto      
   }
 
-  decrement(product){        
+  decrement(product){            
 
-    product.quantity--         
-    product.valor_total = product.valor_produto * product.quantity               
+    if(product.quantity > 0){
 
-    if(product.selectedsIds){
-      if(product.selectedsIds.length > 0)
-        product.selectedsIds = product.selectedsIds.pop()
-    }      
-    
-    if(product.selectedsName){
+      product.quantity--         
+      product.valor_total = product.valor_produto * product.quantity               
+
+      if(product.selectedsIds){
+        if(product.selectedsIds.length > 0)
+           product.selectedsIds.pop()
+      }      
       
-      if(product.selectedsName.length > 0)
-        product.selectedsName = product.selectedsName.pop()
-    }      
-
-    this.totalSelected--
-    this.finalValue -= product.valor_produto
+      if(product.selectedsName){
+        if(product.selectedsName.length > 0){
+          product.selectedsName.pop()
+        }                
+      }      
+  
+      this.totalSelected--
+      this.finalValue -= product.valor_produto
+    }    
   }
   
   goPagePayment(){

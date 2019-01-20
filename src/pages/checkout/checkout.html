@@ -48,7 +48,8 @@
 
 </ion-content>
 
-<ion-footer no-border color="transparent" *ngIf="totalSelected > 0" class="ani-bottom-to-top">    
-    <button ion-button full large (click)="goPagePayment()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titlePay}}  R$ {{finalValue}}</button>    
-    <button ion-button full large (click)="goBack()" color="positive" style="text-transform: uppercase;">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</button>   
+<ion-footer no-border color="transparent"  class="ani-bottom-to-top">    
+    
+    <button ion-button full large [disabled]="totalSelected === 0" (click)="goPagePayment()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titlePay}}  R$ {{finalValue}}</button>    
+    <button ion-button full large [disabled]="totalSelected === 0" (click)="goBack()" color="positive" style="text-transform: uppercase;">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</button>   
 </ion-footer>

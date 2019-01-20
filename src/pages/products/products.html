@@ -48,12 +48,11 @@
         </ion-refresher-content>
     </ion-refresher>
 
-<ion-list>      
-
+<ion-list >      
     <ion-item *ngFor="let product of products" no-lines>                    
 
         <ion-grid item-content>
-            <ion-row>
+            <ion-row>                
                 <ion-col col-1>
                     <button ion-button icon-only color="secondary" clear outline (click)="increment(product)">
                        <ion-icon class="fs-30" name="add-circle"></ion-icon>
@@ -76,8 +75,7 @@
                 </ion-col>
 
                 <ion-col col-3>
-                    <button *ngIf="product.quantity !== 0" ion-button item-left color="secondary" text-wrap (click)="presentModal(product)">          
-                            
+                    <button *ngIf="product.quantity !== 0" ion-button item-left color="secondary" text-wrap (click)="presentModal(product)">                                      
                         <ion-icon name="ios-folder-open"></ion-icon>  {{product.selectedsName}} 
                     </button>                                      
                 </ion-col>
@@ -102,8 +100,8 @@
 
 </ion-content>
 
-
-<ion-footer no-border color="transparent" *ngIf="totalSelected > 0" class="ani-bottom-to-top">     
-    <button ion-button full large (click)="goPagePayment()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titlePay}}:  R$ {{finalValue}}</button>    
-    <button ion-button full large (click)="getAllProducts()" color="positive" style="text-transform: uppercase;">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</button>   
-</ion-footer>
+<ion-footer no-border color="transparent" class="ani-bottom-to-top">    
+         
+        <button ion-button full large [disabled]="totalSelected === 0" (click)="goPagePayment()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titlePay}}:  R$ {{finalValue}}</button>    
+        <button ion-button full large [disabled]="totalSelected === 0" (click)="getAllProducts()" color="positive" style="text-transform: uppercase;">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</button>   
+    </ion-footer>
