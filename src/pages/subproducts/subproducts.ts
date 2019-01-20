@@ -43,8 +43,6 @@ export class SubproductsPage {
     this.subtypes = data.success    
     this.subtypes[0].quantity = this.totalSelected
     this.totalTickets = this.totalSelected
-
-    console.log(this.totalTickets, this.totalSelected)
   }
 
   selectedType(type){    
@@ -74,9 +72,8 @@ export class SubproductsPage {
     }    
   }
   
-  finish(){
-    
-    this.viewCtrl.dismiss(this.subtypes);
+  finish(){    
+    this.viewCtrl.dismiss({subtypes: this.subtypes, productS: this.productSelected});
   }
 
   goBack(){

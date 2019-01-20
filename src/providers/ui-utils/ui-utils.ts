@@ -19,6 +19,17 @@ export class UiUtilsProvider {
     return loading
   }
 
+  showAlertSuccess(){
+    let alert = this.showAlert("Sucesso", "Operação realizada com sucesso!")
+      
+    alert.present()
+    .then( () => {
+      setTimeout(function(){
+        alert.dismiss();
+      }, 3000);        
+    })
+  }
+
   showAlert(title_: string, subtitle_: string) {
     
     let alert = this.alertCtrl.create({

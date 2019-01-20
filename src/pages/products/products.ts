@@ -65,15 +65,7 @@ export class ProductsPage {
     modal.onDidDismiss( data => {
       
       if(data){
-
-        let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePrintSuccess)
-      
-        alert.present()
-        .then( () => {
-          setTimeout(function(){
-            alert.dismiss();
-          }, 3000);        
-        })
+        this.uiUtils.showAlertSuccess()        
       }      
     });
     
@@ -109,8 +101,14 @@ export class ProductsPage {
 
     this.allProducts = this.httpd.getProductsArea(this.idArea)
 
-    this.allProducts.subscribe(data => {     
+    this.allProducts.subscribe(data => {
+
       this.products = data.success 
+      
+      this.products.forEach(element => {        
+        element.selectedsIds = []
+        element.selectedsName = []        
+      });
     })
   }
 
@@ -118,30 +116,36 @@ export class ProductsPage {
     this.allProducts = this.httpd.getProductsArea(this.idArea)
     refresher.complete()    
    } 
- 
 
-  increment(product){        
-
-    if(product.quantity == undefined)
-      product.quantity = 0
-    
+  increment(product){             
     product.quantity++
     product.valor_total = product.valor_produto * product.quantity    
+
+    product.selectedsIds.push(product.id_subtipo_produto)
+    product.selectedsName.push(product.nome_subtipo_produto)
+        
     this.totalSelected++
     this.finalValue += product.valor_produto      
   }
 
   decrement(product){        
-    if(product.quantity > 0){   
 
-      if(product.quantity == undefined)
-        product.quantity = 0
-        
-      product.quantity--         
-      product.valor_total = product.valor_produto * product.quantity               
-      this.totalSelected--
-      this.finalValue -= product.valor_produto
-    }         
+    product.quantity--         
+    product.valor_total = product.valor_produto * product.quantity               
+
+    if(product.selectedsIds){
+      if(product.selectedsIds.length > 0)
+        product.selectedsIds = product.selectedsIds.pop()
+    }      
+    
+    if(product.selectedsName){
+      
+      if(product.selectedsName.length > 0)
+        product.selectedsName = product.selectedsName.pop()
+    }      
+
+    this.totalSelected--
+    this.finalValue -= product.valor_produto
   }
   
   goPagePayment(){
@@ -186,42 +190,54 @@ export class ProductsPage {
     modal.onDidDismiss(data => {
       
       if(data)
-        this.searchProductSubtype(data);
+        this.searchProductSubtypeQuantity(data);
     });
     
     modal.present();
   }
 
-  searchProductSubtype(data){        
+  searchProductSubtypeQuantity(data){    
+    
+    let subtypes = data.subtypes       
+    let productS = data.productS       
 
-    for(var i = 0; i < data.length; ++i){
-      let subproduct = data[i]
-      
-      let quantity = subproduct.quantity
+    let subtypesquantities = [] 
 
-      if(quantity > 0)
-        this.replaceProductSubtype(subproduct)              
-        
+    for(var i = 0; i < subtypes.length; ++i){
+      let subtype = subtypes[i]
+
+      let quantity = subtype.quantity
+
+      if(quantity > 0)            
+        subtypesquantities.push(subtype)
     }
+    
+    this.searchProductSubtype(subtypesquantities, productS)
   }
 
-  replaceProductSubtype(data){    
-
-    console.log(data)
-
-    let id_produto = data.id_produto
-    let fk_id_subtipo_produto = data.fk_id_subtipo_produto
+  searchProductSubtype(selecteds, productS){    
+  
+    let id_produto = productS.id_produto    
 
     for(var i = 0; i < this.products.length; ++i){
       let product = this.products[i]
 
-      let product_id_produto = product.id_produto
+      let product_id_produto = product.id_produto      
       
       if(id_produto === product_id_produto){
-        console.log()
-        product.fk_id_subtipo_produto = fk_id_subtipo_produto
+
+        product.selectedsIds = []
+        product.selectedsName = []
+
+        for(var j = 0; j < selecteds.length; ++j){
+
+          let subselected = selecteds[j];
+
+          product.selectedsIds.push(subselected.id_subtipo_produto)
+          product.selectedsName.push(subselected.nome_subtipo_produto)
+        }
       }
-    }
+    }    
   }
 
   removeParking(ticket){    
@@ -230,10 +246,11 @@ export class ProductsPage {
 
       let element = this.ticketParking[i]
   
-      if(element.id_estoque_utilizavel === ticket.id_estoque_utilizavel)          
-          this.finalValue -= this.ticketParking[i].valor_produto
-          this.totalSelected--          
-          this.ticketParking.splice(i, 1)
+      if(element.id_estoque_utilizavel === ticket.id_estoque_utilizavel){
+        this.finalValue -= this.ticketParking[i].valor_produto
+        this.totalSelected--          
+        this.ticketParking.splice(i, 1)
+      }               
     }
   }
 
@@ -243,15 +260,7 @@ export class ProductsPage {
     modal.onDidDismiss( data => {
       
       if(data){
-
-        let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePrintSuccess)
-      
-        alert.present()
-        .then( () => {
-          setTimeout(function(){
-            alert.dismiss();
-          }, 3000);        
-        })
+        this.uiUtils.showAlertSuccess()
       }      
     });
     
@@ -264,15 +273,7 @@ export class ProductsPage {
     modal.onDidDismiss( data => {
       
       if(data){
-
-        let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePrintSuccess)
-      
-        alert.present()
-        .then( () => {
-          setTimeout(function(){
-            alert.dismiss();
-          }, 3000);        
-        })
+        this.uiUtils.showAlertSuccess()
       }      
     });
     
@@ -285,19 +286,15 @@ export class ProductsPage {
     modal.onDidDismiss( data => {
       
       if(data){
-
-        let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePrintSuccess)
-      
-        alert.present()
-        .then( () => {
-          setTimeout(function(){
-            alert.dismiss();
-          }, 3000);        
-        })
+        this.uiUtils.showAlertSuccess()
       }      
     });
     
     modal.present();
+  }
+
+  productQuantityChanged(product){
+    console.log(product)
   }
 
 }

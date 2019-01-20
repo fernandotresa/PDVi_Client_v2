@@ -28,10 +28,13 @@ export class CheckoutPage {
     this.totalSelected = this.navParams.get("totalSelected")
     this.finalValue = this.navParams.get("finalValue")
 
-    this.productsSelect = []    
+    this.productsSelect = []        
 
-    for(var i = this.products.length - 1; i >= 0; i--) {
-      if(this.products[i].quantity > 0) {        
+    for(var i = 0; i < this.products.length; i++) {
+
+      console.log(this.products[i])
+
+      if(this.products[i].quantity > 0) {                
         this.productsSelect.push(this.products[i])
       }
     } 
@@ -43,27 +46,59 @@ export class CheckoutPage {
   }
 
   presentModal(product){
+
     let modal = this.modalCtrl.create('SubproductsPage', {productSelected: product});
     modal.onDidDismiss(data => {
-      this.replaceProductSubtype(data);
+      
+      if(data)
+        this.searchProductSubtypeQuantity(data);
     });
+    
     modal.present();
   }
 
-  replaceProductSubtype(data){    
+  searchProductSubtypeQuantity(data){    
+    
+    let subtypes = data.subtypes       
+    let productS = data.productS       
 
-    let id_produto = data.id_produto
-    let fk_id_subtipo_produto = data.fk_id_subtipo_produto
+    let subtypesquantities = [] 
+
+    for(var i = 0; i < subtypes.length; ++i){
+      let subtype = subtypes[i]
+
+      let quantity = subtype.quantity
+
+      if(quantity > 0)            
+        subtypesquantities.push(subtype)
+    }
+    
+    this.searchProductSubtype(subtypesquantities, productS)
+  }
+
+  searchProductSubtype(selecteds, productS){    
+  
+    let id_produto = productS.id_produto    
 
     for(var i = 0; i < this.products.length; ++i){
       let product = this.products[i]
 
-      let product_id_produto = product.id_produto
+      let product_id_produto = product.id_produto      
       
       if(id_produto === product_id_produto){
-        product.fk_id_subtipo_produto = fk_id_subtipo_produto
+
+        product.selectedsIds = []
+        product.selectedsName = []
+
+        for(var j = 0; j < selecteds.length; ++j){
+
+          let subselected = selecteds[j];
+
+          product.selectedsIds.push(subselected.id_subtipo_produto)
+          product.selectedsName.push(subselected.nome_subtipo_produto)
+        }
       }
-    }
+    }    
   }
 
   increment(product){    
@@ -72,6 +107,10 @@ export class CheckoutPage {
     
     product.quantity++
     product.valor_total = product.valor_produto * product.quantity    
+
+    product.selectedsIds.push(product.id_subtipo_produto)
+    product.selectedsName.push(product.nome_subtipo_produto)
+
     this.totalSelected++
     this.finalValue += product.valor_produto      
   }
@@ -81,6 +120,17 @@ export class CheckoutPage {
 
       if(product.quantity == undefined)
         product.quantity = 0
+
+      if(product.selectedsIds){
+        if(product.selectedsIds.length > 0)
+          product.selectedsIds = product.selectedsIds.pop()
+      }      
+      
+      if(product.selectedsName){
+        
+        if(product.selectedsName.length > 0)
+          product.selectedsName = product.selectedsName.pop()
+      } 
         
       product.quantity--         
       product.valor_total = product.valor_produto * product.quantity               

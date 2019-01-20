@@ -54,30 +54,31 @@
 
         <ion-grid item-content>
             <ion-row>
-                <ion-col col-2>
+                <ion-col col-1>
                     <button ion-button icon-only color="secondary" clear outline (click)="increment(product)">
                        <ion-icon class="fs-30" name="add-circle"></ion-icon>
                      </button>
                 </ion-col> 
 
-                <ion-col col-2>
-                  <ion-input class="productQuantity" [(ngModel)]="product.quantity"></ion-input>        
+                <ion-col col-1>
+                  <ion-input class="productQuantity" [(ngModel)]="product.quantity" (ngModelChange) ="productQuantityChanged(product)"></ion-input>        
                 </ion-col>
 
-                <ion-col col-2>
+                <ion-col col-1>
                     <button class="productQuantity" ion-button icon-only color="danger" clear outline (click)="decrement(product)">
                         <ion-icon class="fs-30" name="remove-circle"></ion-icon>
                     </button>                  
                 </ion-col>
 
-                <ion-col col-2>
+                <ion-col col-3>
                     <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}}</h2>       
                     <h2 *ngIf="product.quantity === 0">{{product.nome_produto}}</h2>
                 </ion-col>
 
-                <ion-col>
-                    <button *ngIf="product.quantity !== 0" ion-button item-left color="secondary" (click)="presentModal(product)">          
-                        <ion-icon name="ios-folder-open"></ion-icon> {{product.nome_subtipo_produto}}
+                <ion-col col-3>
+                    <button *ngIf="product.quantity !== 0" ion-button item-left color="secondary" text-wrap (click)="presentModal(product)">          
+                            
+                        <ion-icon name="ios-folder-open"></ion-icon>  {{product.selectedsName}} 
                     </button>                                      
                 </ion-col>
                 
@@ -103,7 +104,6 @@
 
 
 <ion-footer no-border color="transparent" *ngIf="totalSelected > 0" class="ani-bottom-to-top">     
-
-    <button ion-button full large (click)="getAllProducts()" style="text-transform: uppercase;">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</button>   
-    <button ion-button full large (click)="goPagePayment()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titlePay}}  R$ {{finalValue}}</button>    
+    <button ion-button full large (click)="goPagePayment()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titlePay}}:  R$ {{finalValue}}</button>    
+    <button ion-button full large (click)="getAllProducts()" color="positive" style="text-transform: uppercase;">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</button>   
 </ion-footer>
