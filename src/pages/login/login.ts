@@ -34,7 +34,7 @@ export class LoginPage {
       this.autoLogin = true   
 
     if(this.autoLogin)
-      this.loginContinue("admin", "Mudaragora00")       
+      this.loginContinue("admin", "Mudaragora00")  
 
     let self = this
 
