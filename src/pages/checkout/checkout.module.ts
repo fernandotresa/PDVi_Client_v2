@@ -4,8 +4,8 @@ import { CheckoutPage } from './checkout';
 
 @NgModule({
   declarations: [
-    CheckoutPage,
-  ],
+    CheckoutPage
+    ],
   imports: [
     IonicPageModule.forChild(CheckoutPage),
   ],

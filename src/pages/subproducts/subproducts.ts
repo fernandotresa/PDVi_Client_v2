@@ -38,10 +38,19 @@ export class SubproductsPage {
     })
   }
 
+
   startInterface(data){
     
-    this.subtypes = data.success    
-    this.subtypes[0].quantity = this.totalSelected
+    this.subtypes = data.success        
+    let fk_id_subtipo_produto = this.productSelected.fk_id_subtipo_produto
+
+    this.subtypes.forEach(element => {      
+
+      if(element.id_subtipo_produto === fk_id_subtipo_produto)
+          element.quantity = this.totalSelected    
+          
+    });
+
     this.totalTickets = this.totalSelected
   }
 

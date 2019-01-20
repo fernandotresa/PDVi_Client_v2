@@ -1,7 +1,12 @@
 <ion-header>
     <ion-navbar text-center no-border-bottom color="primary">      
-        <ion-title>{{dataInfo.titleAppName}}</ion-title>      
+        <ion-title>{{dataInfo.titleAppName}}</ion-title>                          
 
+        <ion-item detail-none no-lines class="backgroundPainel" text-center>  
+            <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
+            <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} <b>{{dataInfo.clock}}</b>
+        </ion-item>
+       
         <ion-buttons end>
 
             <button ion-button icon-only color="royal" (click)="presentModalCashDrain()" tooltip="Sangria" positionV="bottom" arrow>
@@ -27,7 +32,7 @@
             <button ion-button icon-only color="royal" (click)="logout()" tooltip="Deslogar" positionV="bottom" arrow>
                 <ion-icon class="fs-30" name="log-out"></ion-icon>
             </button>            
-        </ion-buttons>
+        </ion-buttons>                
 
   </ion-navbar>  
 
@@ -100,8 +105,7 @@
 
 </ion-content>
 
-<ion-footer no-border color="transparent" class="ani-bottom-to-top">    
-         
+<ion-footer no-border color="transparent" class="ani-bottom-to-top">             
         <button ion-button full large [disabled]="totalSelected === 0" (click)="goPagePayment()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titlePay}}:  R$ {{finalValue}}</button>    
         <button ion-button full large [disabled]="totalSelected === 0" (click)="getAllProducts()" color="positive" style="text-transform: uppercase;">{{dataInfo.titleTotalSelected}}: {{totalSelected}}</button>   
     </ion-footer>

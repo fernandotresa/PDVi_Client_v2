@@ -7,9 +7,9 @@ import { TooltipsModule } from 'ionic-tooltips';
   declarations: [
     ProductsPage,
   ],
-  imports: [
+  imports: [    
     IonicPageModule.forChild(ProductsPage),
-    TooltipsModule.forRoot()
+    TooltipsModule.forRoot()        
   ],
 })
 export class ProductsPageModule {}

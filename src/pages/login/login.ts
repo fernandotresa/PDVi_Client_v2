@@ -34,7 +34,8 @@ export class LoginPage {
       this.autoLogin = true   
 
     /*if(this.autoLogin)
-      this.loginContinue("admin", "Mudaragora00") */ 
+      this.loginContinue("admin", "Mudaragora00")  */
+      
 
     let self = this
 
@@ -94,6 +95,8 @@ export class LoginPage {
   }  
 
   loginFinish(data){
+    
+    this.dataInfo.ipLocal = data.ip    
     
     if(data.success.length > 0){
       this.dataInfo.userInfo = data.success[0]

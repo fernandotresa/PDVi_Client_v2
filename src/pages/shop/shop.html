@@ -2,6 +2,11 @@
   <ion-navbar text-center no-border-bottom color="primary">      
       <ion-title>{{dataInfo.titleOnlineSales}}</ion-title>  
 
+      <ion-item detail-none no-lines class="backgroundPainel" text-center>  
+        <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
+        <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} <b>{{dataInfo.clock}}</b>
+    </ion-item>
+
     <ion-buttons start>
       <button ion-button icon-only color="royal" (click)="goPageHistory()">
         <ion-icon name="folder-open"></ion-icon>

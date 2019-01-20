@@ -297,4 +297,15 @@ page-cash-statement {
             color: $red !important;
         }
     }
+
+    .backgroundPainel{
+        background-color: transparent;
+        color: white;
+    }
+
+    ion-item.item-ios.item.item-block, 
+    ion-item.item-md.item.item-block, 
+    ion-item.item-wp.item.item-block {
+        border-bottom: 0px solid transparent; 
+    }
 }

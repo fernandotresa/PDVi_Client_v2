@@ -2,6 +2,12 @@
     <ion-navbar text-center no-border-bottom color="primary">     
 
       <ion-title>{{dataInfo.titleSubproducts}} - {{dataInfo.titleTotal}}: {{totalSelected}}</ion-title> 
+
+      <ion-item detail-none no-lines class="backgroundPainel" text-center>  
+        <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
+        <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} <b>{{dataInfo.clock}}</b>
+    </ion-item>
+    
     </ion-navbar>   
   </ion-header>
   
@@ -43,7 +49,7 @@
   
   </ion-content>    
 
-  <ion-footer no-border color="transparent">   
-      <button *ngIf="totalTickets === totalSelected" ion-button full large (click)="finish()" color="secondary">{{dataInfo.titleConfirm}}</button>  
+  <ion-footer no-border color="transparent">         
+      <button [disabled]="totalTickets !== totalSelected" ion-button full large (click)="finish()" color="secondary">{{dataInfo.titleConfirm}}</button>  
       <button ion-button full large (click)="goBack()" color="positive">{{dataInfo.titleCancel}}</button>
     </ion-footer>

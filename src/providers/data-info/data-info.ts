@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment-timezone';
 
 @Injectable()
 export class DataInfoProvider {
     
   appType: number = 1
+  ipLocal: string = ""
+  
+  clock: String;
+
   titleGoBack: string = "Voltar"
   userType: any = {name: 'Atendente', email: 'falecom@megaticket.com.br', photo: "assets/imgs/100x100.png"}
   userInfo: any;
@@ -106,6 +111,16 @@ export class DataInfoProvider {
 
   constructor() {
     console.log('Hello DataInfoProvider Provider');
+
+    moment.locale('pt-br'); 
+
+    let self = this
+    this.clock = moment().format("LLL")
+
+    setInterval(function(){
+      self.clock = moment().format("LLL")
+    }, 10000);   
+
   }
 
 }

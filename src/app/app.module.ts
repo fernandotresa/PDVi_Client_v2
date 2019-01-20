@@ -19,7 +19,6 @@ import { CashStatementPageModule } from '../pages/cash-statement/cash-statement.
 import { SupervisorPageModule } from '../pages/supervisor/supervisor.module';
 import { SubproductsPageModule } from '../pages/subproducts/subproducts.module';
 
-
 import { HttpdProvider } from '../providers/httpd/httpd';
 import { HttpClientModule } from '@angular/common/http';
 import { UiUtilsProvider } from '../providers/ui-utils/ui-utils';
@@ -29,24 +28,26 @@ import { SideMenuContentComponent } from '../shared/side-menu-content/side-menu-
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+  
 @NgModule({
   declarations: [
     MyApp,    
-    HomePage,
+    HomePage,        
     SideMenuContentComponent
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule    
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,    
     HomePage
   ],
-  exports: [
+  exports: [    
     HistoryPageModule,
     SettingsPageModule,
     TicketsPageModule,
@@ -61,13 +62,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CashDrainPageModule,
     CashStatementPageModule,
     SupervisorPageModule
-  ],
+    ],
   providers: [    
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpdProvider,
     UiUtilsProvider,
     DataInfoProvider
-  ]
+    ]
 })
 export class AppModule {
   static injector: Injector;
