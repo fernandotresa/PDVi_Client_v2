@@ -117,7 +117,8 @@ export class ProductsPage {
     refresher.complete()    
    } 
 
-  increment(product){             
+  increment(product){       
+
     product.quantity++
     product.valor_total = product.valor_produto * product.quantity    
 
@@ -176,15 +177,16 @@ export class ProductsPage {
     modal.present();
   }
 
- parkingInsert(data){  
-  let ticket = data[0]
-  let element = this.ticketParking[0]  
-  this.finalValue += ticket.valor_produto
-  this.totalSelected++
-  this.removeParking(element)
+ parkingInsert(data){ 
 
-  ticket.isParking = true  
-  this.ticketParking.push(ticket)
+    let ticket = data[0]
+    let element = this.ticketParking[0]  
+    this.finalValue += ticket.valor_produto
+    this.totalSelected++
+    this.removeParking(element)
+
+    ticket.isParking = true  
+    this.ticketParking.push(ticket)
  }
 
   presentModal(product){
@@ -296,8 +298,30 @@ export class ProductsPage {
     modal.present();
   }
 
-  productQuantityChanged(product){
-    console.log(product)
+  productQuantityChanged(){
+
+    this.finalValue = 0
+    this.totalSelected = 0
+
+    for(var i = 0; i < this.products.length; ++i){
+      let product_ = this.products[i]
+      let valor_produto = product_.valor_produto
+      let quantity = product_.quantity
+      
+      if(quantity > 0){
+        
+        let productValueFinal = valor_produto * quantity 
+        this.totalSelected += quantity
+        this.finalValue += productValueFinal                
+
+        if(product_.selectedsIds.length === 0){
+
+          product_.selectedsIds.push(product_.fk_id_subtipo_produto)
+          product_.selectedsName.push(product_.nome_subtipo_produto)        
+        }        
+      }      
+    }
+    
   }
 
 }
