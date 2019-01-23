@@ -367,4 +367,13 @@ page-products {
         border-bottom: 0px solid transparent; 
     }
 
+    .align-text-middle {        
+        text-align: center;
+        vertical-align: middle;
+        display: flex!important;
+        align-content: center!important;
+        align-items: center!important;
+    }    
+    
+
 }

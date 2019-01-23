@@ -1,10 +1,12 @@
 <ion-header>
   <ion-navbar text-center no-border-bottom color="primary">            
     <ion-title>{{dataInfo.titleCashStatement}}</ion-title> 
+
     <ion-item detail-none no-lines class="backgroundPainel" text-center>  
-      <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
-      <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} <b>{{dataInfo.clock}}</b>
-  </ion-item>
+        <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
+        <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} 
+        <b>{{dataInfo.titleTime}}:</b> {{dataInfo.clock}}          
+    </ion-item>
   
   </ion-navbar>   
 </ion-header>
