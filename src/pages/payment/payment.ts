@@ -64,6 +64,26 @@ export class PaymentPage {
   goBack(){
     this.navCtrl.pop()
   }  
+
+  getLastCashierId(){
+    this.httpd.getLastCashier(this.dataInfo.userInfo.id_usuarios)
+    .subscribe(data => {
+      
+      this.getLastCashierContinue(data)
+      
+    })
+  }
+
+  getLastCashierContinue(data){
+    
+    let id_caixa_registrado = data.success[0].id_caixa_registrado    
+
+    this.productSelected.forEach(element => {
+      element.id_caixa_registrado = id_caixa_registrado
+    });
+
+    this.finishPayment()
+  }
  
   finishPayment(){
     let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)

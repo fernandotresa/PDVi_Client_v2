@@ -30,9 +30,7 @@ export class CheckoutPage {
 
     this.productsSelect = []        
 
-    for(var i = 0; i < this.products.length; i++) {
-
-      console.log(this.products[i])
+    for(var i = 0; i < this.products.length; i++) {      
 
       if(this.products[i].quantity > 0) {                
         this.productsSelect.push(this.products[i])
@@ -149,8 +147,7 @@ export class CheckoutPage {
     modal.present();
   }
 
-  paymentFinish(data){
-    console.log(data)
+  paymentFinish(data){    
     this.navCtrl.pop()    
   }
 

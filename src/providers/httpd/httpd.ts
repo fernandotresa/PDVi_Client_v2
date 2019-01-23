@@ -162,4 +162,10 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/getTotalTickets", myData, {headers: headers})
   }
 
+  getLastCashier(idUser_){        
+    let myData = JSON.stringify({id: this.totemId, idUser: idUser_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getLastCashier", myData, {headers: headers})
+  }
+
 }
