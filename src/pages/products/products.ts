@@ -152,7 +152,7 @@ export class ProductsPage {
     }    
   }
   
-  goPagePayment(){
+  goPageCheckout(){
 
     for(var i = 0; i < this.ticketParking.length; ++i){
 
@@ -164,6 +164,39 @@ export class ProductsPage {
     
     this.navCtrl.push('CheckoutPage', {products: this.products, 
       finalValue: this.finalValue, totalSelected: this.totalSelected})
+  }
+
+  goPagePayment(){
+
+    for(var i = 0; i < this.ticketParking.length; ++i){
+
+      let element = this.ticketParking[i]
+      element.quantity = 1
+      element.parking = true
+      this.products.push(element)      
+    }
+
+    let productsSelect = []        
+
+    for(var j = 0; j < this.products.length; j++) {      
+
+      if(this.products[i].quantity > 0) {                
+        productsSelect.push(this.products[i])
+      }
+    } 
+    
+    let modal = this.modalCtrl.create('PaymentPage', {productSelected: productsSelect, 
+      totalSelected: this.totalSelected, finalValue: this.finalValue});
+
+    modal.onDidDismiss(data => {
+      this.paymentFinish(data);
+    });
+    modal.present();
+    
+  }
+
+  paymentFinish(data){    
+    this.navCtrl.pop()    
   }
 
   presentPromptParking(){
@@ -183,7 +216,7 @@ export class ProductsPage {
     let element = this.ticketParking[0]  
     this.finalValue += ticket.valor_produto
     this.totalSelected++
-    this.removeParking(element)
+    //this.removeParking(element)
 
     ticket.isParking = true  
     this.ticketParking.push(ticket)

@@ -56,6 +56,7 @@ export class ParkingPage {
       .subscribe(data => {
   
           console.log(data)
+          this.isSold = false
           this.getTicketParkingCallback(data)    
       })
     }    
@@ -66,6 +67,7 @@ export class ParkingPage {
       this.ticketParking = data.success
 
       this.ticketParking.forEach(element => {
+
         element.data_inclusao_utilizavel = moment(element.data_inclusao_utilizavel)
         .tz('America/Sao_Paulo').format("LLLL")        
 
