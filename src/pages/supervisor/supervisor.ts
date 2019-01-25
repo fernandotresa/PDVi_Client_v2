@@ -4,7 +4,6 @@ import { HttpdProvider } from '../../providers/httpd/httpd';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
 
-
 @IonicPage()
 @Component({
   selector: 'page-supervisor',
@@ -28,17 +27,8 @@ export class SupervisorPage {
 
     modal.onDidDismiss( data => {
       
-      if(data){
-
-        let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePrintSuccess)
-      
-        alert.present()
-        .then( () => {
-          setTimeout(function(){
-            alert.dismiss();
-          }, 3000);        
-        })
-      }      
+      if(data)
+        this.uiUtils.showAlertSuccess()        
     });
     
     modal.present();
@@ -49,17 +39,8 @@ export class SupervisorPage {
 
     modal.onDidDismiss( data => {
       
-      if(data){
-
-        let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePrintSuccess)
-      
-        alert.present()
-        .then( () => {
-          setTimeout(function(){
-            alert.dismiss();
-          }, 3000);        
-        })
-      }      
+      if(data)
+        this.uiUtils.showAlertSuccess()        
     });
     
     modal.present();
@@ -70,17 +51,20 @@ export class SupervisorPage {
 
     modal.onDidDismiss( data => {
       
-      if(data){
+      if(data)
+        this.uiUtils.showAlertSuccess()              
+    });
+    
+    modal.present();
+  }
 
-        let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePrintSuccess)
-      
-        alert.present()
-        .then( () => {
-          setTimeout(function(){
-            alert.dismiss();
-          }, 3000);        
-        })
-      }      
+  presentModalUsers(){
+    let modal = this.modalCtrl.create('UsersPage');    
+
+    modal.onDidDismiss( data => {
+            
+      if(data)
+        this.uiUtils.showAlertSuccess()              
     });
     
     modal.present();

@@ -104,11 +104,11 @@ export class DataInfoProvider {
   titlePrintModelA: string = "Impressão modelo A"
   titlePrintModelB: string = "Impressão modelo B"
   titleSupervisor: string = "Supervisão"
-  titleSupervisorPdvi: string = "Supervisor"
-  
+  titleSupervisorPdvi: string = "Supervisor"  
   titleCashDrain: string = "Sangria"  
   titleCashChange: string = "Troco"
   titleTime: string = "Horário"
+  titleUsers: string = "Usuários"
 
   constructor() {
     console.log('Hello DataInfoProvider Provider');

@@ -2,11 +2,12 @@
     <ion-navbar text-center no-border-bottom color="primary">      
         <ion-title>{{dataInfo.titleSupervisor}}</ion-title>     
         
-        <ion-item detail-none no-lines class="backgroundPainel" text-center>  
-            <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
-            <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} 
-            <b>{{dataInfo.titleTime}}:</b> {{dataInfo.clock}}          
-        </ion-item>
+       <!--  <ion-item detail-none no-lines class="backgroundPainel" text-center>            
+              <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
+              <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} 
+              <b>{{dataInfo.titleTime}}:</b> {{dataInfo.clock}}          
+          </ion-item>
+        -->
       
     </ion-navbar>     
 
@@ -22,9 +23,14 @@
     <button ion-item (click)="presentModalChange()">
       {{ dataInfo.titleCashChange }}
     </button>
+    
 
     <button ion-item (click)="presentModalExtract()">
       {{ dataInfo.titleCashStatement }}
+  </button>
+
+  <button ion-item (click)="presentModalUsers()">
+      {{ dataInfo.titleUsers }}
   </button>
 
   </ion-list>

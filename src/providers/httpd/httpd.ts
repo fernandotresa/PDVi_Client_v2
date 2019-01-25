@@ -17,6 +17,24 @@ export class HttpdProvider {
     return this.http.get(url);
   }
 
+  getUsers(){
+    let myData = JSON.stringify({id: 1});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getUsers", myData, {headers: headers})
+  }
+
+  getUserByName(name_){
+    let myData = JSON.stringify({ name: name_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getUserByName", myData, {headers: headers})
+  }
+
+  changePasswordUser(password_, user_){
+    let myData = JSON.stringify({ user: user_, password: password_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/changePasswordUser", myData, {headers: headers})
+  }
+
   getAllOrders(start_, end_){    
     let myData = JSON.stringify({id: this.totemId, start: start_, end: end_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});

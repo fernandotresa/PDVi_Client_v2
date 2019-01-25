@@ -3,7 +3,6 @@
 
         <ion-row>
             <ion-col>
-
                 <ion-item detail-none no-lines class="backgroundPainel" text-left>  
                     <ion-title>{{dataInfo.titleAppName}}</ion-title>                          
                 </ion-item>                
@@ -104,23 +103,23 @@
     
     <ion-item *ngFor="let ticket of ticketParking" no-lines>      
 
-            <h2>{{ticket.nome_produto}}</h2>       
+        <h2>{{ticket.nome_produto}}</h2>       
 
-            <button ion-button item-right color="danger" (click)="removeParking(ticket)">          
-                <ion-icon name="ios-close"></ion-icon>
-                {{dataInfo.titleRemove}}
-            </button>                   
+        <button ion-button item-right color="danger" (click)="removeParking(ticket)">          
+            <ion-icon name="ios-close"></ion-icon>
+            {{dataInfo.titleRemove}}
+        </button>                   
 
-        </ion-item>    
-    
+    </ion-item>    
+
   </ion-list>
 
 </ion-content>
 
 <ion-footer no-border color="transparent" class="ani-bottom-to-top">             
     <ion-row>
-        <ion-col>
-           <button ion-button full color="yellow_" [disabled]="totalSelected === 0" (click)="goPageCheckout()" color="positive" style="text-transform: uppercase;">{{dataInfo.titleCheckout}}</button>                         
+        <ion-col>            
+           <button ion-button full color="bronze" [disabled]="totalSelected === 0" (click)="goPageCheckout()" color="positive" style="text-transform: uppercase;">{{dataInfo.titleCheckout}}</button>                         
         </ion-col>
     
         <ion-col>
@@ -131,6 +130,5 @@
             <button ion-button full [disabled]="totalSelected === 0" (click)="goPagePayment()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titlePay}}:  R$ {{finalValue}}</button>    
         </ion-col>
     </ion-row>
-        
-        
+                
     </ion-footer>

@@ -1,0 +1,32 @@
+<ion-header>
+
+    <ion-navbar text-center no-border-bottom color="primary">
+      <ion-title> {{dataInfo.titleUsers}} </ion-title>                
+    </ion-navbar>
+  
+    <ion-toolbar no-border color="primary">
+        <ion-searchbar
+          [(ngModel)]="searchTerm"
+          (ionInput)="setFilteredItems()"
+          placeholder= "Procurar...">
+       </ion-searchbar>
+    </ion-toolbar>
+   
+  </ion-header>
+  
+<ion-content padding>
+
+    <ion-list>
+
+      <ion-buttons ion-item text-wrap *ngFor="let user of (users | async)?.success" no-lines (click)="presentAlertPrompt(user)">
+          <ion-icon name="md-flash" item-start *ngIf="user.fk_id_nivel_acesso === 1" color="primary"></ion-icon>
+          <ion-icon name="ribbon" item-start *ngIf="user.fk_id_nivel_acesso === 2" color="primary"></ion-icon>
+          <ion-icon name="people" item-start *ngIf="user.fk_id_nivel_acesso === 4" color="primary"></ion-icon>
+
+          {{user.login_usuarios}} 
+       </ion-buttons>
+    
+  </ion-list>
+
+
+</ion-content>

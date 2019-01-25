@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, MenuController	} from 'ionic-angular';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
+import { UsersPage } from '../pages/users/users';
 import { SideMenuSettings } from './../shared/side-menu-content/models/side-menu-settings';
 import { SideMenuOption } from './../shared/side-menu-content/models/side-menu-option';
 import { SideMenuContentComponent } from './../shared/side-menu-content/side-menu-content.component';
@@ -13,16 +14,17 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   @ViewChild(SideMenuContentComponent) sideMenu: SideMenuContentComponent;
 
-  public options: Array<SideMenuOption>;
-
+	public options: Array<SideMenuOption>;
+	
 	public sideMenuSettings: SideMenuSettings = {
 		accordionMode: true,
 		showSelectedOption: true,
 		selectedOptionClass: 'active-side-menu-option'		
   };
 	
-  //rootPage:any = SupervisorPage;
-	rootPage:any = LoginPage;
+	rootPage:any = UsersPage;
+	
+	//rootPage:any = LoginPage;
 	
   
 

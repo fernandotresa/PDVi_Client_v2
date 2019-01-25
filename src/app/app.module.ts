@@ -13,6 +13,7 @@ import { TicketsPageModule } from '../pages/tickets/tickets.module';
 import { ParkingPageModule } from '../pages/parking/parking.module';
 import { PaymentPageModule } from '../pages/payment/payment.module';
 import { LoginPageModule } from '../pages/login/login.module';
+import { UsersPageModule } from '../pages/users/users.module';
 import { CashChangePageModule } from '../pages/cash-change/cash-change.module';
 import { CashDrainPageModule } from '../pages/cash-drain/cash-drain.module';
 import { CashStatementPageModule } from '../pages/cash-statement/cash-statement.module';
@@ -61,7 +62,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CashChangePageModule,
     CashDrainPageModule,
     CashStatementPageModule,
-    SupervisorPageModule
+    SupervisorPageModule,
+    UsersPageModule
+    
     ],
   providers: [    
     {provide: ErrorHandler, useClass: IonicErrorHandler},
