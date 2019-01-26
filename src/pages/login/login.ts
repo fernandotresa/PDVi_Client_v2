@@ -5,6 +5,7 @@ import { DataInfoProvider } from '../../providers/data-info/data-info'
 import { Observable } from 'rxjs/Observable';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { HomePage } from '../../pages/home/home';
+import {Md5} from 'ts-md5/dist/md5';
 
 @Component({
   selector: 'page-login',
@@ -34,7 +35,7 @@ export class LoginPage {
       this.autoLogin = true   
       
     if(this.autoLogin)
-      this.loginContinue("admin", "Mudaragora00") 
+      this.loginContinue("admin", "123456") 
       
     let self = this
 
@@ -75,12 +76,13 @@ export class LoginPage {
   }
 
   loginContinue(email, pass){
+    let passwd = Md5.hashStr(pass);
     
     let loading = this.uiUtils.showLoading(this.dataInfo.titlePleaseWait)    
     loading.present() 
     var self = this
 
-    this.httpd.getAuth(email, pass)
+    this.httpd.getAuth(email, passwd)
 
     .subscribe( data => {
 

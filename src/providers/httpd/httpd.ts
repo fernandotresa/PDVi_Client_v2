@@ -29,7 +29,7 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/getUserByName", myData, {headers: headers})
   }
 
-  changePasswordUser(password_, user_){
+  changePasswordUser(user_, password_){
     let myData = JSON.stringify({ user: user_, password: password_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/changePasswordUser", myData, {headers: headers})

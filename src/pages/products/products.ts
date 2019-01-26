@@ -64,9 +64,8 @@ export class ProductsPage {
 
     modal.onDidDismiss( data => {
       
-      if(data){
-        this.uiUtils.showAlertSuccess()        
-      }      
+      if(data)
+        this.uiUtils.showAlertSuccess()            
     });
     
     modal.present();
@@ -342,7 +341,8 @@ export class ProductsPage {
       let quantity = product_.quantity
       
       if(quantity > 0){
-        
+
+        product_.valor_total = product_.valor_produto * quantity    
         let productValueFinal = valor_produto * quantity 
         this.totalSelected += quantity
         this.finalValue += productValueFinal                

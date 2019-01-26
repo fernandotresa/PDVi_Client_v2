@@ -6,6 +6,7 @@ import { DataInfoProvider } from '../../providers/data-info/data-info'
 import { Observable } from 'rxjs/Observable';
 import "rxjs/Rx";
 import { FormControl } from '@angular/forms';
+import {Md5} from 'ts-md5/dist/md5';
 
 @IonicPage()
 @Component({
@@ -14,7 +15,13 @@ import { FormControl } from '@angular/forms';
 })
 export class UsersPage {
 
+  supervisorPassword: string = ""
+  supervisorUsername: string = ""
+  supervisorId: number = 0    
+  supervisorInfo: any = []
+  
   users: Observable<any>;
+  allSupervisors: Observable<any>;
 
   searchTerm: string = '';
   searching: any = false;
@@ -36,15 +43,13 @@ export class UsersPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad UsersPage');
-
-    this.users = this.httpd.getUsers()
+    this.getSupervisorInfo()
   }
 
   setFilteredItems(){
-    this.users = this.httpd.getUserByName(this.searchTerm)    
+    if(this.checkSupervisorInfo())     
+      this.users = this.httpd.getUserByName(this.searchTerm)    
   } 
-
 
   async presentAlertPrompt(user) {
 
@@ -84,12 +89,75 @@ export class UsersPage {
     });
     
     await alert.present();
+  }  
+
+  getSupervisorInfo(){
+    
+    this.allSupervisors = this.httpd.getAuthSupervisor()
+
+    this.allSupervisors
+    .subscribe( data => {
+        this.supervisorInfo = data.success
+    }); 
+  }    
+
+  checkSupervisorInfo(){
+
+    let checked = false
+
+    this.supervisorInfo.forEach(element => {
+      
+      if(element.login_usuarios === this.supervisorUsername) {
+
+        if(element.senha_usuarios_pdvi == this.supervisorPassword){
+          checked = true      
+          this.supervisorId = element.id_usuarios                    
+        }          
+      }
+        
+    });
+
+    return checked;
   }
 
-  changeUserPassword(user, password_){
-    
-    console.log(user, password_)
+  finish(){     
+
+    if(! this.checkSupervisorInfo())     
+      this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleAuthError).present()      
+
+    else  {
+      this.users = this.httpd.getUsers()
+      this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titleAuthSuccess).present()      
+    }
+      
   }
  
+  changeUserPassword(user, password_){
+
+    if(this.supervisorId === 0)
+      this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleAuthError).present()      
+    
+    else {
+
+
+      let loading = this.uiUtils.showLoading(this.dataInfo.titlePleaseWait)    
+      loading.present() 
+      var self = this
+
+      let passwd = Md5.hashStr(password_);
+
+      this.httpd.changePasswordUser(user, passwd)
+        .subscribe( () => {
+
+          this.uiUtils.showAlertSuccess()
+          loading.dismiss()      
+
+        }), error => {
+          loading.dismiss()
+          self.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleUserChangePasswordError).present()
+      } 
+
+    }        
+  }
 
 }

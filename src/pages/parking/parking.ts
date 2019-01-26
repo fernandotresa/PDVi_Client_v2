@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
@@ -12,6 +12,8 @@ import * as moment from 'moment-timezone';
   templateUrl: 'parking.html',
 })
 export class ParkingPage {
+
+  @ViewChild('inputEnd') inputEnd;
 
   parking: Observable<any>;
   searchTerm: string = '';
@@ -37,7 +39,17 @@ export class ParkingPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ParkingPage');
+  
+    let self = this
+
+    setTimeout(function(){
+      self.inputEnd.setFocus()
+    }, 1000);     
+  }
+
+  focusPassword(){    
+    console.log("focusPassword")
+    this.inputEnd.setFocus()
   }
 
   goBack(){

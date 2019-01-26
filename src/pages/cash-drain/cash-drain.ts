@@ -88,7 +88,7 @@ export class CashDrainPage {
     this.httpd.confirmCashDrain(this.dataInfo.userInfo.id_usuarios, this.supervisorId, this.cashDrainTotal)
 
     .subscribe( data => {
-      this.finishOperation(data)      
+      self.uiUtils.showAlertSuccess()
       loading.dismiss()      
 
     }, error => {
@@ -100,18 +100,6 @@ export class CashDrainPage {
 
   }
 
-  finishOperation(data){
-
-    var self = this
-    let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titleCashDrainSuccess)
-      
-      alert.present()
-      .then( () => {
-        setTimeout(function(){
-          alert.dismiss();
-          self.navCtrl.pop()
-        }, 3000);        
-      })
-  }
+  
 
 }
