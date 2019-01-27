@@ -8,13 +8,14 @@
                 </ion-item>                
             </ion-col>
 
-            <ion-col col-8>
-                <ion-item detail-none no-lines class="backgroundPainel" text-left>  
+            <ion-col col-9>
+                <ion-item detail-none no-lines class="backgroundPainel" text-center>  
                     <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
                     <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} 
                     <b>{{dataInfo.titleTime}}:</b> {{dataInfo.clock}}
                 </ion-item>
             </ion-col>
+            
         </ion-row>        
        
         <ion-buttons end>
@@ -90,7 +91,7 @@
                     <h2 *ngIf="product.quantity === 0">{{product.nome_produto}}</h2>
                 </ion-col>
 
-                <ion-col col-6>
+                <ion-col col-4>
                     <button *ngIf="product.quantity !== 0" small ion-button item-left color="secondary" text-wrap (click)="presentModal(product)">                                      
                         <ion-icon name="ios-folder-open"></ion-icon>  {{product.selectedsName}} 
                     </button>                                      
