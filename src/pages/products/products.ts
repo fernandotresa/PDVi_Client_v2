@@ -179,8 +179,8 @@ export class ProductsPage {
 
     for(var j = 0; j < this.products.length; j++) {      
 
-      if(this.products[i].quantity > 0) {                
-        productsSelect.push(this.products[i])
+      if(this.products[j].quantity > 0) {                
+        productsSelect.push(this.products[j])
       }
     } 
     
