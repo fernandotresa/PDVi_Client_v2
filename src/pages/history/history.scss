@@ -10,5 +10,33 @@ page-history {
     ion-item.item-wp.item.item-block {
         border-bottom: 0px solid transparent; 
     }
+
+    .item-checkbox{
+        ion-checkbox{
+            button.item-cover{
+                width: 15%;
+            }
+        }
+    
+        ion-label{
+            button.item-cover{
+                width: 85%;
+                right: 0;
+                left: auto;
+            }
+        }
+      }
+
+      .backgroundPainel{
+        background-color: transparent;
+        color: white;
+    }    
+
+    .ani-bottom-to-top{
+        animation-name: bottom-to-top;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-direction: alternate;
+    }
     
 }

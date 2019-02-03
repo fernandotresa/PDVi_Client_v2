@@ -4,6 +4,7 @@ import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
 import { Observable } from 'rxjs/Observable';
+import {Md5} from 'ts-md5/dist/md5';
 
 @IonicPage()
 @Component({
@@ -56,16 +57,17 @@ export class CashDrainPage {
   checkSupervisorInfo(){
 
     let checked = false
+    let passwd = Md5.hashStr(this.supervisorPassword);
 
     this.supervisorInfo.forEach(element => {
       
       if(element.login_usuarios === this.supervisorUsername) {
-        if(element.senha_usuarios_pdvi == this.supervisorPassword){
+
+        if(element.senha_usuarios_pdvi == passwd){
           checked = true      
           this.supervisorId = element.id_usuarios          
         }          
-      }
-        
+      }        
     });
 
     return checked;

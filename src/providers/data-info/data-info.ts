@@ -4,7 +4,7 @@ import * as moment from 'moment-timezone';
 @Injectable()
 export class DataInfoProvider {
     
-  appType: number = 1
+  appType: number = 2
   ipLocal: string = ""
   
   clock: String;
@@ -51,6 +51,7 @@ export class DataInfoProvider {
   titlePayed: string = "Pago"
   titleNotPayed: string = "Não Pago"
   titleSearch: string = "Pesquisar"
+  titleSendQrcode: string = "QR Code e-mail"
   titleCashStatement: string = "Extrato de caixa"
   titleRemove: string = "Remover"
   titleSearchingClientName: string = "Procurando pelo nome do cliente, favor aguarde"
@@ -68,6 +69,7 @@ export class DataInfoProvider {
   titleLimit: string = "Limite atingido"
   titleValue: string = "Valor"
   titleTotalSelected: string = "Limpar total selecionado"
+  titleCleanSelected: string = "Limpar selecionados"
   titleTotal: string = "Total"  
   titleSave: string = "Salvar"
   titlePay: string = "Pagar"
@@ -104,6 +106,7 @@ export class DataInfoProvider {
   titleSuccess: string = "Sucesso"
   titlePrintSuccess: string = "Impressão enviada com sucesso"
   titleSelectList: string = "Favor selecionar na lista"
+  titleSelectAll: string = "Selecionar todos"
   titlePrintModelA: string = "Impressão modelo A"
   titlePrintModelB: string = "Impressão modelo B"
   titleSupervisor: string = "Supervisão"

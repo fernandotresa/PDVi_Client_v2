@@ -32,10 +32,10 @@ export class LoginPage {
     this.autoLogin = this.navParams.get("autoLogin")
 
     if(this.autoLogin == undefined)
-      this.autoLogin = true   
-      
+      this.autoLogin = true       
+
     if(this.autoLogin)
-      this.loginContinue("admin", "123456") 
+      this.loginContinue("admin", "Mudaragora00")
       
     let self = this
 
@@ -55,6 +55,7 @@ export class LoginPage {
       this.inputEnd.setFocus()
   }  
   
+
   goHome(){    
     if(this.dataInfo.appType === 1)
       this.navCtrl.setRoot(HomePage);
@@ -87,6 +88,7 @@ export class LoginPage {
     .subscribe( data => {
 
       this.loginFinish(data)
+
       loading.dismiss()      
     }, error => {
       loading.dismiss().then( () => {

@@ -3,10 +3,28 @@
         <ion-title>{{dataInfo.titleHistory}}</ion-title>  
 
         <ion-item detail-none no-lines class="backgroundPainel" text-center>  
-                <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
-                <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} 
-                <b>{{dataInfo.titleTime}}:</b> {{dataInfo.clock}}          
-            </ion-item>
+            <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
+            <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} 
+            <b>{{dataInfo.titleTime}}:</b> {{dataInfo.clock}}          
+        </ion-item>
+
+        <ion-buttons start *ngIf="dataInfo.appType === 2">
+            <button ion-button icon-only color="royal" (click)="presentActionSheet()">
+                <ion-icon name="search"></ion-icon>
+            </button>
+        </ion-buttons>
+
+        <ion-buttons start *ngIf="!listMultiple && dataInfo.appType === 2">
+            <button ion-button icon-only color="royal" (click)="changeListType()">
+                <ion-icon name="flash"></ion-icon>
+            </button>
+            </ion-buttons>  
+    
+            <ion-buttons end *ngIf="listMultiple  && dataInfo.appType === 2">
+                <button ion-button icon-only color="royal" (click)="changeListType()">
+                    <ion-icon name="ios-information-circle"></ion-icon>
+                </button>
+        </ion-buttons>
         
     </ion-navbar>  
     
@@ -14,32 +32,16 @@
 
 <ion-content padding>
 
-    <ion-searchbar *ngIf="dayBegin && dayEnd && supervisorOk"
+<ion-searchbar *ngIf="dayBegin && dayEnd && supervisorOk"
     [(ngModel)]="searchTerm"
     (ionInput)="setFilteredItems()"
     placeholder= "Procurar...">    
-  </ion-searchbar>
+  </ion-searchbar>    
 
-    <ion-list *ngIf="dataInfo.appType === 2">
-        <ion-item>
-          <ion-label>{{dataInfo.titleDayStart}}</ion-label>
-          <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="dayBegin"></ion-datetime>
-        </ion-item>
-      
-        <ion-item>
-          <ion-label>{{dataInfo.titleEndStart}}</ion-label>
-          <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="dayEnd"></ion-datetime>
-        </ion-item>
-        
-      <ion-item>
-          <button ion-button full large text-uppercase (click)="search()">{{dataInfo.titleSearch}}</button>          
-      </ion-item>
+<ion-list  *ngIf="dataInfo.appType === 1">  
 
-    </ion-list>
+    <ion-item no-lines class="text-green fs-15 fw-600 pdl-0" *ngIf="! supervisorOk">   
 
-    <ion-list *ngIf="dataInfo.appType === 1">  
-
-    <ion-item no-lines class="text-green fs-15 fw-600 pdl-0" *ngIf="! supervisorOk">                  
         <ion-label color="primary" class="fs-30">{{dataInfo.titleSupervisor}}</ion-label>    
             <ion-select [(ngModel)]="supervisorUsername">            
             <ion-option *ngFor="let supervisor of (allSupervisors | async)?.success">{{supervisor.login_usuarios}}</ion-option>                                                  
@@ -60,19 +62,61 @@
         
     </ion-list>
 
+    <ion-list  *ngIf="dataInfo.appType === 2">
+        <ion-item>
+            <ion-label>{{dataInfo.titleDayStart}}</ion-label>
+            <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="dayBegin"></ion-datetime>
+        </ion-item>
+        
+        <ion-item>
+            <ion-label>{{dataInfo.titleEndStart}}</ion-label>
+            <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="dayEnd" (ngModelChange) ="dayEndChanged()" ></ion-datetime>
+        </ion-item>
+        
+        <ion-item>
+            <button ion-button full large text-uppercase (click)="search()">{{dataInfo.titleSearch}}</button>          
+        </ion-item>
+
+    </ion-list>
+    
     <ion-list *ngIf="dataInfo.appType === 2">  
         <button ion-item  *ngFor="let order of ticketsCallback" no-lines (click)="goPageTicket(order)">
-          <h2>{{order._billing_first_name}} {{order._billing_last_name}} </h2>
-          <p>{{dataInfo.titleTicketType}}: {{order.order_items}}</p>
-          <p>{{dataInfo.titleDayBo}} {{order.post_date}}</p>        
-        </button>                    
-    </ion-list>        
+            <ion-label>
+                <h2>{{order._billing_first_name}} {{order._billing_last_name}} </h2>
+                <p>{{dataInfo.titleCPF}}: {{order._billing_cpf}}</p>
+                <p>{{dataInfo.titleTicketType}}: {{order.order_items}}</p>
+                <p>{{dataInfo.titleDayPurschase}}: {{order.post_date}}</p>    
+            </ion-label>
+                
+            <ion-checkbox *ngIf="listMultiple" color="royal" [checked]="order.checked" (ionChange)="insertMultiplePrint(order)"></ion-checkbox>                  
+
+          </button>                    
+
+        </ion-list>
+
 </ion-content>
 
-<ion-footer no-border color="transparent" *ngIf="dataInfo.appType === 1" class="ani-bottom-to-top">      
 
+<ion-footer no-border color="transparent" *ngIf="dataInfo.appType === 1" class="ani-bottom-to-top">      
     <button *ngIf="! supervisorOk" ion-button full large (click)="finish()" color="secondary">{{dataInfo.titleConfirm}}</button>  
     <button *ngIf="supervisorOk" ion-button full large (click)="printSelecteds()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titleRePrint}}</button>    
     <button ion-button full large (click)="goBack()" style="text-transform: uppercase;">{{dataInfo.titleGoBack}}</button>   
   </ion-footer>
+
+<ion-footer no-border color="transparent" class="ani-bottom-to-top" *ngIf="dataInfo.appType === 2 && listMultiple">             
+
+<ion-row>
+    <ion-col>
+        <button ion-button full [disabled]="ticketsChecked.length === 0" (click)="cleanSelected()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titleCleanSelected}}
+        </button>    
+    </ion-col>
+    <ion-col>
+        <button ion-button full (click)="selectAll()" color="positive" style="text-transform: uppercase;">{{dataInfo.titleSelectAll}}</button>   
+    </ion-col>
+    <ion-col>            
+        <button ion-button full [disabled]="ticketsChecked.length === 0" color="bronze" (click)="printSelectedsOnline()" color="positive" style="text-transform: uppercase;">{{dataInfo.titlePrint}}</button>
+    </ion-col>       
+</ion-row>
+                
+</ion-footer>
 

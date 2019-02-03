@@ -179,23 +179,16 @@ export class ProductsPage {
 
     for(var j = 0; j < this.products.length; j++) {      
 
-      if(this.products[j].quantity > 0) {                
+      if(this.products[j].quantity > 0)             
         productsSelect.push(this.products[j])
-      }
+    
     } 
     
     let modal = this.modalCtrl.create('PaymentPage', {productSelected: productsSelect, 
       totalSelected: this.totalSelected, finalValue: this.finalValue});
 
-    modal.onDidDismiss(data => {
-      this.paymentFinish(data);
-    });
     modal.present();
     
-  }
-
-  paymentFinish(data){    
-    this.navCtrl.pop()    
   }
 
   presentPromptParking(){
@@ -212,7 +205,7 @@ export class ProductsPage {
  parkingInsert(data){ 
 
     let ticket = data[0]
-    let element = this.ticketParking[0]  
+    //let element = this.ticketParking[0]  
     this.finalValue += ticket.valor_produto
     this.totalSelected++
     //this.removeParking(element)

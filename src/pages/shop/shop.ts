@@ -10,7 +10,6 @@ import { TicketsPage } from '../../pages/tickets/tickets';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
 import { HistoryPage } from '../history/history';
 
-
 @IonicPage()
 @Component({
   selector: 'page-shop',
@@ -42,9 +41,7 @@ export class ShopPage {
     moment.locale('pt-br'); 
 
     this.dayBegin = moment().startOf('day').format()
-    this.dayEnd = moment().endOf('day').format()
-
-    console.log(this.dayBegin, this.dayEnd)
+    this.dayEnd = moment().endOf('day').format()    
 
     this.searchControl = new FormControl();
 
@@ -69,6 +66,7 @@ export class ShopPage {
     loading.present() 
 
     this.ticketsCallback = []
+    this.ticketsChecked = []
 
     this.allOrders = this.httpd.getAllOrders(this.dayBegin, this.dayEnd)
     this.allOrders.subscribe(data => {      
@@ -83,24 +81,36 @@ export class ShopPage {
   }
 
   setFilteredItems(){
-    if(this.searchTerm.length > 5){
+    
+    let result = this.searchTerm.replace("[\\-\\+\\.\\^:,]","")
+    let res = result.substring(0, 3);
+    let number = Number(res)     
 
-      let number = Number(this.searchTerm)     
 
-      if(number)
-        this.getByCPF()      
+    console.log(this.searchTerm, result, number)
 
-      else
-        this.getByName()        
-    }          
+    if(number)
+      this.getByCPF()
+
+    else {
+
+      if(this.searchTerm.length == 0)
+        this.search()
+
+      else if(this.searchTerm.length > 5)
+        this.search()                 
+    }
+    
+  }
+
+  search(){                  
+    this.getByName()
   }
 
   getByName(){
+
     console.log('getByName')
 
-    let loading = this.uiUtils.showLoading(this.dataInfo.titleSearchingClientName)    
-    loading.present() 
-    
     this.ticketsCallback = []
     this.allOrders = this.httpd.getAllOrdersByName(this.searchTerm, this.dayBegin, this.dayEnd)
     this.allOrders.subscribe(data => {      
@@ -109,16 +119,12 @@ export class ShopPage {
         element.post_date = moment(element.post_date).tz('America/Sao_Paulo').format("L")        
         this.ticketsCallback.push(element)
       });
-
-      loading.dismiss()
     })
   }
 
   getByCPF(){
-    console.log('getByCPF')
 
-    let loading = this.uiUtils.showLoading(this.dataInfo.titleSearchingClientCPF)    
-    loading.present() 
+    console.log('getByCPF')
     
     this.ticketsCallback = []
     this.allOrders = this.httpd.getAllOrdersByCPF(this.searchTerm, this.dayBegin, this.dayEnd)
@@ -127,9 +133,8 @@ export class ShopPage {
       data.success.forEach(element => {        
         element.post_date = moment(element.post_date).tz('America/Sao_Paulo').format("L")        
         this.ticketsCallback.push(element)
+        
       });
-
-      loading.dismiss()
     })
   }
 
@@ -152,8 +157,7 @@ export class ShopPage {
    }
 
    if(id > 0)
-    this.ticketsChecked.push(id)
-    
+    this.ticketsChecked.push(id)    
   }
 
   printMultiple(){
@@ -166,7 +170,17 @@ export class ShopPage {
   }
 
   printMultipleContinue(){
-    console.log("Continuando impressão")
+    console.log("Continuando impressão", this.ticketsChecked)
+
+    this.httpd.printTicketMultiple(this.ticketsChecked, this.dataInfo.userInfo.login_usuarios, 1)
+      .subscribe(() => {
+        this.uiUtils.showAlertSuccess()
+      })
+  }  
+
+  cleanSelected(){  
+    this.ticketsChecked = []
+    this.getAllOrders()
   }
 
 }

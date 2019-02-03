@@ -6,11 +6,17 @@
           <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
           <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} 
           <b>{{dataInfo.titleTime}}:</b> {{dataInfo.clock}}          
-      </ion-item>
+      </ion-item>     
+
+      <ion-buttons start>
+       <button ion-button menuToggle icon-only color="royal">
+          <ion-icon name="menu"></ion-icon>
+        </button>
+      </ion-buttons>
 
     <ion-buttons start>
       <button ion-button icon-only color="royal" (click)="goPageHistory()">
-        <ion-icon name="folder-open"></ion-icon>
+        <ion-icon name="calendar"></ion-icon>
       </button>
     </ion-buttons>
 
@@ -18,13 +24,7 @@
         <button ion-button icon-only color="royal" (click)="changeListType()">
           <ion-icon name="flash"></ion-icon>
         </button>
-      </ion-buttons>
-
-      <ion-buttons end *ngIf="listMultiple && this.ticketsChecked.length > 0">
-          <button ion-button icon-only color="royal" (click)="printMultiple()">
-            <ion-icon name="ios-print"></ion-icon>
-          </button>
-        </ion-buttons>
+      </ion-buttons>  
 
       <ion-buttons end *ngIf="listMultiple">
         <button ion-button icon-only color="royal" (click)="changeListType()">
@@ -72,3 +72,24 @@
   </ion-list>
 
 </ion-content>
+
+<ion-footer no-border color="transparent" class="ani-bottom-to-top" *ngIf="ticketsChecked.length > 0">             
+
+  <ion-row>
+
+      <ion-col>
+          <button ion-button full (click)="cleanSelected()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titleCleanSelected}}
+          </button>    
+      </ion-col>
+
+      <ion-col>
+          <button ion-button full (click)="getAllProducts()" color="positive" style="text-transform: uppercase;">{{dataInfo.titleSendQrcode}}</button>   
+      </ion-col>
+
+      <ion-col>            
+          <button ion-button full color="bronze" (click)="printMultiple()" color="positive" style="text-transform: uppercase;">{{dataInfo.titlePrint}}</button>
+      </ion-col>       
+      
+  </ion-row>
+              
+</ion-footer>
