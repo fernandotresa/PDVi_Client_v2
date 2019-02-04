@@ -180,8 +180,7 @@ export class ProductsPage {
     for(var j = 0; j < this.products.length; j++) {      
 
       if(this.products[j].quantity > 0)             
-        productsSelect.push(this.products[j])
-    
+        productsSelect.push(this.products[j])                
     } 
     
     let modal = this.modalCtrl.create('PaymentPage', {productSelected: productsSelect, 
@@ -189,11 +188,18 @@ export class ProductsPage {
 
     modal.present();
     
+
+
+
   }
 
   presentPromptParking(){
+    console.log("11111111111")
+
     let modal = this.modalCtrl.create('ParkingPage');
     modal.onDidDismiss(data => {  
+
+      console.log("222222", data)
 
       if(data)
         this.parkingInsert(data)
@@ -204,11 +210,11 @@ export class ProductsPage {
 
  parkingInsert(data){ 
 
-    let ticket = data[0]
-    //let element = this.ticketParking[0]  
+    console.log("33333333333333333333333")
+    let ticket = data[0]        
     this.finalValue += ticket.valor_produto
     this.totalSelected++
-    //this.removeParking(element)
+    this.removeParking(ticket)
 
     ticket.isParking = true  
     this.ticketParking.push(ticket)

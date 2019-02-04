@@ -47,8 +47,7 @@ export class ParkingPage {
     }, 1000);     
   }
 
-  focusPassword(){    
-    console.log("focusPassword")
+  focusPassword(){        
     this.inputEnd.setFocus()
   }
 
@@ -67,7 +66,6 @@ export class ParkingPage {
       this.httpd.getTicketParking(this.searchTerm)
       .subscribe(data => {
   
-          console.log(data)
           this.isSold = false
           this.getTicketParkingCallback(data)    
       })

@@ -4,7 +4,7 @@ import * as moment from 'moment-timezone';
 @Injectable()
 export class DataInfoProvider {
     
-  appType: number = 2
+  appType: number = 1
   ipLocal: string = ""
   
   clock: String;
