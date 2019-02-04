@@ -79,7 +79,7 @@ export class PaymentPage {
     let id_caixa_registrado = data.success[0].id_caixa_registrado    
 
     this.productSelected.forEach(element => {
-      element.id_caixa_registrado = id_caixa_registrado
+      element.fk_id_caixa_venda = id_caixa_registrado
     });
 
     this.finishPayment()
