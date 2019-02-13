@@ -20,27 +20,27 @@
         
         <ion-grid item-content>
 
-            <ion-row>
-                <ion-col col-2>
-                    <button ion-button icon-only color="secondary" clear outline (click)="increment(type)">
-                       <ion-icon class="fs-30" name="add-circle"></ion-icon>
-                     </button>
-                </ion-col> 
-
-                <ion-col col-2>                                        
-                  <ion-input class="align-text-middle" [(ngModel)]="type.quantity"></ion-input>        
-                </ion-col>
-
-                <ion-col col-2>
-                    <button class="productQuantity" ion-button icon-only color="danger" clear outline (click)="decrement(type)">
+            <ion-row>                
+                <ion-col>
+                    <button ion-button icon-only color="danger" clear outline (click)="decrement(type)">
                         <ion-icon class="fs-30" name="remove-circle"></ion-icon>
                     </button>                  
-                </ion-col>
-
-                <ion-col col-3>
-                    <h2>{{type.nome_subtipo_produto}} </h2>                           
                 </ion-col>                
-                
+
+                <ion-col class="align-text-middle">                    
+                    <ion-input text-center type="number" [(ngModel)]="type.quantity"></ion-input>        
+                </ion-col>                                                    
+
+                <ion-col>
+                    <button ion-button icon-only color="secondary" clear outline (click)="increment(type)">
+                        <ion-icon class="fs-30" name="add-circle"></ion-icon>
+                        </button>
+                </ion-col> 
+
+                <ion-col class="align-text-middle" col-4>                                        
+                    <h2>{{type.nome_subtipo_produto}} </h2>                           
+                </ion-col>
+                                
             </ion-row>
         </ion-grid>  
 

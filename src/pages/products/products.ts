@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, IonicPage, NavParams, ModalController, Events } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { HttpdProvider } from '../../providers/httpd/httpd';
@@ -14,6 +14,9 @@ import { LoginPage } from '../../pages/login/login';
   templateUrl: 'products.html',
 })
 export class ProductsPage {
+
+  @ViewChild('inputSearch') inputSearch;
+  @ViewChild('inputProduct') inputProduct;
 
   finalValue: number = 0
   totalSelected: number = 0
@@ -51,8 +54,8 @@ export class ProductsPage {
     this.getAllProducts()
 
     this.events.subscribe(this.dataInfo.eventPaymentOk, data => {        
-      this.getAllProducts()
-    });
+      this.getAllProducts()      
+    });    
   }
 
   goPageSettings(){
@@ -108,6 +111,8 @@ export class ProductsPage {
         element.selectedsIds = []
         element.selectedsName = []        
       });
+
+      this.inputSearch.setFocus()
     })
   }
 
@@ -186,20 +191,13 @@ export class ProductsPage {
     let modal = this.modalCtrl.create('PaymentPage', {productSelected: productsSelect, 
       totalSelected: this.totalSelected, finalValue: this.finalValue});
 
-    modal.present();
-    
-
-
-
+    modal.present();    
   }
 
   presentPromptParking(){
-    console.log("11111111111")
 
     let modal = this.modalCtrl.create('ParkingPage');
     modal.onDidDismiss(data => {  
-
-      console.log("222222", data)
 
       if(data)
         this.parkingInsert(data)
@@ -210,7 +208,6 @@ export class ProductsPage {
 
  parkingInsert(data){ 
 
-    console.log("33333333333333333333333")
     let ticket = data[0]        
     this.finalValue += ticket.valor_produto
     this.totalSelected++
@@ -329,6 +326,8 @@ export class ProductsPage {
     modal.present();
   }
 
+
+
   productQuantityChanged(){
 
     this.finalValue = 0
@@ -351,9 +350,15 @@ export class ProductsPage {
           product_.selectedsIds.push(product_.fk_id_subtipo_produto)
           product_.selectedsName.push(product_.nome_subtipo_produto)        
         }        
-      }      
-    }
-    
+      } 
+    }        
+  }
+
+
+  onKeydown(product){    
+
+    if(product.quantity < 0)
+      product.quantity = 0
   }
 
 }

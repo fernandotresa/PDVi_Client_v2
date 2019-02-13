@@ -56,43 +56,42 @@
     <ion-item no-lines>
         <ion-item no-lines *ngFor="let ticket of ticketsCallback">                      
             <ion-checkbox (click)="ticketClicked(ticket)" [checked]=ticket.checked></ion-checkbox>
-            <ion-label>{{ticket.fk_id_estoque_utilizavel}} - {{ticket.nome_produto}} - {{ticket.data_log_venda}} </ion-label>          
+            <ion-label>{{ticket.fk_id_estoque_utilizavel}} - {{ticket.nome_produto}} - {{ticket.data_log_venda}} - {{ticket.id_caixa_registrado}} </ion-label>          
         </ion-item>  
     </ion-item>
         
-    </ion-list>
+</ion-list>
 
-    <ion-list  *ngIf="dataInfo.appType === 2">
-        <ion-item>
-            <ion-label>{{dataInfo.titleDayStart}}</ion-label>
-            <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="dayBegin"></ion-datetime>
-        </ion-item>
-        
-        <ion-item>
-            <ion-label>{{dataInfo.titleEndStart}}</ion-label>
-            <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="dayEnd" (ngModelChange) ="dayEndChanged()" ></ion-datetime>
-        </ion-item>
-        
-        <ion-item>
-            <button ion-button full large text-uppercase (click)="search()">{{dataInfo.titleSearch}}</button>          
-        </ion-item>
-
-    </ion-list>
+<ion-list  *ngIf="dataInfo.appType === 2">
+    <ion-item>
+        <ion-label>{{dataInfo.titleDayStart}}</ion-label>
+        <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="dayBegin"></ion-datetime>
+    </ion-item>
     
-    <ion-list *ngIf="dataInfo.appType === 2">  
-        <button ion-item  *ngFor="let order of ticketsCallback" no-lines (click)="goPageTicket(order)">
-            <ion-label>
-                <h2>{{order._billing_first_name}} {{order._billing_last_name}} </h2>
-                <p>{{dataInfo.titleCPF}}: {{order._billing_cpf}}</p>
-                <p>{{dataInfo.titleTicketType}}: {{order.order_items}}</p>
-                <p>{{dataInfo.titleDayPurschase}}: {{order.post_date}}</p>    
-            </ion-label>
-                
-            <ion-checkbox *ngIf="listMultiple" color="royal" [checked]="order.checked" (ionChange)="insertMultiplePrint(order)"></ion-checkbox>                  
+    <ion-item>
+        <ion-label>{{dataInfo.titleEndStart}}</ion-label>
+        <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="dayEnd" (ngModelChange) ="dayEndChanged()" ></ion-datetime>
+    </ion-item>
+    
+    <ion-item>
+        <button ion-button full large text-uppercase (click)="search()">{{dataInfo.titleSearch}}</button>          
+    </ion-item>
+</ion-list>
 
-          </button>                    
+    
+<ion-list *ngIf="dataInfo.appType === 2">  
+    <button ion-item  *ngFor="let order of ticketsCallback" no-lines (click)="goPageTicket(order)">
+        <ion-label>
+            <h2>{{order._billing_first_name}} {{order._billing_last_name}} </h2>
+            <p>{{dataInfo.titleCPF}}: {{order._billing_cpf}}</p>
+            <p>{{dataInfo.titleTicketType}}: {{order.order_items}}</p>
+            <p>{{dataInfo.titleDayPurschase}}: {{order.post_date}}</p>    
+        </ion-label>
+            
+        <ion-checkbox *ngIf="listMultiple" color="royal" [checked]="order.checked" (ionChange)="insertMultiplePrint(order)"></ion-checkbox>                  
 
-        </ion-list>
+    </button>                    
+</ion-list>
 
 </ion-content>
 

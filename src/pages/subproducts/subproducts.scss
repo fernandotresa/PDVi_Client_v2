@@ -9,10 +9,21 @@ page-subproducts {
         background-color: transparent;
         color: white;
     }
-
+    
     ion-item.item-ios.item.item-block, 
     ion-item.item-md.item.item-block, 
     ion-item.item-wp.item.item-block {
         border-bottom: 0px solid transparent; 
+        
+        min-height: 3rem;
+    }
+
+
+    .align-text-middle {        
+        text-align: center;
+        vertical-align: middle;
+        display: flex!important;
+        align-content: center!important;
+        align-items: center!important;
     }
 }

@@ -36,7 +36,7 @@ export class HistoryPage {
   supervisorId: number = 0    
   supervisorInfo: any = []  
   allSupervisors: Observable<any>;
-  supervisorOk: Boolean = false
+  supervisorOk: Boolean = true
 
   ticketsChecked: any = []
   listMultiple: Boolean = false
@@ -135,10 +135,14 @@ export class HistoryPage {
 
   setFilteredItems(){  
      
-    if(this.dataInfo.appType === 1)
-      this.searchHistoryPDViByName()    
-   else
-      this.searchHistoryOnlineByName()
+    if(this.searchTerm.length > 3){
+
+      if(this.dataInfo.appType === 1)
+        this.searchHistoryPDViByName()    
+      else
+        this.searchHistoryOnlineByName()
+
+    }    
   }
 
   searchHistoryPDViByName(){
@@ -149,12 +153,40 @@ export class HistoryPage {
       
     this.allOrders.subscribe(data => {      
 
-      data.success.forEach(element => {        
+      data.success.forEach(element => {                        
+
         element.data_log_venda = moment(element.data_log_venda).tz('America/Sao_Paulo').format("L")                
-        this.ticketsCallback.push(element)
-      });
+        this.searchTicketsCashier(element)
+      });      
+    })
+
+  }
+
+  searchTicketsCashier(element){
+
+    this.httpd.getTicketsCashier(element.id_caixa_registrado)
+
+    .subscribe(data => {      
+      let id_estoque_utilizavel = element.id_estoque_utilizavel
+      this.ticketsCallback.push(element)
+
+      this.searchTIcketsCashierCallback(data, id_estoque_utilizavel)    
     })
   }
+
+
+  searchTIcketsCashierCallback(data, id_estoque_utilizavel){
+
+    data.success.forEach(element => {        
+
+      if(element.id_estoque_utilizavel !== id_estoque_utilizavel){
+        element.data_log_venda = moment(element.data_log_venda).tz('America/Sao_Paulo').format("L")                
+        this.ticketsCallback.push(element)
+      }
+      
+    });
+  }
+
 
   searchHistoryOnlineByName(){
     this.ticketsCallback = []

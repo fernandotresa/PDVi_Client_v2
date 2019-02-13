@@ -46,7 +46,7 @@
   </ion-navbar>  
 
     <ion-toolbar color="primary">
-      <ion-searchbar
+      <ion-searchbar #inputSearch
         [(ngModel)]="searchTerm"
         (ionInput)="setFilteredItems()"
         placeholder= "Procurar...">    
@@ -74,8 +74,8 @@
                     </button>                  
                 </ion-col>                
 
-                <ion-col class="align-text-middle">
-                    <ion-input text-center type="number" [(ngModel)]="product.quantity" (ngModelChange) ="productQuantityChanged(product)"></ion-input>        
+                <ion-col class="align-text-middle">                    
+                    <ion-input text-center type="number"  (keydown)="onKeydown(product)" [(ngModel)]="product.quantity" (ngModelChange) ="productQuantityChanged(product)"></ion-input>        
                 </ion-col>                                                    
 
                 <ion-col>

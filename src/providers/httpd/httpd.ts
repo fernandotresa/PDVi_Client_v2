@@ -66,17 +66,21 @@ export class HttpdProvider {
   }
 
   getTicketOperator(idUser_: number, start_: string , end_: string){    
-
     let myData = JSON.stringify({idUser: idUser_, start: start_, end: end_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/getTicketOperator", myData, {headers: headers})
   }
 
   getTicketOperatorStr(idUser_: number, start_: string , end_: string, str_: string){    
-
     let myData = JSON.stringify({idUser: idUser_, start: start_, end: end_, str: str_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/getTicketOperatorStr", myData, {headers: headers})
+  }
+
+  getTicketsCashier(idCashier_: number){    
+    let myData = JSON.stringify({idCashier: idCashier_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getTicketsCashier", myData, {headers: headers})
   }
 
   printTicket(idTicket_){    
