@@ -88,6 +88,7 @@ export class PaymentPage {
   finishPayment(){
     let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
     loading.present() 
+    
     let self = this
 
     this.httpd.payProducts(this.paymentForm, this.productSelected, 

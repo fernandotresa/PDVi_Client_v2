@@ -327,7 +327,6 @@ export class ProductsPage {
   }
 
 
-
   productQuantityChanged(){
 
     this.finalValue = 0

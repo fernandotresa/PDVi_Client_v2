@@ -24,7 +24,6 @@ export class SubproductsPage {
     public httpd: HttpdProvider,
     public viewCtrl: ViewController,
     public navParams: NavParams) {
-
   }
 
   ionViewDidLoad() {

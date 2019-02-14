@@ -36,7 +36,7 @@ export class HistoryPage {
   supervisorId: number = 0    
   supervisorInfo: any = []  
   allSupervisors: Observable<any>;
-  supervisorOk: Boolean = true
+  supervisorOk: Boolean = false
 
   ticketsChecked: any = []
   listMultiple: Boolean = false
@@ -155,7 +155,11 @@ export class HistoryPage {
 
       data.success.forEach(element => {                        
 
-        element.data_log_venda = moment(element.data_log_venda).tz('America/Sao_Paulo').format("L")                
+        element.data_log_venda = moment(element.data_log_venda)
+          .tz('America/Sao_Paulo').format("DD.MM.YYYY hh:mm:ss")
+
+          console.log(element.data_log_venda)
+
         this.searchTicketsCashier(element)
       });      
     })
@@ -180,7 +184,9 @@ export class HistoryPage {
     data.success.forEach(element => {        
 
       if(element.id_estoque_utilizavel !== id_estoque_utilizavel){
-        element.data_log_venda = moment(element.data_log_venda).tz('America/Sao_Paulo').format("L")                
+        element.data_log_venda = moment(element.data_log_venda)
+          .tz('America/Sao_Paulo').format("DD.MM.YYYY hh:mm:ss")
+
         this.ticketsCallback.push(element)
       }
       
@@ -224,7 +230,9 @@ export class HistoryPage {
     this.allOrders.subscribe(data => {      
 
       data.success.forEach(element => {        
-        element.data_log_venda = moment(element.data_log_venda).tz('America/Sao_Paulo').format("DD.MM.YYYY kk:mm")        
+        element.data_log_venda = element.data_log_venda = moment(element.data_log_venda)
+        .tz('America/Sao_Paulo').format("DD.MM.YYYY hh:mm:ss")
+        
 
         this.ticketsCallback.push(element)
       });
@@ -349,7 +357,6 @@ export class HistoryPage {
     this.ticketsChecked = []
     this.getAllOrders()
   }
-
 
   selectAll(){
 
