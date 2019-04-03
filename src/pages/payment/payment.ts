@@ -66,9 +66,13 @@ export class PaymentPage {
   }  
 
   getLastCashierId(){
+    let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
+    loading.present() 
+
     this.httpd.getLastCashier(this.dataInfo.userInfo.id_usuarios)
     .subscribe(data => {
       
+      loading.dismiss() 
       this.getLastCashierContinue(data)
       
     })
@@ -89,14 +93,69 @@ export class PaymentPage {
     let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
     loading.present() 
     
-    let self = this
-
     this.httpd.payProducts(this.paymentForm, this.productSelected, 
       this.dataInfo.userInfo.id_usuarios, this.dataInfo.userInfo.login_usuarios, this.finalValue)
-    .subscribe( () => {
-      loading.dismiss()
 
-      let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePaymentSuccess)
+    .subscribe( data => {
+      this.verifyCallbackPayment()
+      loading.dismiss()      
+    })
+  }
+
+  verifyCallbackPayment(){
+
+    let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
+    loading.present() 
+
+    let self = this
+
+    setTimeout(function(){
+
+      self.httpd.getErrors()
+      .subscribe(data => {
+
+        self.getErrosCallback(data, loading)
+      })    
+
+    }, 5000)
+
+  }
+
+  getErrosCallback(data, loading){
+
+    console.log(data)
+
+    let erros = false
+    let errosArray = []
+
+    data.errorOnSelling.forEach(element => {
+      errosArray.push(element)
+      erros = true
+    });
+
+    loading.dismiss()   
+
+    if(erros){
+      this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titlePaymentError).present()
+      this.recoverPaymentErros(errosArray)
+
+    } else 
+      this.paymentFinish()
+            
+  }
+
+  recoverPaymentErros(data){
+    this.httpd.recoverPaymentErros(data).subscribe( () => {
+
+      this.navCtrl.pop()  
+
+    })
+  }
+
+  paymentFinish(){
+
+    let alert = this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titlePaymentSuccess)
+    let self = this
       
       alert.present()
       .then( () => {
@@ -107,7 +166,6 @@ export class PaymentPage {
           self.events.publish(self.dataInfo.eventPaymentOk, 1);
         }, 3000);        
       })
-    })
   }
 
   totalChanged(){    

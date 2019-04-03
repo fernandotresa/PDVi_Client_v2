@@ -17,6 +17,7 @@ export class LoginPage {
   @ViewChild('inputEnd') inputEnd;
 
   allConfigs: Observable<any>;
+  
   autoLogin: Boolean = true
   username: string
   password: string
@@ -33,9 +34,7 @@ export class LoginPage {
 
     if(this.autoLogin == undefined)
       this.autoLogin = true       
-      
-      
-
+            
     if(this.autoLogin)
       this.loginContinue("admin", "Mudaragora00")
       

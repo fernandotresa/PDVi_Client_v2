@@ -88,6 +88,8 @@ export class DataInfoProvider {
   titleAuthSuccess: string = "Autenticado com sucesso"
   titleAuth: string = "Autenticar"
   titleCashDrainError: string = "Erro ao realizar Sangria"  
+  titlePaymentError: string = "Falha ao vender alguns ingressos. Favor repita a operação"  
+  
   titleCashDrainSuccess: string = "Sangria realizada com sucesso"
   titleCashChangeError: string = "Erro ao realizar troco"
   titleTicketTotal: string = "Ingressos"

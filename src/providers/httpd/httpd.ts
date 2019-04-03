@@ -203,4 +203,17 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/getLastCashier", myData, {headers: headers})
   }
 
+  getErrors(){    
+    let myData = JSON.stringify({idType: 1});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getErrors", myData, {headers: headers})
+  }
+
+  recoverPaymentErros(tickets){    
+    
+    let myData = JSON.stringify({tickets: tickets});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/recoverPaymentErros", myData, {headers: headers})
+  }
+
 }
