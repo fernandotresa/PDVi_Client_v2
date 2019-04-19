@@ -23,10 +23,10 @@ export class MyApp {
   };
 	
 	
-	rootPage:any = AdministratorPage;
+	//rootPage:any = AdministratorPage;
 
 
-	//rootPage:any = LoginPage;	  
+	rootPage:any = LoginPage;	  
 
   constructor(platform: Platform, private menuCtrl: MenuController) {
     platform.ready().then(() => {

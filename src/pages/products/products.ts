@@ -61,7 +61,6 @@ export class ProductsPage {
   startAdmin(){
     console.log("Iniciando administrador")
     this.getAllProductsAdmin()
-
   }
 
   startOperator(){
@@ -130,6 +129,7 @@ export class ProductsPage {
       });
 
       this.inputSearch.setFocus()
+
     })
   }
 
@@ -145,43 +145,10 @@ export class ProductsPage {
 
       this.products = data.success       
       this.inputSearch.setFocus()
-      this.syncStockOnline()
       
       loading.dismiss()
     })
-  }
-
-  syncStockOnline(){
-    this.httpd.syncStock().subscribe(data => {
-      this.syncStockOnlineCallback(data)
-    })
-  }
-
-  syncStockOnlineCallback(data){
-
-    console.log(data)
-
-    data.success.forEach(product => {
-      
-      this.products.forEach(element => {  
-             
-        if(element.nome_produto === product.nome){
-          console.log("Modificando estoque: ", product.nome, product.Stock)
-          element.stock = product.Stock
-        }
-
-      });      
-    });  
-    
-    this.syncStockLocal()
-  }
-
-  syncStockLocal(){
-    
-    this.httpd.syncStockLocal(this.products).subscribe( () => {      
-      console.log("Sincronizado com sucesso!")
-    })
-  }
+  }   
 
   doRefresh(refresher) {   
     this.allProducts = this.httpd.getProductsArea(this.idArea)
@@ -190,15 +157,6 @@ export class ProductsPage {
 
   increment(product){      
      
-    if(this.dataInfo.isAdmin)
-      this.incrementAdmin(product)
-    else
-      this.incrementOperator(product)
-
-  }
-
-  incrementOperator(product){       
-
     product.quantity++
     product.valor_total = product.valor_produto * product.quantity    
 
@@ -206,24 +164,11 @@ export class ProductsPage {
     product.selectedsName.push(product.nome_subtipo_produto)
         
     this.totalSelected++
-    this.finalValue += product.valor_produto      
-
+    this.finalValue += product.valor_produto  
   }
 
-  incrementAdmin(product){ 
-    product.stock++
-  }
-
+ 
   decrement(product){            
-
-    if(this.dataInfo.isAdmin)
-      this.decrementAdmin(product)
-    else
-      this.decrementOperator(product)
-
-  }
-
-  decrementOperator(product){       
 
     if(product.quantity > 0){
 
@@ -244,13 +189,8 @@ export class ProductsPage {
       this.totalSelected--
       this.finalValue -= product.valor_produto
     }     
-
   }
 
-  decrementAdmin(product){ 
-    product.stock--
-  }
-  
   goPageCheckout(){
 
     for(var i = 0; i < this.ticketParking.length; ++i){
@@ -453,26 +393,7 @@ export class ProductsPage {
 
     if(product.quantity < 0)
       product.quantity = 0
-  }
-
-  sync(){
-
-    this.uiUtils.showConfirm(this.dataInfo.titleAtention, this.dataInfo.titleConfirmSyncOnline)
-      .then(res => {
-        if(res){
-          this.syncContinue()
-        }
-      }) 
-
-  }
-
-  syncContinue(){
-
-    this.httpd.syncStockOnline(this.products).subscribe( () => {      
-      console.log("Sincronizado com sucesso!")
-    })
-
-  }
+  }  
 
 }
 

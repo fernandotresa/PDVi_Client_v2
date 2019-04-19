@@ -7,7 +7,8 @@ export class DataInfoProvider {
   appType: number = 1
 
   ipLocal: string = ""
-  isAdmin: Boolean = true
+  
+  isAdmin: Boolean = false
   
   clock: String;
 

@@ -75,25 +75,26 @@
             <ion-row>   
 
                 <ion-col>
-                    <button ion-button icon-only color="danger" clear outline (click)="decrement(product)">
+                    <button [disabled]="product.stock === 0" ion-button icon-only color="danger" clear outline (click)="decrement(product)">
                         <ion-icon class="fs-30" name="remove-circle"></ion-icon>
                     </button>                  
                 </ion-col>                
 
                 <ion-col class="align-text-middle">                
-                    <ion-input text-center type="number"  (keydown)="onKeydown(product)" [(ngModel)]="product.quantity" (ngModelChange) ="productQuantityChanged(product)"></ion-input>        
+                    <ion-input text-center type="number" [disabled]="product.stock === 0" (keydown)="onKeydown(product)" [(ngModel)]="product.quantity" (ngModelChange) ="productQuantityChanged(product)"></ion-input>        
                 </ion-col>                                                    
 
                 <ion-col>
-                    <button ion-button icon-only color="secondary" clear outline (click)="increment(product)">
+                    <button ion-button icon-only color="secondary" clear outline (click)="increment(product)" [disabled]="product.stock === 0">
                         <ion-icon class="fs-30" name="add-circle"></ion-icon>
                         </button>
                 </ion-col> 
 
                 <ion-col class="align-text-middle" col-4>                                        
-                    <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}}</h2>       
-                    <h2 *ngIf="product.quantity === 0">{{product.nome_produto}}</h2>
+                    <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}} - {{dataInfo.titleStock}}: {{product.stock}}</h2>       
+                    <h2 *ngIf="product.quantity === 0">{{product.nome_produto}} - {{dataInfo.titleStock}}: {{product.stock}}</h2>
                 </ion-col>
+                
 
                 <ion-col col-4>
                     <button *ngIf="product.quantity !== 0" small ion-button item-left color="secondary" text-wrap (click)="presentModal(product)">                                      
@@ -122,33 +123,7 @@
   <ion-list *ngIf="dataInfo.isAdmin">      
     
         <ion-item *ngFor="let product of products" no-lines>                    
-    
-            <ion-grid item-content>
-                <ion-row>   
-    
-                    <ion-col>
-                        <button ion-button icon-only color="danger" clear outline (click)="decrement(product)">
-                            <ion-icon class="fs-30" name="remove-circle"></ion-icon>
-                        </button>                  
-                    </ion-col>                
-    
-                    <ion-col class="align-text-middle">                
-                        <ion-input text-center type="number"  (keydown)="onKeydown(product)" [(ngModel)]="product.stock" (ngModelChange) ="productQuantityChanged(product)"></ion-input>        
-                    </ion-col>                                                    
-    
-                    <ion-col>
-                        <button ion-button icon-only color="secondary" clear outline (click)="increment(product)">
-                            <ion-icon class="fs-30" name="add-circle"></ion-icon>
-                            </button>
-                    </ion-col> 
-    
-                    <ion-col class="align-text-middle" col-4>                                        
-                        <h2>{{product.nome_produto}} - R$ {{product.valor_produto}}</h2>                        
-                    </ion-col>
-                     
-                </ion-row>
-            </ion-grid>        
-                       
+            <h2>{{product.nome_produto}} - {{dataInfo.titleStock}}: {{product.stock}}</h2>                        
         </ion-item>                
     
       </ion-list>
@@ -170,7 +145,5 @@
             <button ion-button full [disabled]="totalSelected === 0" (click)="goPagePayment()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titlePay}}:  R$ {{finalValue}}</button>    
         </ion-col>
     </ion-row>
-
-    <button *ngIf="dataInfo.isAdmin" ion-button full large (click)="sync()" color="secondary">{{dataInfo.titleSync}}</button>  
                 
 </ion-footer>    
