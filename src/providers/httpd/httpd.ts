@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class HttpdProvider {
   
-  address : string = 'http://localhost:8085'    
+  address : string = 'http://www.megaticket.com.br:8085'    
   contentHeader: Headers = new Headers({'Content-Type': 'application/json'});
   totemId: number = 1
   
@@ -117,6 +117,30 @@ export class HttpdProvider {
     let myData = JSON.stringify({id: this.totemId, name: name_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/getAreasByName", myData, {headers: headers})
+  }
+
+  syncStock(){    
+    let myData = JSON.stringify({id: this.totemId});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/syncStock", myData, {headers: headers})
+  }
+
+  syncStockLocal(products_){    
+    let myData = JSON.stringify({id: this.totemId, products: products_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/syncStockLocal", myData, {headers: headers})
+  }
+
+  syncStockOnline(products_){    
+    let myData = JSON.stringify({id: this.totemId, products: products_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/syncStockOnline", myData, {headers: headers})
+  }
+
+  getAllProducts(){    
+    let myData = JSON.stringify({id: this.totemId});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getAllProducts", myData, {headers: headers})
   }
 
   getProductsArea(idArea_){    

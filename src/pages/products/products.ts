@@ -7,6 +7,9 @@ import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
 import { LoginPage } from '../../pages/login/login';
+import { CashStatementPage } from '../../pages/cash-statement/cash-statement';
+import { CashChangePage } from '../../pages/cash-change/cash-change';
+import { CashDrainPage } from '../../pages/cash-drain/cash-drain';
 
 @IonicPage()
 @Component({
@@ -44,18 +47,32 @@ export class ProductsPage {
 
     this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
       this.searching = false;
-    });
-
-    this.area = this.navParams.get("area")    
+    });       
   }
 
-  ionViewDidLoad() {      
+  ionViewDidLoad() {    
+
+    if(this.dataInfo.isAdmin)
+      this.startAdmin()
+    else
+      this.startOperator()
+  }
+
+  startAdmin(){
+    console.log("Iniciando administrador")
+    this.getAllProductsAdmin()
+
+  }
+
+  startOperator(){
+    this.area = this.navParams.get("area")    
+
     this.idArea = this.area.id_area_venda 
     this.getAllProducts()
 
     this.events.subscribe(this.dataInfo.eventPaymentOk, data => {        
       this.getAllProducts()      
-    });    
+    }); 
   }
 
   goPageSettings(){
@@ -105,8 +122,8 @@ export class ProductsPage {
 
     this.allProducts.subscribe(data => {
 
-      this.products = data.success 
-      
+      this.products = data.success          
+
       this.products.forEach(element => {        
         element.selectedsIds = []
         element.selectedsName = []        
@@ -116,12 +133,71 @@ export class ProductsPage {
     })
   }
 
+  getAllProductsAdmin(){
+    let loading = this.uiUtils.showLoading(this.dataInfo.titlePleaseWait)    
+    loading.present() 
+
+    this.resetValues() 
+
+    this.allProducts = this.httpd.getAllProducts()
+
+    this.allProducts.subscribe(data => {
+
+      this.products = data.success       
+      this.inputSearch.setFocus()
+      this.syncStockOnline()
+      
+      loading.dismiss()
+    })
+  }
+
+  syncStockOnline(){
+    this.httpd.syncStock().subscribe(data => {
+      this.syncStockOnlineCallback(data)
+    })
+  }
+
+  syncStockOnlineCallback(data){
+
+    console.log(data)
+
+    data.success.forEach(product => {
+      
+      this.products.forEach(element => {  
+             
+        if(element.nome_produto === product.nome){
+          console.log("Modificando estoque: ", product.nome, product.Stock)
+          element.stock = product.Stock
+        }
+
+      });      
+    });  
+    
+    this.syncStockLocal()
+  }
+
+  syncStockLocal(){
+    
+    this.httpd.syncStockLocal(this.products).subscribe( () => {      
+      console.log("Sincronizado com sucesso!")
+    })
+  }
+
   doRefresh(refresher) {   
     this.allProducts = this.httpd.getProductsArea(this.idArea)
     refresher.complete()    
    } 
 
-  increment(product){       
+  increment(product){      
+     
+    if(this.dataInfo.isAdmin)
+      this.incrementAdmin(product)
+    else
+      this.incrementOperator(product)
+
+  }
+
+  incrementOperator(product){       
 
     product.quantity++
     product.valor_total = product.valor_produto * product.quantity    
@@ -131,9 +207,23 @@ export class ProductsPage {
         
     this.totalSelected++
     this.finalValue += product.valor_produto      
+
+  }
+
+  incrementAdmin(product){ 
+    product.stock++
   }
 
   decrement(product){            
+
+    if(this.dataInfo.isAdmin)
+      this.decrementAdmin(product)
+    else
+      this.decrementOperator(product)
+
+  }
+
+  decrementOperator(product){       
 
     if(product.quantity > 0){
 
@@ -153,7 +243,12 @@ export class ProductsPage {
   
       this.totalSelected--
       this.finalValue -= product.valor_produto
-    }    
+    }     
+
+  }
+
+  decrementAdmin(product){ 
+    product.stock--
   }
   
   goPageCheckout(){
@@ -288,7 +383,7 @@ export class ProductsPage {
   }
 
   presentModalCashDrain(){
-    let modal = this.modalCtrl.create('CashDrainPage');    
+    let modal = this.modalCtrl.create(CashDrainPage);    
 
     modal.onDidDismiss( data => {
       
@@ -301,7 +396,7 @@ export class ProductsPage {
   }
 
   presentModalChange(){
-    let modal = this.modalCtrl.create('CashChangePage');    
+    let modal = this.modalCtrl.create(CashChangePage);    
 
     modal.onDidDismiss( data => {
       
@@ -314,7 +409,7 @@ export class ProductsPage {
   }
 
   presentModalExtract(){
-    let modal = this.modalCtrl.create('CashStatementPage');    
+    let modal = this.modalCtrl.create(CashStatementPage);    
 
     modal.onDidDismiss( data => {
       
@@ -358,6 +453,25 @@ export class ProductsPage {
 
     if(product.quantity < 0)
       product.quantity = 0
+  }
+
+  sync(){
+
+    this.uiUtils.showConfirm(this.dataInfo.titleAtention, this.dataInfo.titleConfirmSyncOnline)
+      .then(res => {
+        if(res){
+          this.syncContinue()
+        }
+      }) 
+
+  }
+
+  syncContinue(){
+
+    this.httpd.syncStockOnline(this.products).subscribe( () => {      
+      console.log("Sincronizado com sucesso!")
+    })
+
   }
 
 }

@@ -2,12 +2,15 @@
     <ion-navbar text-center no-border-bottom color="primary">              
 
         <ion-row>
+
             <ion-col>
                 <ion-item detail-none no-lines class="backgroundPainel" text-left>  
-                    <ion-title>{{dataInfo.titleAppName}}</ion-title>                          
+                    <ion-title *ngIf="! dataInfo.isAdmin">{{dataInfo.titleAppName}}</ion-title>                                              
+                    <ion-title *ngIf="dataInfo.isAdmin">{{dataInfo.titleAppName}} {{dataInfo.titleProducts}} </ion-title>                                              
                 </ion-item>                
             </ion-col>
-            <ion-col col-9>
+
+            <ion-col col-9 *ngIf="! dataInfo.isAdmin">
                 <ion-item detail-none no-lines class="backgroundPainel" text-center>  
                     <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
                     <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} 
@@ -16,7 +19,7 @@
             </ion-col>        
         </ion-row>        
        
-        <ion-buttons end>
+        <ion-buttons end *ngIf="! dataInfo.isAdmin">
 
             <button ion-button icon-only color="royal" (click)="presentModalCashDrain()" tooltip="Sangria" positionV="bottom" arrow>
                 <ion-icon class="fs-30" name="md-remove-circle"></ion-icon>
@@ -56,13 +59,16 @@
 </ion-header>
 
 <ion-content padding>
+
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Atualizando informações" 
             refreshingSpinner="circles">
         </ion-refresher-content>
     </ion-refresher>
 
-<ion-list >      
+
+<ion-list *ngIf="! dataInfo.isAdmin">      
+    
     <ion-item *ngFor="let product of products" no-lines>                    
 
         <ion-grid item-content>
@@ -74,7 +80,7 @@
                     </button>                  
                 </ion-col>                
 
-                <ion-col class="align-text-middle">                    
+                <ion-col class="align-text-middle">                
                     <ion-input text-center type="number"  (keydown)="onKeydown(product)" [(ngModel)]="product.quantity" (ngModelChange) ="productQuantityChanged(product)"></ion-input>        
                 </ion-col>                                                    
 
@@ -113,10 +119,45 @@
 
   </ion-list>
 
+  <ion-list *ngIf="dataInfo.isAdmin">      
+    
+        <ion-item *ngFor="let product of products" no-lines>                    
+    
+            <ion-grid item-content>
+                <ion-row>   
+    
+                    <ion-col>
+                        <button ion-button icon-only color="danger" clear outline (click)="decrement(product)">
+                            <ion-icon class="fs-30" name="remove-circle"></ion-icon>
+                        </button>                  
+                    </ion-col>                
+    
+                    <ion-col class="align-text-middle">                
+                        <ion-input text-center type="number"  (keydown)="onKeydown(product)" [(ngModel)]="product.stock" (ngModelChange) ="productQuantityChanged(product)"></ion-input>        
+                    </ion-col>                                                    
+    
+                    <ion-col>
+                        <button ion-button icon-only color="secondary" clear outline (click)="increment(product)">
+                            <ion-icon class="fs-30" name="add-circle"></ion-icon>
+                            </button>
+                    </ion-col> 
+    
+                    <ion-col class="align-text-middle" col-4>                                        
+                        <h2>{{product.nome_produto}} - R$ {{product.valor_produto}}</h2>                        
+                    </ion-col>
+                     
+                </ion-row>
+            </ion-grid>        
+                       
+        </ion-item>                
+    
+      </ion-list>
+
 </ion-content>
 
 <ion-footer no-border color="transparent" class="ani-bottom-to-top">             
-    <ion-row>
+
+    <ion-row *ngIf="! dataInfo.isAdmin">
         <ion-col>            
            <button ion-button full color="bronze" [disabled]="totalSelected === 0" (click)="goPageCheckout()" color="positive" style="text-transform: uppercase;">{{dataInfo.titleCheckout}}</button>                         
         </ion-col>
@@ -129,5 +170,7 @@
             <button ion-button full [disabled]="totalSelected === 0" (click)="goPagePayment()" color="secondary" style="text-transform: uppercase;">{{dataInfo.titlePay}}:  R$ {{finalValue}}</button>    
         </ion-col>
     </ion-row>
+
+    <button *ngIf="dataInfo.isAdmin" ion-button full large (click)="sync()" color="secondary">{{dataInfo.titleSync}}</button>  
                 
-    </ion-footer>
+</ion-footer>    

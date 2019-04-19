@@ -5,7 +5,9 @@ import * as moment from 'moment-timezone';
 export class DataInfoProvider {
     
   appType: number = 1
+
   ipLocal: string = ""
+  isAdmin: Boolean = true
   
   clock: String;
 
@@ -13,6 +15,11 @@ export class DataInfoProvider {
   userType: any = {name: 'Atendente', email: 'falecom@megaticket.com.br', photo: "assets/imgs/100x100.png"}
   userInfo: any;
 
+  appName: string = "PDVi"
+  titleNotifications: string = "Notificações"
+  titleProducts: string = "Produtos"
+  titleSync: string = "Sincronizar"
+  titleStock: string = "Estoque"
   titleAccessDenied: string = "Acesso negado"
   eventPaymentOk: string = 'eventPaymentOk'
   titleAppName: string = "3A PDVi"
@@ -57,6 +64,7 @@ export class DataInfoProvider {
   titleSearchingClientName: string = "Procurando pelo nome do cliente, favor aguarde"
   titleSearchingClientCPF: string = "Procurando pelo CPF do cliente, favor aguarde"
   titleConfirmMultiPrint: string = "Deseja confirmar impressão multipla?"
+  titleConfirmSyncOnline: string = "Deseja confirmar sincronização com base online?"
   titleStreet: string = "Rua"
   titleNumber: string = "Número"
   titleCity: string = "Cidade"

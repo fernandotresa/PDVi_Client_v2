@@ -17,8 +17,8 @@ export class LoginPage {
   @ViewChild('inputEnd') inputEnd;
 
   allConfigs: Observable<any>;
-  
-  autoLogin: Boolean = true
+
+  autoLogin: Boolean = false
   username: string
   password: string
 

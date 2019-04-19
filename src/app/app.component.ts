@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, MenuController	} from 'ionic-angular';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
-//import { UsersPage } from '../pages/users/users';
+import { AdministratorPage } from '../pages/administrator/administrator';
 import { SideMenuSettings } from './../shared/side-menu-content/models/side-menu-settings';
 import { SideMenuOption } from './../shared/side-menu-content/models/side-menu-option';
 import { SideMenuContentComponent } from './../shared/side-menu-content/side-menu-content.component';
@@ -22,9 +22,11 @@ export class MyApp {
 		selectedOptionClass: 'active-side-menu-option'		
   };
 	
-	//rootPage:any = UsersPage;
+	
+	rootPage:any = AdministratorPage;
 
-	rootPage:any = LoginPage;	  
+
+	//rootPage:any = LoginPage;	  
 
   constructor(platform: Platform, private menuCtrl: MenuController) {
     platform.ready().then(() => {

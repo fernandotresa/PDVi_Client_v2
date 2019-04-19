@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar text-center no-border-bottom color="primary">            
+  <ion-title>{{dataInfo.appName}}</ion-title> 
+  
+  <ion-buttons end>
+    <button ion-button menuToggle color="white_">
+      <ion-icon name="menu"></ion-icon></button>
+ </ion-buttons>
+
+  </ion-navbar>   
+
+</ion-header>
+  
+  <ion-content padding class="trips detail-bg">
+
+    
+    <div class="trip card" tappable (click)="goPageProducts()" margin-bottom>
+      <div class="background border-bottom" [ngStyle]="{'background-image': 'url(assets/imgs/clientes.jpg'}">
+        <div class="background-filter rlt">
+          <div class="align-bottom" padding-left padding-right>            
+            <h6 class="pull-right text-white" ion-text>{{dataInfo.titleProducts}}</h6>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+      <div class="padding-sm primary-bg">
+        <ion-icon name="alert" class="text-white"></ion-icon>
+        <span ion-text class="text-white"> {{totalRegisterCompletedStr}} </span>
+        <span class="pull-right" ion-text color="light"><strong>{{totalRegisterCompleted}}%</strong> <span ion-text  class="text-green bold"> Preenchidos </span></span>
+      </div>
+    </div>    
+    
+    <div class="trip card" tappable (click)="goPageStock()" margin-bottom>
+        <div class="background border-bottom" [ngStyle]="{'background-image': 'url(assets/imgs/agenda.jpg'}">
+          <div class="background-filter rlt">
+            <div class="align-bottom" padding-left padding-right>
+              <h6 class="pull-right text-white" ion-text>{{dataInfo.titleStock}}</h6>
+              <div class="clear"></div>
+            </div>
+          </div>
+        </div>       
+    </div>   
+      
+      <div class="trip card" tappable (click)="goPageNotifications()" margin-bottom>
+        <div class="background border-bottom" [ngStyle]="{'background-image': 'url(assets/imgs/notifications.jpg'}">
+          <div class="background-filter rlt">
+            <div class="align-bottom" padding-left padding-right>
+              <h6 class="pull-right text-white" ion-text>{{dataInfo.titleNotifications}}</h6>
+              <div class="clear"></div>
+            </div>
+          </div>
+        </div>        
+      </div>  
+
+  </ion-content>

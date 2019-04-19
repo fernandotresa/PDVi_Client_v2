@@ -5,6 +5,7 @@ import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
 import { HistoryPageModule } from '../pages/history/history.module';
+import { AdministratorPageModule } from '../pages/administrator/administrator.module';
 import { ProductsPageModule } from '../pages/products/products.module';
 import { ShopPageModule } from '../pages/shop/shop.module';
 import { CheckoutPageModule } from '../pages/checkout/checkout.module';
@@ -48,7 +49,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MyApp,    
     HomePage
   ],
+  
   exports: [    
+    AdministratorPageModule,
     HistoryPageModule,
     SettingsPageModule,
     TicketsPageModule,
