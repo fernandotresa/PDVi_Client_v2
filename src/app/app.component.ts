@@ -77,6 +77,16 @@ export class MyApp {
 			displayText: 'PDVi',
 			component: HomePage			
 		});
+
+		this.options.push({
+			iconName: 'cart',
+			displayText: 'Totem de acesso',
+			custom: {
+				isExternalLink: true,
+				externalUrl: "http://www.megaticket.com.br:8080/totem_acesso/	"
+			}
+			
+		});	
 		
 		this.options.push({
 			iconName: 'cart',

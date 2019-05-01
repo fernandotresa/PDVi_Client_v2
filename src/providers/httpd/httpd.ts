@@ -5,7 +5,9 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class HttpdProvider {
   
-  address : string = 'http://www.megaticket.com.br:8085'    
+  //address : string = 'http://www.megaticket.com.br:8085'  
+  
+  address : string = 'http://localhost:8085'    
   contentHeader: Headers = new Headers({'Content-Type': 'application/json'});
   totemId: number = 1
   
@@ -220,6 +222,22 @@ export class HttpdProvider {
     let myData = JSON.stringify({tickets: tickets});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/recoverPaymentErros", myData, {headers: headers})
+  }
+
+  /**
+   * COMANDOS RECEPTOR
+   */
+
+  getAllReceptors(){
+    let myData = JSON.stringify({id: 1});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getAllReceptors", myData, {headers: headers})
+  }
+  
+  systemCommand(command_: number, idUser_: number, idPonto_: number){   
+    let myData = JSON.stringify({id: this.totemId, idUser: idUser_, cmd: command_, idPonto: idPonto_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/systemCommand", myData, {headers: headers})
   }
 
 }

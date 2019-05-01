@@ -20,6 +20,7 @@ import { CashDrainPageModule } from '../pages/cash-drain/cash-drain.module';
 import { CashStatementPageModule } from '../pages/cash-statement/cash-statement.module';
 import { SupervisorPageModule } from '../pages/supervisor/supervisor.module';
 import { SubproductsPageModule } from '../pages/subproducts/subproducts.module';
+import { ReceptorPageModule } from '../pages/receptor/receptor.module';
 
 import { HttpdProvider } from '../providers/httpd/httpd';
 import { HttpClientModule } from '@angular/common/http';
@@ -66,8 +67,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CashDrainPageModule,
     CashStatementPageModule,
     SupervisorPageModule,
-    UsersPageModule
-    
+    UsersPageModule,
+    ReceptorPageModule    
     ],
   providers: [    
     {provide: ErrorHandler, useClass: IonicErrorHandler},

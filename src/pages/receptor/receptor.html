@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar text-center no-border-bottom color="primary">              
+
+      <ion-row>
+
+          <ion-col col-2>
+              <ion-item detail-none no-lines class="backgroundPainel" text-left>  
+                  <ion-title *ngIf="! dataInfo.isAdmin">{{dataInfo.titleAppName}}</ion-title>                                              
+                  <ion-title *ngIf="dataInfo.isAdmin">{{dataInfo.titleAppName}} {{dataInfo.titleProducts}} </ion-title>                                              
+              </ion-item>                
+          </ion-col>
+
+          <ion-col col-10 *ngIf="! dataInfo.isAdmin">
+              <ion-item detail-none no-lines class="backgroundPainel" text-center>  
+                  <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
+                  <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} 
+                  <b>{{dataInfo.titleTime}}:</b> {{dataInfo.clock}}
+              </ion-item>
+          </ion-col>        
+      </ion-row>  
+
+        
+</ion-navbar>  
+
+  <ion-toolbar color="primary">
+    <ion-searchbar #inputSearch
+      [(ngModel)]="searchTerm"
+      (ionInput)="setFilteredItems()"
+      placeholder= "Procurar...">    
+    </ion-searchbar>
+ </ion-toolbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>      
+    
+    <ion-item *ngFor="let receptor of (allReceptors | async)?.success" no-lines>                            
+          {{receptor.nome_ponto_acesso}} {{receptor.ip_ponto_acesso}}
+
+        <ion-icon name="megaphone" (click)="sendAudio(receptor)" item-right></ion-icon>
+        <ion-icon name="hand" color="danger" (click)="close(receptor)" item-right></ion-icon>              
+        <ion-icon name="hand" color="secondary" (click)="open(receptor)" item-right></ion-icon>
+
+    </ion-item>    
+    
+  </ion-list>
+
+</ion-content>
