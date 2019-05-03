@@ -36,9 +36,9 @@ export class ReceptorPage {
     
     //let id = this.dataInfo.userInfo.id_usuario
     let id = 1
-    let id_ponto_acesso = receptor.id_ponto_acesso
+    let ip_ponto_acesso = receptor.ip_ponto_acesso
 
-    this.httpd.systemCommand(idCommand_, id, id_ponto_acesso)
+    this.httpd.systemCommand(idCommand_, id, ip_ponto_acesso)
 
     .subscribe( () => {   
       this.uiUtils.showAlertSuccess()    

@@ -34,7 +34,7 @@ export class LoginPage {
     this.autoLogin = this.navParams.get("autoLogin")
 
     if(this.autoLogin == undefined)
-      this.autoLogin = true
+      this.autoLogin = false
             
     if(this.autoLogin)
       this.loginContinue("admin", "Mudaragora00")
@@ -60,11 +60,10 @@ export class LoginPage {
 
   goHome(){    
     if(this.dataInfo.appType === 1){
-      //this.navCtrl.setRoot(HomePage);
-      this.navCtrl.setRoot(ReceptorPage);
+      this.navCtrl.setRoot(HomePage);
+      //this.navCtrl.setRoot(ReceptorPage);
       
-    }
-      
+    }      
 
     else if(this.dataInfo.appType === 2)
       this.navCtrl.setRoot("ShopPage");

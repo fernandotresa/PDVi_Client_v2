@@ -20,11 +20,9 @@ export class MyApp {
 		accordionMode: true,
 		showSelectedOption: true,
 		selectedOptionClass: 'active-side-menu-option'		
-  };
-	
+  	};	
 	
 	//rootPage:any = AdministratorPage;
-
 
 	rootPage:any = LoginPage;	  
 
@@ -79,14 +77,19 @@ export class MyApp {
 		});
 
 		this.options.push({
-			iconName: 'cart',
+			iconName: 'pricetag',
 			displayText: 'Totem de acesso',
 			custom: {
 				isExternalLink: true,
 				externalUrl: "http://www.megaticket.com.br:8080/totem_acesso/	"
-			}
-			
+			}			
 		});	
+
+		this.options.push({
+			iconName: 'hand',
+			displayText: 'Receptor',
+			component: "ReceptorPage"			
+		});						
 		
 		this.options.push({
 			iconName: 'cart',

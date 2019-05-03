@@ -234,8 +234,8 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/getAllReceptors", myData, {headers: headers})
   }
   
-  systemCommand(command_: number, idUser_: number, idPonto_: number){   
-    let myData = JSON.stringify({id: this.totemId, idUser: idUser_, cmd: command_, idPonto: idPonto_});
+  systemCommand(command_: number, idUser_: number, ipPonto_: number){   
+    let myData = JSON.stringify({id: this.totemId, idUser: idUser_, cmd: command_, ipPonto: ipPonto_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/systemCommand", myData, {headers: headers})
   }
