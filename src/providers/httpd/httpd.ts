@@ -7,7 +7,7 @@ export class HttpdProvider {
   
   //address : string = 'http://www.megaticket.com.br:8085'  
   
-  address : string = 'http://localhost:8085'    
+  address : string = 'http://localhost:8086'    
   contentHeader: Headers = new Headers({'Content-Type': 'application/json'});
   totemId: number = 1
   
@@ -140,7 +140,7 @@ export class HttpdProvider {
   }
 
   payProducts(idPayment_, products_, userId_, userName_, finalValue_){
-    let myData = JSON.stringify({id: this.totemId, idPayment: idPayment_, 
+    let myData = JSON.stringify({id: this.totemId, idPayment: idPayment_,
       products: products_, userId: userId_, userName: userName_, finalValue: finalValue_});
 
     const headers = new HttpHeaders({'Content-Type':'application/json'});

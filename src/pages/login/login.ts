@@ -5,7 +5,7 @@ import { DataInfoProvider } from '../../providers/data-info/data-info'
 import { Observable } from 'rxjs/Observable';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { HomePage } from '../../pages/home/home';
-import { ReceptorPage } from '../../pages/receptor/receptor';
+//import { ReceptorPage } from '../../pages/receptor/receptor';
 import {Md5} from 'ts-md5/dist/md5';
 
 @Component({
@@ -34,7 +34,7 @@ export class LoginPage {
     this.autoLogin = this.navParams.get("autoLogin")
 
     if(this.autoLogin == undefined)
-      this.autoLogin = false
+      this.autoLogin = true
             
     if(this.autoLogin)
       this.loginContinue("admin", "Mudaragora00")
@@ -60,8 +60,8 @@ export class LoginPage {
 
   goHome(){    
     if(this.dataInfo.appType === 1){
-      this.navCtrl.setRoot(HomePage);
-      //this.navCtrl.setRoot(ReceptorPage);
+      //this.navCtrl.setRoot(HomePage);
+      this.navCtrl.setRoot("AttachmentsPage");
       
     }      
 

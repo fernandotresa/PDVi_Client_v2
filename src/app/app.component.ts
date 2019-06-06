@@ -2,10 +2,21 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, MenuController	} from 'ionic-angular';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
-import { AdministratorPage } from '../pages/administrator/administrator';
+//import { AdministratorPage } from '../pages/administrator/administrator';
 import { SideMenuSettings } from './../shared/side-menu-content/models/side-menu-settings';
 import { SideMenuOption } from './../shared/side-menu-content/models/side-menu-option';
 import { SideMenuContentComponent } from './../shared/side-menu-content/side-menu-content.component';
+import * as firebaseApp from 'firebase/app';
+
+export const firebaseConfig = {
+	apiKey: "AIzaSyAzSLbqgDiYqYIkemFmOmnJIb2DBesxL7I",
+	authDomain: "pdvi-d9207.firebaseapp.com",
+	databaseURL: "https://pdvi-d9207.firebaseio.com",
+	projectId: "pdvi-d9207",
+	storageBucket: "pdvi-d9207.appspot.com",
+	messagingSenderId: "940789269313",
+	appId: "1:940789269313:web:a16fae4bdd9f4a9e"
+  };
 
 @Component({
   templateUrl: 'app.html'
@@ -30,6 +41,12 @@ export class MyApp {
     platform.ready().then(() => {
 			this.initializeOptionsClient()
 			//this.menuCtrl.enable(false)
+
+			if(firebaseApp){
+				if(!firebaseApp.apps.length)      
+				firebaseApp.initializeApp(firebaseConfig)  
+			
+			  }    
     });
   }
 
@@ -81,7 +98,7 @@ export class MyApp {
 			displayText: 'Totem de acesso',
 			custom: {
 				isExternalLink: true,
-				externalUrl: "http://www.megaticket.com.br:8080/totem_acesso/	"
+				externalUrl: "http://localhost/totem_acesso/	"
 			}			
 		});	
 

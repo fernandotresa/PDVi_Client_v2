@@ -5,6 +5,7 @@ import * as moment from 'moment-timezone';
 export class DataInfoProvider {
     
   appType: number = 1
+  isWeb: Boolean = true
 
   ipLocal: string = ""
   
@@ -27,6 +28,8 @@ export class DataInfoProvider {
   titlePdvi: string = "PDVi"
   titleAddress: string = "Endereço"
   titleParking: string = "Estacionamento"
+  titleAttachments: string = "Anexos"
+  titleAttachment: string = "Anexar"
   titleOnlineSales: string = "Vendas Online"  
   titleCPF: string = "CPF"
   titleModuleOnline: string = "Módulo vendas online"
@@ -68,6 +71,7 @@ export class DataInfoProvider {
   titleConfirmSyncOnline: string = "Deseja confirmar sincronização com base online?"
   titleStreet: string = "Rua"
   titleNumber: string = "Número"
+  titleUploadAll: string = "Enviar todas imagens"
   titleCity: string = "Cidade"
   titleCEP: string = "CEP"
   titleState: string = "Estado"
@@ -142,5 +146,16 @@ export class DataInfoProvider {
     }, 10000);   
 
   }
+
+  dataURItoBlob(dataURI) {
+    let binary = atob(dataURI.split(',')[1]);
+    let array = [];
+    for (let i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
+  };
+
+ 
 
 }

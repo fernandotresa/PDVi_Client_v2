@@ -1,8 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events,  ActionSheetController, Platform } from 'ionic-angular';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
+import { CameraProvider } from '../../providers/camera/camera'
 import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
@@ -22,12 +23,17 @@ export class PaymentPage {
   productSelected: any = []  
   paymentForm: string = "Dinheiro"
 
+  urlPicture: string;
+  
   constructor(
     public navCtrl: NavController, 
     public dataInfo: DataInfoProvider,    
     public httpd: HttpdProvider,
     public uiUtils: UiUtilsProvider,
+    public actionsheetCtrl: ActionSheetController,
+    public platform: Platform,
     public events: Events,
+    public camera: CameraProvider,
     public navParams: NavParams) {      
   }
 
@@ -89,12 +95,21 @@ export class PaymentPage {
     this.finishPayment()
   }
  
-  finishPayment(){
+  finishPayment(){  
+    this.startCheckout()      
+  }
+  
+  startCheckout(){
+
     let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
     loading.present() 
-    
-    this.httpd.payProducts(this.paymentForm, this.productSelected, 
-      this.dataInfo.userInfo.id_usuarios, this.dataInfo.userInfo.login_usuarios, this.finalValue)
+
+    this.httpd.payProducts(
+      this.paymentForm, 
+      this.productSelected, 
+      this.dataInfo.userInfo.id_usuarios, 
+      this.dataInfo.userInfo.login_usuarios, 
+      this.finalValue)
 
     .subscribe( data => {
       this.verifyCallbackPayment()
@@ -122,8 +137,6 @@ export class PaymentPage {
   }
 
   getErrosCallback(data, loading){
-
-    console.log(data)
 
     let erros = false
     let errosArray = []
@@ -167,7 +180,7 @@ export class PaymentPage {
         }, 3000);        
       })
   }
-
+ 
   totalChanged(){    
     this.totalChange = this.totalReceived - this.finalValue
   }
@@ -175,6 +188,7 @@ export class PaymentPage {
   paymentChanged(event){
     console.log(event)
   }
-     
+
+  
 }
   

@@ -2,8 +2,10 @@ import { ErrorHandler, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { Camera } from '@ionic-native/camera';
 
 import { HomePage } from '../pages/home/home';
+import { AttachmentsPageModule } from '../pages/attachments/attachments.module';
 import { HistoryPageModule } from '../pages/history/history.module';
 import { AdministratorPageModule } from '../pages/administrator/administrator.module';
 import { ProductsPageModule } from '../pages/products/products.module';
@@ -30,6 +32,25 @@ import { DataInfoProvider } from '../providers/data-info/data-info';
 import { SideMenuContentComponent } from '../shared/side-menu-content/side-menu-content.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CameraProvider } from '../providers/camera/camera';
+import { StorageProvider } from '../providers/storage/storage';
+
+import { Firebase } from '@ionic-native/firebase/ngx';
+import { AngularFireModule } from 'angularfire2';
+
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyAzSLbqgDiYqYIkemFmOmnJIb2DBesxL7I",
+  authDomain: "pdvi-d9207.firebaseapp.com",
+  databaseURL: "https://pdvi-d9207.firebaseio.com",
+  projectId: "pdvi-d9207",
+  storageBucket: "pdvi-d9207.appspot.com",
+  messagingSenderId: "940789269313",
+  appId: "1:940789269313:web:a16fae4bdd9f4a9e"
+};
+
 
   
 @NgModule({
@@ -42,7 +63,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    BrowserAnimationsModule    
+    BrowserAnimationsModule,
+    AngularFireDatabaseModule,
+    AngularFireStorageModule,    
+    AngularFireModule.initializeApp(firebaseConfig),    
     
   ],
   bootstrap: [IonicApp],
@@ -68,15 +92,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CashStatementPageModule,
     SupervisorPageModule,
     UsersPageModule,
-    ReceptorPageModule    
+    ReceptorPageModule,
+    AttachmentsPageModule
     ],
   providers: [    
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     HttpdProvider,
     UiUtilsProvider,
-    DataInfoProvider
+    DataInfoProvider,
+    Firebase,
+    Camera,
+    CameraProvider,
+    StorageProvider
     ]
 })
+
 export class AppModule {
   static injector: Injector;
 
@@ -84,3 +114,4 @@ export class AppModule {
     AppModule.injector = injector;
   }
 }
+
