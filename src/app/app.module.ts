@@ -10,6 +10,7 @@ import { HistoryPageModule } from '../pages/history/history.module';
 import { AdministratorPageModule } from '../pages/administrator/administrator.module';
 import { ProductsPageModule } from '../pages/products/products.module';
 import { ShopPageModule } from '../pages/shop/shop.module';
+import { AttachmentsListPageModule } from '../pages/attachments-list/attachments-list.module';
 import { CheckoutPageModule } from '../pages/checkout/checkout.module';
 import { SettingsPageModule } from '../pages/settings/settings.module';
 import { TicketsPageModule } from '../pages/tickets/tickets.module';
@@ -93,7 +94,8 @@ export const firebaseConfig = {
     SupervisorPageModule,
     UsersPageModule,
     ReceptorPageModule,
-    AttachmentsPageModule
+    AttachmentsPageModule,
+    AttachmentsListPageModule
     ],
   providers: [    
     {provide: ErrorHandler, useClass: IonicErrorHandler},

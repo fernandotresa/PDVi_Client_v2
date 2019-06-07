@@ -217,13 +217,14 @@ export class ProductsPage {
 
     let productsSelect = []        
 
-    console.log(this.products)
-
     for(var j = 0; j < this.products.length; j++) {      
 
       if(this.products[j].quantity > 0)             
         productsSelect.push(this.products[j])                
     } 
+
+    console.log(productsSelect)
+
     
     let modal = this.modalCtrl.create('PaymentPage', {productSelected: productsSelect, 
       totalSelected: this.totalSelected, finalValue: this.finalValue});

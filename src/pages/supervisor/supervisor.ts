@@ -70,4 +70,9 @@ export class SupervisorPage {
     modal.present();
   }
 
+  presentModalAttachments(){
+    let modal = this.modalCtrl.create('AttachmentsListPage');        
+    modal.present();  
+  }
+
 }

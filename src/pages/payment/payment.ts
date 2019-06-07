@@ -41,6 +41,9 @@ export class PaymentPage {
     this.productSelected = this.navParams.get('productSelected') 
     this.totalSelected = this.navParams.get('totalSelected') 
     this.finalValue = this.navParams.get('finalValue') 
+
+    console.log(this.productSelected)
+    
     this.setIntervalFocus()
 
     this.payments = this.httpd.getPaymentsMethods()
