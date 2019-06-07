@@ -111,6 +111,8 @@ export class DataInfoProvider {
   titleCashDrainSuccess: string = "Sangria realizada com sucesso"
   titleCashChangeError: string = "Erro ao realizar troco"
   titleTicketTotal: string = "Ingressos"
+  titleTicketName: string = "Nome do produto"
+  titleTicketDateSold: string = "Data da venda"
   titleUserChangePasswordError: string = "Erro ao modificar senha"  
   
   titleCashChangeSuccess: string = "Troco realizado com sucesso"

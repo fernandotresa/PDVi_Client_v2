@@ -13,7 +13,7 @@ export class StorageProvider {
   constructor() {
     console.log('Hello StorageProvider Provider');
 
-      this.picturePath =  this.getPath() + '.jpg'
+    this.picturePath =  this.getPath() + '.jpg'
     this.pathFinal = '/fotos/'
   }
 
@@ -28,9 +28,7 @@ export class StorageProvider {
   removePicture(url) {    
      console.log(url)
      return firebase.storage().ref(this.pathFinal).child(url).delete()
-  }
-  
-
+  }  
 
   getPath(){
     let now = moment().format("YYYYMMDDhhmmSSSS")
