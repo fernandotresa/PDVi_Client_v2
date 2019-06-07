@@ -101,7 +101,7 @@
                         <ion-icon name="ios-folder-open"></ion-icon>{{product.selectedsName}} 
                     </button>                                      
 
-                    <button *ngIf="product.quantity !== 0" small ion-button item-left color="secondary" text-wrap (click)="presentModalAttachment(product)">                                      
+                    <button *ngIf="product.quantity !== 0 && product.comprovante === 1" small ion-button item-left color="secondary" text-wrap (click)="presentModalAttachment(product)">                                      
                         <ion-icon name="ios-folder-open"></ion-icon>{{dataInfo.titleAttachment}}
                     </button>
                 </ion-col>

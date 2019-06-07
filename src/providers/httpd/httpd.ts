@@ -5,14 +5,13 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class HttpdProvider {
   
-  //address : string = 'http://www.megaticket.com.br:8085'  
-  
+  //address : string = 'http://produtos.dbltecnologia.com.br:8086'    
   address : string = 'http://localhost:8086'    
   contentHeader: Headers = new Headers({'Content-Type': 'application/json'});
   totemId: number = 1
   
   constructor(public http: HttpClient) {
-    console.log('Hello HttpdProvider Provider', this.address);    
+  
   }  
 
   GET(url) {

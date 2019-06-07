@@ -10,14 +10,14 @@
   
     </ion-navbar> 
     
-    <ion-toolbar color="primary">
+    <ion-toolbar color="primary" *ngIf="false">
         <ion-searchbar #inputSearch
           [(ngModel)]="searchTerm"
           (ionInput)="setFilteredItems()"
           placeholder= "Procurar...">    
         </ion-searchbar>
      </ion-toolbar>
-     
+
   </ion-header>
 
 

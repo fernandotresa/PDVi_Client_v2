@@ -130,7 +130,6 @@ export class ProductsPage {
       });
 
       this.inputSearch.setFocus()
-
     })
   }
 
