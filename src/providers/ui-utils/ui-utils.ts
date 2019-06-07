@@ -22,7 +22,7 @@ export class UiUtilsProvider {
   showAlertSuccess(){
     let alert = this.showAlert("Sucesso", "Operação realizada com sucesso!")
       
-    alert.present()
+    return alert.present()
     .then( () => {
       setTimeout(function(){
         alert.dismiss();

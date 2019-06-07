@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 import { StorageProvider } from '../../providers/storage/storage';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils'
 import { DataInfoProvider } from '../../providers/data-info/data-info'
@@ -12,32 +12,15 @@ import { DataInfoProvider } from '../../providers/data-info/data-info'
 })
 export class AttachmentsPage {
 
-  base64Image1: string = '';
-  selectedPhoto1: any;
-  urlPicture1: string = ""
-
-  base64Image2: string = '';
-  selectedPhoto2: any;
-  urlPicture2: string = ""
-
-  base64Image3: string = '';
-  selectedPhoto3: any;
-  urlPicture3: string = ""
-
-  base64Image4: string = '';
-  selectedPhoto4: any;
-  urlPicture4: string = ""
-
-  base64Image5: string = '';
-  selectedPhoto5: any;
-  urlPicture5: string = ""
-
-  photoChanged: Boolean = false
+  products: any;
+  productsNames: any = []
+  productsImages: any = []
+  productsUrls: any = []  
+  productsQuantity: number = 0
 
   constructor(
-    public navCtrl: NavController,
     public dataInfo: DataInfoProvider, 
-
+    public viewCtrl: ViewController,
     public uiUtils: UiUtilsProvider,
     public storage: StorageProvider, 
     public navParams: NavParams) {
@@ -45,206 +28,83 @@ export class AttachmentsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AttachmentsPage');
+
+    this.products = this.navParams.get('product')
+    this.productsNames = this.products.selectedsName
+    this.productsUrls = []
+    this.productsQuantity = this.products.quantity
   }
 
   goBack(){
-    this.navCtrl.pop()
+    this.products.urls = this.productsUrls
+    this.viewCtrl.dismiss({products: this.products });
   }
 
-  picChange1(event: any) {
+  picChange(event: any) {
 
     if(event.target.files && event.target.files[0]){
       let reader = new FileReader();
 
       reader.onload = (event:any) => {
-        this.base64Image1 = event.target.result;
-        this.photoChanged = true
 
-        this.uploadPicture1()
+        let image = event.target.result;
+        this.productsImages.push(image)
+               
       }
       reader.readAsDataURL(event.target.files[0]);
     }    
-  }
+  }  
 
-  picChange2(event: any) {
+upload(image: string){
 
-    if(event.target.files && event.target.files[0]){
-      let reader = new FileReader();
-
-      reader.onload = (event:any) => {
-        this.base64Image2 = event.target.result;
-        this.photoChanged = true
-
-        this.uploadPicture2()
-      }
-      reader.readAsDataURL(event.target.files[0]);
-    }    
-  }
-
-  picChange3(event: any) {
-
-    if(event.target.files && event.target.files[0]){
-      let reader = new FileReader();
-
-      reader.onload = (event:any) => {
-        this.base64Image3 = event.target.result;
-        this.photoChanged = true
-
-        this.uploadPicture3()
-      }
-      reader.readAsDataURL(event.target.files[0]);
-    }    
-  }
-
-  picChange4(event: any) {
-
-    if(event.target.files && event.target.files[0]){
-      let reader = new FileReader();
-
-      reader.onload = (event:any) => {
-        this.base64Image4 = event.target.result;
-        this.photoChanged = true
-
-        this.uploadPicture4()
-      }
-      reader.readAsDataURL(event.target.files[0]);
-    }    
-  }
-
-  picChange5(event: any) {
-
-    if(event.target.files && event.target.files[0]){
-      let reader = new FileReader();
-
-      reader.onload = (event:any) => {
-        this.base64Image5 = event.target.result;
-        this.photoChanged = true
-
-        this.uploadPicture5()
-      }
-      reader.readAsDataURL(event.target.files[0]);
-    }    
-  }
-   
-
- uploadPicture1(){
-    let loading = this.uiUtils.showLoading("Enviando imagem 1. Favor aguarde.")
-
-    this.storage.uploadPicture(this.base64Image1)
+  return this.storage.uploadPicture(image)
 
       .then(snapshot => {
 
         snapshot.ref.getDownloadURL().then(url => {
-          this.urlPicture1 = url
-          loading.dismiss()
-          this.uiUtils.showAlertSuccess()
+          console.log(url)
+          this.productsUrls.push(url)
+          
 
         }).catch(err => {
-          loading.dismiss()
-          this.uiUtils.showAlert("Erro ao enviar", err).present()
+         console.log(err)
           
         })
       })
       .catch( error => {
-        loading.dismiss()
-        this.uiUtils.showAlert("Erro ao enviar", error).present()
-      })  
-  }
-
-  uploadPicture2(){
-    let loading = this.uiUtils.showLoading("Enviando imagem 2. Favor aguarde.")
-
-    this.storage.uploadPicture(this.base64Image2)
-
-      .then(snapshot => {
-
-        snapshot.ref.getDownloadURL().then(url => {
-          this.urlPicture2 = url
-          loading.dismiss()
-          this.uiUtils.showAlertSuccess()
-
-        }).catch(err => {
-          loading.dismiss()
-          this.uiUtils.showAlert("Erro ao enviar", err).present()
-          
-        })
+        console.log(error)
       })
-      .catch( error => {
-        loading.dismiss()
-        this.uiUtils.showAlert("Erro ao enviar", error).present()
-      })  
-  }
+  }    
 
-  uploadPicture3(){
-    let loading = this.uiUtils.showLoading("Enviando imagem 3. Favor aguarde.")
+  uploadAll(){
 
-    this.storage.uploadPicture(this.base64Image1)
+    let loading = this.uiUtils.showLoading(this.dataInfo.titlePleaseWait)
+    loading.present()
 
-      .then(snapshot => {
+    let promises = []
 
-        snapshot.ref.getDownloadURL().then(url => {
-          this.urlPicture1 = url
-          loading.dismiss()
-          this.uiUtils.showAlertSuccess()
+    this.productsImages.forEach(element => {
 
-        }).catch(err => {
-          loading.dismiss()
-          this.uiUtils.showAlert("Erro ao enviar", err).present()
-          
-        })
+        promises.push(this.upload(element))
+      });
+
+    Promise.all(promises)
+    .then( () => {
+
+      loading.dismiss()
+
+      this.uiUtils.showAlertSuccess()
+
+      .then( () => {  
+        this.goBack()
       })
-      .catch( error => {
-        loading.dismiss()
-        this.uiUtils.showAlert("Erro ao enviar", error).present()
-      })  
+    })
+    .catch( () => {
+      this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleUploadFail).present()
+    });
+    
   }
 
-  uploadPicture4(){
-    let loading = this.uiUtils.showLoading("Enviando imagem 4. Favor aguarde.")
-
-    this.storage.uploadPicture(this.base64Image4)
-
-      .then(snapshot => {
-
-        snapshot.ref.getDownloadURL().then(url => {
-          this.urlPicture4 = url
-          loading.dismiss()
-          this.uiUtils.showAlertSuccess()
-
-        }).catch(err => {
-          loading.dismiss()
-          this.uiUtils.showAlert("Erro ao enviar", err).present()
-          
-        })
-      })
-      .catch( error => {
-        loading.dismiss()
-        this.uiUtils.showAlert("Erro ao enviar", error).present()
-      })  
-  }
-
-  uploadPicture5(){
-    let loading = this.uiUtils.showLoading("Enviando imagem 5. Favor aguarde.")
-
-    this.storage.uploadPicture(this.base64Image5)
-
-      .then(snapshot => {
-
-        snapshot.ref.getDownloadURL().then(url => {
-          this.urlPicture5 = url
-          loading.dismiss()
-          this.uiUtils.showAlertSuccess()
-
-        }).catch(err => {
-          loading.dismiss()
-          this.uiUtils.showAlert("Erro ao enviar", err).present()
-          
-        })
-      })
-      .catch( error => {
-        loading.dismiss()
-        this.uiUtils.showAlert("Erro ao enviar", error).present()
-      })  
-  }
+ 
   
 }

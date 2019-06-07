@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
+import * as moment from 'moment-timezone';
+
 
 @Injectable()
 export class StorageProvider {
@@ -11,7 +13,7 @@ export class StorageProvider {
   constructor() {
     console.log('Hello StorageProvider Provider');
 
-    this.picturePath =  this.getPath() + '.jpg'
+      this.picturePath =  this.getPath() + '.jpg'
     this.pathFinal = '/fotos/'
   }
 
@@ -31,7 +33,8 @@ export class StorageProvider {
 
 
   getPath(){
-    return "abcdefg"
+    let now = moment().format("YYYYMMDDhhmmSSSS")
+    return now
   }
 
   

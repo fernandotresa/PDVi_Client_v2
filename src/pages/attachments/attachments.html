@@ -23,77 +23,25 @@
 
   <ion-list>
     
-    <ion-card class="trip card" text-center>  
+    <ion-card text-center  *ngFor="let product of productsNames; let i = index">  
 
         <ion-card-header style="background-color: #488aff; color: white;">              
-            <span ion-text color="light" text-wrap>{{dataInfo.titleAttachment}}</span><br>
-        </ion-card-header>
-        
-        <img style="width: 100%; height: 20%;" src="../../assets/imgs/identidade.jpeg">
-        
-        <ion-card-content>                
-            <input type="file" class="file-input" (change)="picChange1($event)" accept="image/*;capture=camera"  item-end>   
-        </ion-card-content>            
-        
-    </ion-card>     
-
-    <ion-card class="trip card" text-center>  
-        <ion-card-header style="background-color: #488aff; color: white;">              
-            <span ion-text color="light" text-wrap>{{dataInfo.titleAttachment}}</span><br>
-        </ion-card-header>
-        
-        <img style="width: 100%; height: 100%;" src="../../assets/imgs/identidade.jpeg">
+            <span ion-text color="light" text-wrap *ngIf="productsImages[i]">{{dataInfo.titleAttachment}}</span><br>
+            <span ion-text color="light" text-wrap *ngIf="! productsImages[i]">{{dataInfo.titleAttachmentWaiting}}</span><br>
+        </ion-card-header>            
         
         <ion-card-content>                
-            <input type="file" class="file-input" (change)="picChange2($event)" accept="image/*;capture=camera"  item-end>   
-        </ion-card-content>            
-        
-    </ion-card>     
-
-    <ion-card class="trip card" text-center>  
-        <ion-card-header style="background-color: #488aff; color: white;">              
-            <span ion-text color="light" text-wrap>{{dataInfo.titleAttachment}}</span><br>
-        </ion-card-header>
-        
-        <img style="width: 100%; height: 100%;" src="../../assets/imgs/identidade.jpeg">
-        
-        <ion-card-content>                
-            <input type="file" class="file-input" (change)="picChange3($event)" accept="image/*;capture=camera"  item-end>   
-        </ion-card-content>            
-        
-    </ion-card>     
-
-    <ion-card class="trip card" text-center>  
-        <ion-card-header style="background-color: #488aff; color: white;">              
-            <span ion-text color="light" text-wrap>{{dataInfo.titleAttachment}}</span><br>
-        </ion-card-header>
-        
-        <img style="width: 100%; height: 100%;" src="../../assets/imgs/identidade.jpeg">
-        
-        <ion-card-content>                
-            <input type="file" class="file-input" (change)="picChange4($event)" accept="image/*;capture=camera"  item-end>   
-        </ion-card-content>            
-        
-    </ion-card>     
-
-    <ion-card class="trip card" text-center>  
-        <ion-card-header style="background-color: #488aff; color: white;">              
-            <span ion-text color="light" text-wrap>{{dataInfo.titleAttachment}}</span><br>
-        </ion-card-header>
-        
-        <img style="width: 100%; height: 100%;" src="../../assets/imgs/identidade.jpeg">
-        
-        <ion-card-content>                
-            <input type="file"  class="file-input" (change)="picChange5($event)" accept="image/*;capture=camera"  item-end>   
-        </ion-card-content>            
-        
-    </ion-card>     
+            <input type="file" class="file-input" (change)="picChange($event)" accept="image/*;capture=camera"  item-end>   
+            <img style="width: 100%; height: 100%;" [src]="productsImages[i]" *ngIf="productsImages[i]">
+        </ion-card-content> 
+                        
+    </ion-card>         
     
 </ion-list>
 
 </ion-content>
 
-<ion-footer no-border color="transparent">       
-    <button ion-button full large (click)="uploadPictures()" color="secondary">{{dataInfo.titleUploadAll}}</button>  
-    <button ion-button full large (click)="goBack()" color="positive">{{dataInfo.titleCancel}}</button>
+<ion-footer no-border color="transparent">           
+    <button ion-button [disabled]="productsImages.length !== productsQuantity" full large (click)="uploadAll()" color="positive">{{dataInfo.titleUploadAll}}</button>
+    <button ion-button full large (click)="goBack()" color="positive">{{dataInfo.titleGoBack}}</button>
   </ion-footer>

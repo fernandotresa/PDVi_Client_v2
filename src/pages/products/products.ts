@@ -10,6 +10,7 @@ import { LoginPage } from '../../pages/login/login';
 import { CashStatementPage } from '../../pages/cash-statement/cash-statement';
 import { CashChangePage } from '../../pages/cash-change/cash-change';
 import { CashDrainPage } from '../../pages/cash-drain/cash-drain';
+import { AttachmentsPage } from '../../pages/attachments/attachments';
 
 @IonicPage()
 @Component({
@@ -166,7 +167,6 @@ export class ProductsPage {
     this.totalSelected++
     this.finalValue += product.valor_produto  
   }
-
  
   decrement(product){            
 
@@ -216,6 +216,8 @@ export class ProductsPage {
     }
 
     let productsSelect = []        
+
+    console.log(this.products)
 
     for(var j = 0; j < this.products.length; j++) {      
 
@@ -388,12 +390,29 @@ export class ProductsPage {
     }        
   }
 
-
   onKeydown(product){    
 
     if(product.quantity < 0)
       product.quantity = 0
   }  
+
+  presentModalAttachment(prod){    
+
+    let modal = this.modalCtrl.create(AttachmentsPage, {product: prod});    
+
+    modal.onDidDismiss( data => {
+      
+      if(data.urls){        
+
+        prod.urlUpload = data.url
+        console.log(prod)
+
+        this.uiUtils.showAlertSuccess()
+      }      
+    });
+    
+    modal.present();
+  }
 
 }
 
