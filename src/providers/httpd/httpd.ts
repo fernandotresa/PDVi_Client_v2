@@ -126,8 +126,7 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/getAllProducts", myData, {headers: headers})
   }
 
-  getProductsAttachments(idUser_, start_, end_){
-    
+  getProductsAttachments(idUser_, start_, end_){    
     let myData = JSON.stringify({id: this.totemId, idUser: idUser_, start: start_, end: end_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/getProductsAttachments", myData, {headers: headers})

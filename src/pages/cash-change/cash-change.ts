@@ -74,14 +74,11 @@ export class CashChangePage {
   }
 
   finish(){        
-
-
     if(! this.checkSupervisorInfo())      
       this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleAuthError).present()
 
     else 
-      this.confirm()
-             
+      this.confirm()           
   }
 
   confirm(){

@@ -10,28 +10,52 @@
   
     </ion-navbar> 
     
-    <ion-toolbar color="primary" *ngIf="false">
+    <ion-toolbar color="primary" *ngIf="supervisorAuthOk">
         <ion-searchbar #inputSearch
           [(ngModel)]="searchTerm"
           (ionInput)="setFilteredItems()"
           placeholder= "Procurar...">    
         </ion-searchbar>
      </ion-toolbar>
-
   </ion-header>
 
 
 <ion-content padding>
 
-
     <ion-list>      
+
+        <ion-item no-lines class="text-green fs-15 fw-600 pdl-0">                  
+            <ion-label color="primary" class="fs-30">{{dataInfo.titleSupervisorPdvi}}</ion-label>    
+              <ion-select [(ngModel)]="supervisorUsername">              
+              <ion-option *ngFor="let supervisor of (allSupervisors | async)?.success">{{supervisor.login_usuarios}}</ion-option>                                                  
+            </ion-select>                          
+          </ion-item>      
     
-        <ion-card text-center  *ngFor="let product of productsAll" no-lines>  
+          <ion-item no-lines class="text-green fs-15 fw-600 pdl-0">
+              <ion-label color="primary" class="fs-30">{{dataInfo.titlePassword}}</ion-label>      
+               <ion-input type="password" [(ngModel)]="supervisorPassword" (keyup.enter)="finish()" text-right
+    
+               #inputPassword></ion-input>
+          </ion-item> 
+          
+          <ion-item>
+              <ion-label>{{dataInfo.titleDayStart}}</ion-label>
+              <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY" [(ngModel)]="dayBegin"></ion-datetime>
+          </ion-item>
+
+            <ion-item>
+                <ion-label>{{dataInfo.titleDayEnd}}</ion-label>
+                <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY" [(ngModel)]="dayEnd"></ion-datetime>
+          </ion-item>
+
+      <button *ngIf="supervisorAuthOk" ion-button full large (click)="getData()"  color="secondary">{{dataInfo.titleConfirm}}</button>  
+    
+        <ion-card text-center *ngFor="let product of productsAll" no-lines>  
 
             <ion-card-header style="background-color: #488aff; color: white;">                              
                 <span ion-text color="light" text-wrap>
 
-                  <b>{{dataInfo.titleTicket}}:</b> {{product.id_estoque_utilizavel}}<br>
+                <b>{{dataInfo.titleTicket}}:</b> {{product.id_estoque_utilizavel}}<br>
                 <b>{{dataInfo.titleTicketName}}:</b> {{product.nome_produto}} <br>
                 <b>{{dataInfo.titleTicketDateSold}}:</b> {{product.data_log_venda}}<br>
               </span><br>

@@ -51,7 +51,7 @@
     <ion-toolbar color="primary">
       <ion-searchbar #inputSearch
         [(ngModel)]="searchTerm"
-        (ionInput)="setFilteredItems()"
+        (search)="setFilteredItems()"
         placeholder= "Procurar...">    
       </ion-searchbar>
    </ion-toolbar>
