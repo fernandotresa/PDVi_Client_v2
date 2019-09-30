@@ -5,6 +5,11 @@ import * as moment from 'moment-timezone';
 export class DataInfoProvider {
     
   appType: number = 1
+  areaId: number = 1
+  totemId: number = 1
+  portaId: number = 1
+
+  maxTicketsMultiple: number = 1000
   isWeb: Boolean = true
 
   ipLocal: string = ""
@@ -12,6 +17,7 @@ export class DataInfoProvider {
   isAdmin: Boolean = false
   
   clock: String;
+  ticketRead: String;
 
   titleGoBack: string = "Voltar"
   userType: any = {name: 'Atendente', email: 'falecom@megaticket.com.br', photo: "assets/imgs/100x100.png"}

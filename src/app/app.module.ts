@@ -18,6 +18,8 @@ import { ParkingPageModule } from '../pages/parking/parking.module';
 import { PaymentPageModule } from '../pages/payment/payment.module';
 import { LoginPageModule } from '../pages/login/login.module';
 import { UsersPageModule } from '../pages/users/users.module';
+import { PreprintedPageModule } from '../pages/preprinted/preprinted.module';
+
 import { CashChangePageModule } from '../pages/cash-change/cash-change.module';
 import { CashDrainPageModule } from '../pages/cash-drain/cash-drain.module';
 import { CashStatementPageModule } from '../pages/cash-statement/cash-statement.module';
@@ -95,7 +97,8 @@ export const firebaseConfig = {
     UsersPageModule,
     ReceptorPageModule,
     AttachmentsPageModule,
-    AttachmentsListPageModule
+    AttachmentsListPageModule,
+    PreprintedPageModule
     ],
   providers: [    
     {provide: ErrorHandler, useClass: IonicErrorHandler},

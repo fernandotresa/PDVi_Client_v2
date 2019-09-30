@@ -6,7 +6,6 @@ import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils';
 import { FormControl } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
-import { ProductsPage } from '../products/products';
 
 @Component({
   selector: 'page-home',
@@ -58,7 +57,7 @@ export class HomePage {
   }
 
   areaSelected(area_){
-    this.navCtrl.push(ProductsPage, {area: area_})
+    this.navCtrl.push('ProductsPage', {area: area_})
   }
       
 }
