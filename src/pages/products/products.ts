@@ -221,9 +221,6 @@ export class ProductsPage {
       if(this.products[j].quantity > 0)             
         productsSelect.push(this.products[j])                
     } 
-
-    console.log(productsSelect)
-
     
     let modal = this.modalCtrl.create('PaymentPage', {productSelected: productsSelect, 
       totalSelected: this.totalSelected, finalValue: this.finalValue});

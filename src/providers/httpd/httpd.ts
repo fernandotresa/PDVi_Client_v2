@@ -258,46 +258,16 @@ export class HttpdProvider {
    * PRE VENDAS   
    */
 
+  checkTicket(ticket_){    
+    let myData = JSON.stringify({id: this.dataInfo.totemId, ticket: ticket_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/checkTicket", myData, {headers: headers})
+  }
+
   checkMultipleTickets(start_, end_){    
     let myData = JSON.stringify({id: this.dataInfo.totemId, ticketStart: start_, ticketEnd: end_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/checkMultipleTickets", myData, {headers: headers})
-  }
-
-  checkTicketSold(value_){    
-    let myData = JSON.stringify({id: this.dataInfo.totemId, ticket: value_});
-    const headers = new HttpHeaders({'Content-Type':'application/json'});
-    return this.http.post(this.address  + "/checkTicketIsSold", myData, {headers: headers})
-  }
-
-  checkTicketMultiple(value_){    
-    let myData = JSON.stringify({id: this.dataInfo.totemId, ticket: value_, idArea: this.dataInfo.areaId, idPorta: this.dataInfo.portaId});
-    const headers = new HttpHeaders({'Content-Type':'application/json'});
-    return this.http.post(this.address  + "/checkTicketMultiple", myData, {headers: headers})
-  }
-
-  checkTicketContinueMultiple(value_){        
-    let myData = JSON.stringify({id: this.dataInfo.totemId, ticket: value_, idArea: this.dataInfo.areaId, idPorta: this.dataInfo.portaId});
-    const headers = new HttpHeaders({'Content-Type':'application/json'});
-    return this.http.post(this.address  + "/checkTicketContinueMultiple", myData, {headers: headers})
-  }
-
-  checkTicketUsedSimple(value_){    
-    let myData = JSON.stringify({id: this.dataInfo.totemId, ticket: value_, idArea: this.dataInfo.areaId, idPorta: this.dataInfo.portaId});
-    const headers = new HttpHeaders({'Content-Type':'application/json'});
-    return this.http.post(this.address  + "/checkTicketUsedSimple", myData, {headers: headers})    
-  }
-
-  checkTicketUsed(value_){    
-    let myData = JSON.stringify({id: this.dataInfo.totemId, ticket: value_, idArea: this.dataInfo.areaId, idPorta: this.dataInfo.portaId});
-    const headers = new HttpHeaders({'Content-Type':'application/json'});
-    return this.http.post(this.address  + "/checkTicketUsed", myData, {headers: headers})    
-  }
-
-  checkTicketUsedTotal(value_){    
-    let myData = JSON.stringify({id: this.dataInfo.totemId, ticket: value_, idArea: this.dataInfo.areaId, idPorta: this.dataInfo.portaId});
-    const headers = new HttpHeaders({'Content-Type':'application/json'});
-    return this.http.post(this.address  + "/checkTicketUsedTotal", myData, {headers: headers})    
   }
 
   useTicketMultiple(value_){

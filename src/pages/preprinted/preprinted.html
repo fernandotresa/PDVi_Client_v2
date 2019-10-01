@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar text-center no-border-bottom color="primary">        
-    <ion-title> Pré venda </ion-title>     
+    <ion-title>Venda de bilhetes</ion-title>     
   </ion-navbar>  
   
 </ion-header>
@@ -13,125 +13,62 @@
 </ion-list>
   
 <ion-list *ngIf="! isLoading">
+    <ion-label stacked>Faça uma leitura</ion-label>
+
     <ion-item no-lines><ion-label stacked> {{dataInfo.ticketStart}} </ion-label>
-      <ion-input type="number" (keyup.enter)="checkTicketStart()" [(ngModel)]="searchTicket" #searchbar></ion-input>
+      <ion-input type="number" (keyup.enter)="search()" [(ngModel)]="searchTicket" #searchbar></ion-input>
+
   </ion-item>  
 
-  <ion-item no-lines><ion-label stacked> {{dataInfo.ticketStart}} </ion-label>
-    <ion-input type="number" (keyup.enter)="checkTicketEnd()" [(ngModel)]="searchTicketEnd" #inputEnd></ion-input>
-  </ion-item>  
+  <ion-row>
+      <ion-col>
+        <button ion-button full (click)="cancelar()">Cancelar</button>    
+      </ion-col>
 
-  <button ion-button full (click)="searchMultipleTickets()">Enviar</button>    
+      <ion-col>
+        <button ion-button full (click)="search()">Enviar</button>    
+      </ion-col>      
+  </ion-row>
+
+  <button ion-button full (click)="pagamento()" color="secondary" *ngIf="allTicketCart.length > 0">Pagamento</button>    
+  
                               
 </ion-list>
 
-<ion-list>
 
-  <ion-row *ngIf="allTickets && allTickets.success.length > 0">
+<ion-list  *ngIf="! isLoading && allTickets.length > 0"> 
 
-    <ion-col>
-        <button ion-button full color="primary" (click)="vendeTodos()">Vender todos</button>
-    </ion-col>
-      
-    <ion-col>
-        <button ion-button full color="danger" (click)="apagaLista()">Apagar lista</button>
-    </ion-col>      
+        <ion-item *ngFor="let command of allTickets">    
+                Ingresso: {{ command.id_estoque_utilizavel}} Subtipo: {{command.nome_subtipo_produto}}
+              
+            <span item-end>R$ {{ command.valor_produto}} </span>
 
-    <ion-col>
-        <button ion-button full color="primary" (click)="selecionaSubtipo()">Selecionar Subtipo</button>
-    </ion-col>      
+            <button ion-button color="light" item-end (click)="presentModal(command)">Subtipos</button>
+            <button ion-button color="danger" item-end (click)="remove(command)">Apagar</button>
+                
+        </ion-item>
+    
+    </ion-list>
+    
 
-    <ion-col>
-        <button ion-button full color="secondary" (click)="vendaLote()" *ngIf="! isVendaLote">Venda em lote</button>
-        <button ion-button full color="primary" (click)="vendaLote()" *ngIf="isVendaLote">Venda unitária</button>
-    </ion-col>      
-
-  </ion-row>
  
-  
+<ion-list  *ngIf="! isLoading && allTicketsMultiple.length > 0"> 
 
-<ion-grid *ngIf="! isLoading">
-  <ion-row wrap>
-    <ion-col width-33 *ngFor="let command of (allTickets)?.success">        
+    <ion-item *ngFor="let command of allTicketsMultiple">    
+    <h3 style="color: red;"> Ingresso:{{command.nome_subtipo_produto}} do {{command.ticketStart}} até {{command.ticketEnd}} .... 
+        <b>R$ {{command.valor_produto}} x {{command.total}}</b>
         
-      <ion-card>
-          
-          <ion-card-header style="border-top: 3px solid red; border-bottom: 3px solid red; margin-bottom: 5px;" *ngIf="command.message">
-              <h5 style="color: red;"> Ingresso: {{ command.id_estoque_utilizavel}}  </h5>                                                
-          </ion-card-header>
+      </h3>
+      
+    <span item-end>R$ {{ command.valorTotalF}} </span>    
 
-          <ion-card-header  style="border-top: 3px solid green; ; border-bottom: 3px solid green; margin-bottom: 5px;" *ngIf="command.alerta">                    
-              <h5 style="color: green;"> Ingresso: {{ command.id_estoque_utilizavel}}  </h5>                  
-          </ion-card-header>
+    <h3> {{command.total}} bilhete(s). Subtipo: {{command.nome_subtipo_produto}}</h3>
 
-          <ion-card-content>
-              <p *ngIf="command.data_log_venda"> Data venda: {{ command.data_log_venda}} </p>
-              <p *ngIf="command.nome_ponto_acesso"> Ponto utilização: {{ command.nome_ponto_acesso}} </p>         
-              <p *ngIf="command.alerta">Atenção: {{ command.alerta}} </p>
-              <p *ngIf="command.message">Informação: {{ command.message}} </p>
+    <button ion-button color="light" item-end (click)="presentModal(command)">Subtipos</button>
+    <button ion-button color="danger" item-end (click)="remove(command)">Apagar</button>
 
-              <button ion-button full color="secondary" (click)="venderUnitario(command)">Vender</button>
-          </ion-card-content>
-
-      </ion-card>        
-    </ion-col>
-  </ion-row>
-</ion-grid>
+    </ion-item>
 
 </ion-list>
 
-
 </ion-content>
-
-<ion-footer color="transparent">
-
-<ion-toolbar color="white_">  
-
-  <ion-grid>                  
-      <ion-row>
-          
-      <ion-col col-4>  
-
-          <div class="options">
-          
-              <ion-col>  
-                  <ion-fab>
-                      <button ion-fab color="primary" [disabled]="!inputVisible">
-                          <h3 class="fs-15 fw-600">{{totalChecks}}</h3>                    
-                      </button>
-                  </ion-fab>  
-              </ion-col> 
-
-              <ion-col>  
-                  <ion-fab>
-                      <button ion-fab color="danger" [disabled]="!inputVisible">                            
-                          <h3 class="fs-15 fw-600 mgb-10">{{totalChecksOk}}</h3>
-                      </button>
-                  </ion-fab>  
-              </ion-col>
-      
-              <ion-col>  
-                  <ion-fab>
-                      <button ion-fab color="secondary" [disabled]="!inputVisible">
-                          <h3 class="fs-15 fw-600 mgb-10">{{totalChecksNotOk}}</h3>
-                      </button>
-                  </ion-fab>  
-              </ion-col>  
-
-          </div>
-
-      </ion-col>
-
-      <ion-col col-8>                                  
-          <div class="logo-bottom">
-              <img src="assets/imgs/logo3a.png"/>
-          </div>
-      </ion-col>
-
-      </ion-row>  
-
-      </ion-grid>       
-
-  </ion-toolbar>
-  
-  </ion-footer>

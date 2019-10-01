@@ -105,6 +105,8 @@ export class LoginPage {
     
     if(data.success.length > 0){
       this.dataInfo.userInfo = data.success[0]
+
+      console.log(this.dataInfo.userInfo)
       this.goHome()
     }
       
