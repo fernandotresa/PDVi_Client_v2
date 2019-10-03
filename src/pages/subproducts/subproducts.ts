@@ -11,6 +11,7 @@ import { HttpdProvider } from '../../providers/httpd/httpd';
 })
 export class SubproductsPage {
 
+
   productSelected: any;
   allSubtypes: Observable<any>;
   subtypes: any = []
@@ -27,6 +28,7 @@ export class SubproductsPage {
   }
 
   ionViewDidLoad() {
+    
     this.productSelected = this.navParams.get('productSelected') 
     this.totalSelected = this.productSelected.quantity    
 
@@ -36,7 +38,6 @@ export class SubproductsPage {
       this.startInterface(data)
     })
   }
-
 
   startInterface(data){
     

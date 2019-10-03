@@ -24,7 +24,8 @@ export class PaymentPage {
   paymentForm: string = "Dinheiro"
 
   urlPicture: string;
-  
+  isPrePrinted: Boolean = false
+
   constructor(
     public navCtrl: NavController, 
     public dataInfo: DataInfoProvider,    
@@ -42,7 +43,7 @@ export class PaymentPage {
     this.totalSelected = this.navParams.get('totalSelected') 
     this.finalValue = this.navParams.get('finalValue') 
 
-    console.log(this.productSelected)
+    this.isPrePrinted = this.navParams.get('isPrePrinted')     
     
     this.setIntervalFocus()
 
@@ -107,12 +108,17 @@ export class PaymentPage {
     let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
     loading.present() 
 
+    console.log(
+      this.finalValue, 
+      this.isPrePrinted)
+
     this.httpd.payProducts(
       this.paymentForm, 
       this.productSelected, 
       this.dataInfo.userInfo.id_usuarios, 
       this.dataInfo.userInfo.login_usuarios, 
-      this.finalValue)
+      this.finalValue, 
+      this.isPrePrinted)
 
     .subscribe( data => {
       this.verifyCallbackPayment()

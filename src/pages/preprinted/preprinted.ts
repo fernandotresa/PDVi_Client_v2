@@ -6,7 +6,6 @@ import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils'
 //import moment from 'moment';
 
 @IonicPage()
-
 @Component({
   selector: 'page-preprinted',
   templateUrl: 'preprinted.html',
@@ -25,7 +24,8 @@ export class PreprintedPage {
   allTicketCart: any = []
   allTickesSimpleList: any = []
 
-  searchTicket: string = '19503001';
+  searchTicket: string = '19503027';
+
   searchTicketStart: string = '';
   searchTicketEnd: string = '';
  
@@ -55,7 +55,7 @@ export class PreprintedPage {
 
   ionViewDidLoad() {    
     
-    this.searchTicket = '19503001'
+    this.searchTicket = '19503027'
     this.goBack()    
     this.totemWorking()
     this.setFocus()
@@ -106,9 +106,7 @@ export class PreprintedPage {
   }
  
  
-  search(){
-
-    console.log('??? Procurando: ', this.searchTicket, this.allTickets.includes(this.searchTicket), this.allTickesSimpleList )
+  search(){    
     
     if(! this.allTickesSimpleList.includes(this.searchTicket)){
 
@@ -129,23 +127,16 @@ export class PreprintedPage {
     if(this.allTickets[this.allTickets.length-1]){
     
       let last = this.allTickets[this.allTickets.length-1].id_estoque_utilizavel
-
-      let ini = String(last).substring(0,2)
-      
-      let fim = this.searchTicket.substring(0,2)
-
-      console.log(last, this.searchTicket, ini, fim)
+      let ini = String(last).substring(0,2)      
+      let fim = this.searchTicket.substring(0,2)      
 
       if(ini === fim)
           this.checkTicketDifference()
       else 
-        this.searchOne()
-      
-
+        this.searchOne()      
     } 
 
     else {
-      console.log('Array não possui último item')
       this.searchOne()
     }
 
@@ -169,7 +160,7 @@ export class PreprintedPage {
 
   searchOne(){
     
-    this.uiUtils.showToast('Iniciando verificação do ingresso: ' + this.searchTicket)
+    this.uiUtils.showToast('Verificando ingresso: ' + this.searchTicket)
     this.isLoading = true
 
     this.http.checkTicket(this.searchTicket)
@@ -235,7 +226,10 @@ export class PreprintedPage {
   }
 
   searchCallbackContinueOne(ticket){
-    ticket.success.forEach(element => {      
+
+    let vencidos = []
+
+    ticket.success.forEach(element => {            
 
       if(element.data_log_venda == undefined){
         
@@ -246,7 +240,7 @@ export class PreprintedPage {
         element.selectedsIds.push(element.id_subtipo_produto)
         element.selectedsName.push(element.nome_subtipo_produto)
 
-        this.valorTotal += element.valor_produto        
+        this.valorTotal += element.valor_produto
         this.vendaLoteTipoTicket = element.nome_subtipo_produto
 
         let ticketNumberStr = String(element.id_estoque_utilizavel)        
@@ -254,55 +248,81 @@ export class PreprintedPage {
         this.allTickesSimpleList.push(ticketNumberStr)
         this.allTickets.push(element)
         this.allTicketCart.push(element)        
+
+      } else {
+          vencidos.push(element.id_estoque_utilizavel)
       }        
-    });                
+    });
+    
+    if(vencidos.length > 0){
+      this.avisoIngressosVencidos(vencidos)
+    }
+  }
+
+  avisoIngressosVencidos(vencidos){
+    let msg = "Ingressos já vendido: " + vencidos
+    this.uiUtils.showAlert("Atenção", msg).present()
   }
 
   searchCallbackContinueMultiple(ticket){
     
-    let el = {valorTotal: 0, ticketStart: '', ticketEnd: '', total: 0, valorTotalF: '', quantity: 0}
+    let el = {valorTotal: 0, ticketStart: '', ticketEnd: '', total: 0, valorTotalF: '', quantity: 0,
+    selectedsIds: [], selectedsName: []}
+
     let items_ = []
+    let vencidos = []
 
     ticket.success.forEach(element => {
 
       if(element.data_log_venda == undefined){
 
         el = element
-        el.total = ticket.success.length     
+        el.total = ticket.success.length  - 1
 
         el.valorTotal = 0
         el.valorTotal += element.valor_produto * el.total
-        el.quantity = ticket.success.length
+        element.quantity = ticket.success.length  
+
+        el.selectedsIds = []
+        el.selectedsName = []
+
+        el.selectedsIds.push(element.id_subtipo_produto)
+        el.selectedsName.push(element.nome_subtipo_produto)
 
         el.valorTotalF = el.valorTotal.toFixed(2)
 
         el.ticketStart = this.searchTicketStart
         el.ticketEnd = this.searchTicketEnd 
-        el.quantity =  ticket.success.length
-
-        items_.push(el)
+        el.quantity =  1
 
         this.allTicketCart.push(el)
-      }        
+        this.valorTotal += element.valor_produto
+        this.vendaLoteTipoTicket = element.nome_subtipo_produto
+
+        items_.push(el)
+      }
+              
+      else {
+        vencidos.push(element.id_estoque_utilizavel)
+    } 
 
     });            
 
+    if(vencidos.length > 0){
+      this.avisoIngressosVencidos(vencidos)
+    }    
+
     this.allTicketsMultiple.push(el)    
-    this.removeTicketDuplicated(items_)
+
+    this.removeTicketDuplicated(items_)  
   }
 
   removeTicketDuplicated(items_){
 
     for( var i = 0; i < items_.length; i++){ 
       
-      for( var j = 0; j < this.allTickets.length; j++){ 
-          
-          let val1 = items_[i].id_estoque_utilizavel
-          let val2 = this.allTickets[j].id_estoque_utilizavel            
-
-          if(val1 === val2){            
-            this.allTickets.splice(j, 1)
-          }
+      for( var j = 0; j < this.allTickets.length; j++){           
+          this.removeSingle(this.allTickets[j])
        }
     }
   }
@@ -317,9 +337,13 @@ export class PreprintedPage {
   }
 
   pagamento(){
-   
-    let modal = this.modalCtrl.create('PaymentPage', {productSelected: this.allTicketCart, 
-      totalSelected: this.valorTotal, finalValue: this.valorTotal});
+    
+    let data = {productSelected: this.allTicketCart, 
+      totalSelected: this.valorTotal, finalValue: this.valorTotal, isPrePrinted: true}
+
+      console.log(data)
+    
+    let modal = this.modalCtrl.create('PaymentPage', data);
 
     modal.present(); 
     
@@ -349,8 +373,11 @@ export class PreprintedPage {
 
       let quantity = subtype.quantity
 
-      if(quantity > 0)            
+      if(quantity > 0){
+        productS.nome_subtipo_produto = subtype.nome_subtipo_produto
         subtypesquantities.push(subtype)
+      }    
+        
     }
     
     this.searchProductSubtype(subtypesquantities, productS)
@@ -361,7 +388,27 @@ export class PreprintedPage {
     let id_produto = productS.id_produto    
 
     for(var i = 0; i < this.allTicketCart.length; ++i){
+
       let product = this.allTicketCart[i]
+      let product_id_produto = product.id_produto      
+      
+      if(id_produto === product_id_produto){
+
+        product.selectedsIds = []
+        product.selectedsName = []        
+
+        for(var j = 0; j < selecteds.length; ++j){
+
+          let subselected = selecteds[j];
+
+          product.selectedsIds.push(subselected.id_subtipo_produto)
+          product.selectedsName.push(subselected.nome_subtipo_produto)
+        }
+      }
+    }    
+
+    for(var i = 0; i < this.allTickets.length; ++i){
+      let product = this.allTickets[i]
 
       let product_id_produto = product.id_produto      
       
@@ -378,7 +425,7 @@ export class PreprintedPage {
           product.selectedsName.push(subselected.nome_subtipo_produto)
         }
       }
-    }    
+    }  
   }
 
   remove(command){
@@ -390,10 +437,13 @@ export class PreprintedPage {
     })    
   }
 
-  removeContinue(command){    
+  removeContinue(command){        
+    this.removeCart(command)
+    this.removeSingle(command)                    
+    this.removeListMultiple(command)
+  }
 
-    console.log('removeContinue ', command)
-
+  removeCart(command){
     for( var i = 0; i < this.allTicketCart.length; i++){ 
           
       let id_estoque_utilizavel = this.allTicketCart[i].id_estoque_utilizavel            
@@ -401,18 +451,32 @@ export class PreprintedPage {
       if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
         this.allTicketCart.splice(i, 1)
       }
-   }    
+   }       
+ }
 
-    for( var j = 0; j < this.allTickets.length; j++){ 
+ removeSingle(command){
+  for( var j = 0; j < this.allTickets.length; j++){ 
           
-      let id_estoque_utilizavel = this.allTickets[j].id_estoque_utilizavel            
+    let id_estoque_utilizavel = this.allTickets[j].id_estoque_utilizavel            
 
-      if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
-        this.allTickets.splice(j, 1)
-      }
-   }      
+    if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
+      this.allTickets.splice(j, 1)
+    }
+  }
+ }
 
-   for( var k = 0; k < this.allTickesSimpleList.length; k++){ 
+ removeListMultiple(command){
+
+  for( var m = 0; m < this.allTicketsMultiple.length; m++){ 
+          
+    let id_estoque_utilizavel = this.allTicketsMultiple[m].id_estoque_utilizavel            
+
+    if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
+      this.allTicketsMultiple.splice(m, 1)
+    }
+   }     
+
+  for( var k = 0; k < this.allTickesSimpleList.length; k++){ 
           
     let id_estoque_utilizavel = Number(this.allTickesSimpleList[k])
 
@@ -420,17 +484,6 @@ export class PreprintedPage {
       this.allTickesSimpleList.splice(k, 1)
     }
   }
-  
-  for( var m = 0; m < this.allTicketsMultiple.length; m++){ 
-          
-    let id_estoque_utilizavel = this.allTicketsMultiple[m].id_estoque_utilizavel            
-    console.log(id_estoque_utilizavel)
-
-    if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
-      this.allTicketsMultiple.splice(m, 1)
-    }
- }   
-
  }
 
  

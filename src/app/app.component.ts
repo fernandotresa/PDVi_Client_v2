@@ -102,6 +102,13 @@ export class MyApp {
 			}			
 		});	
 
+			
+		this.options.push({
+			iconName: 'clipboard',
+			displayText: 'Pré Venda',
+			component: "PreprintedPage"			
+		});	
+
 		this.options.push({
 			iconName: 'hand',
 			displayText: 'Receptor',

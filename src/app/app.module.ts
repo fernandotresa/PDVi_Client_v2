@@ -98,6 +98,7 @@ export const firebaseConfig = {
     ReceptorPageModule,
     AttachmentsPageModule,
     AttachmentsListPageModule,
+    
     PreprintedPageModule
     ],
   providers: [    
