@@ -89,7 +89,7 @@ export class DataInfoProvider {
   titleEnterPassword: string = "Digite a sua senha"
   titleLoadingInformations: string = "Carregando informações"
   titlePaymentForm: string = "Forma de pagamento"
-  titleWarning: string = "Atenção"
+  titleWarning: string = "Erro!"
   titleLimit: string = "Limite atingido"
   titleValue: string = "Valor"
   titleTotalSelected: string = "Limpar total selecionado"

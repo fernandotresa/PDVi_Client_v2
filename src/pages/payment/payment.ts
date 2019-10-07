@@ -42,7 +42,6 @@ export class PaymentPage {
     this.productSelected = this.navParams.get('productSelected') 
     this.totalSelected = this.navParams.get('totalSelected') 
     this.finalValue = this.navParams.get('finalValue') 
-
     this.isPrePrinted = this.navParams.get('isPrePrinted')     
     
     this.setIntervalFocus()
@@ -54,8 +53,7 @@ export class PaymentPage {
   }  
 
   setPaymentDefault(data){    
-    this.paymentForm = data.success[0].nome_tipo_pagamento
-    console.log(this.paymentForm)
+    this.paymentForm = data.success[0].nome_tipo_pagamento    
   }
 
   setIntervalFocus(){
@@ -107,10 +105,6 @@ export class PaymentPage {
 
     let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
     loading.present() 
-
-    console.log(
-      this.finalValue, 
-      this.isPrePrinted)
 
     this.httpd.payProducts(
       this.paymentForm, 
@@ -168,7 +162,7 @@ export class PaymentPage {
 
   recoverPaymentErros(data){
     this.httpd.recoverPaymentErros(data).subscribe( () => {
-
+      this.events.publish(this.dataInfo.eventPaymentOk, 0);
       this.navCtrl.pop()  
 
     })
@@ -181,6 +175,7 @@ export class PaymentPage {
       
       alert.present()
       .then( () => {
+
         setTimeout(function(){
           alert.dismiss();
           self.navCtrl.pop()

@@ -26,11 +26,15 @@
       </ion-col>
 
       <ion-col>
-        <button ion-button full (click)="search()">Enviar</button>    
+
+        <button [disabled]="allTicketCart.length === 0" ion-button full (click)="pagamento()" color="secondary">Pagamento</button>    
+      </ion-col>  
+
+      <ion-col>
+        <button [disabled]="!searchTicket || searchTicket.length === 0" ion-button full (click)="search()">Confirmar</button>    
       </ion-col>      
   </ion-row>
 
-  <button ion-button full (click)="pagamento()" color="secondary" *ngIf="allTicketCart.length > 0">Pagamento</button>    
   
                               
 </ion-list>
@@ -44,7 +48,7 @@
             <span item-end>R$ {{ command.valor_produto}} </span>
 
             <button ion-button color="light" item-end (click)="presentModal(command)">Subtipos</button>
-            <button ion-button color="danger" item-end (click)="remove(command)">Apagar</button>
+            <button ion-button color="danger" item-end (click)="remove(command)">Remover</button>
                 
         </ion-item>
     
@@ -65,7 +69,7 @@
     <h3> {{command.total}} bilhete(s). Subtipo: {{command.nome_subtipo_produto}}</h3>
 
     <button ion-button color="light" item-end (click)="presentModal(command)">Subtipos</button>
-    <button ion-button color="danger" item-end (click)="remove(command)">Apagar</button>
+    <button ion-button color="danger" item-end (click)="remove(command)">Remover</button>
 
     </ion-item>
 

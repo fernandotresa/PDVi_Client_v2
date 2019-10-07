@@ -105,7 +105,7 @@ export class MyApp {
 			
 		this.options.push({
 			iconName: 'clipboard',
-			displayText: 'Pré Venda',
+			displayText: 'Venda de Pré Impresso	',
 			component: "PreprintedPage"			
 		});	
 

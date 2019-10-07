@@ -24,7 +24,7 @@ export class PreprintedPage {
   allTicketCart: any = []
   allTickesSimpleList: any = []
 
-  searchTicket: string = '19503027';
+  searchTicket: string = '';
 
   searchTicketStart: string = '';
   searchTicketEnd: string = '';
@@ -44,7 +44,6 @@ export class PreprintedPage {
     public http: HttpdProvider) {      
 
       this.events.subscribe(this.dataInfo.eventPaymentOk, data => {       
-        this.search() 
         this.cancelar()
       }); 
   }
@@ -55,14 +54,11 @@ export class PreprintedPage {
 
   ionViewDidLoad() {    
     
-    this.searchTicket = '19503027'
+    this.cancelar()
     this.goBack()    
     this.totemWorking()
     this.setFocus()
-    this.setIntervalFocus()  
-
-    this.allTickets = []
-    this.allTicketsMultiple = []
+    this.setIntervalFocus()      
   }    
 
   goBack(){    
@@ -116,8 +112,10 @@ export class PreprintedPage {
             this.searchOne()
         
         else 
-          this.checkDigits()
-        
+          this.checkDigits()        
+      }
+      else {
+        this.uiUtils.showAlert('Erro!', 'Código Incorreto')
       }
     }         
   }
@@ -176,7 +174,7 @@ export class PreprintedPage {
 
     let msg = 'Deseja inserir Múltiplos desta sequência? De ' + this.searchTicketStart + ' até ' + this.searchTicketEnd
 
-    this.uiUtils.showConfirm(this.dataInfo.titleAtention, msg)
+    this.uiUtils.showConfirm('Venda Múltipla', msg)
     .then(res => {
 
       if(res){
@@ -209,7 +207,7 @@ export class PreprintedPage {
 
 
   searchCallbackNone(){
-      this.uiUtils.showAlert('Atenção', 'Nenhum resultado').present()
+      this.uiUtils.showAlert('Erro!', 'Bilhetenão existe no estoque!').present()
       this.totemWorking()
   }
 
@@ -277,7 +275,7 @@ export class PreprintedPage {
       if(element.data_log_venda == undefined){
 
         el = element
-        el.total = ticket.success.length  - 1
+        el.total = ticket.success.length  
 
         el.valorTotal = 0
         el.valorTotal += element.valor_produto * el.total
@@ -319,12 +317,12 @@ export class PreprintedPage {
 
   removeTicketDuplicated(items_){
 
-    for( var i = 0; i < items_.length; i++){ 
+    for( var i = 0; i < items_.length; i++){       
       
-      for( var j = 0; j < this.allTickets.length; j++){           
-          this.removeSingle(this.allTickets[j])
-       }
-    }
+      let ticket = items_[i]
+      //this.removeCart(ticket)
+      this.removeSingle(ticket)          
+    }    
   }
 
   cancelar(){
@@ -332,16 +330,33 @@ export class PreprintedPage {
     this.allTickets = []
     this.allTicketsMultiple = []
     this.valorTotal = 0
+    this.searchTicket = ''
     this.searchTicketStart = ''
     this.searchTicketEnd = ''
   }
 
   pagamento(){
+
+    this.valorTotal = 0
+    let dup = []
+    let cart = []
+
+    this.allTicketCart.forEach(element => {
+      console.log('element.valor_produto', element.id_estoque_utilizavel, element.valor_produto)
+
+      if(! dup.includes(element.id_estoque_utilizavel)){
+        this.valorTotal += element.valor_produto
+        dup.push(element.id_estoque_utilizavel)
+        cart.push(element)
+        
+      }            
+    });
+
+    this.allTicketCart = cart
+    console.log(cart)
     
     let data = {productSelected: this.allTicketCart, 
       totalSelected: this.valorTotal, finalValue: this.valorTotal, isPrePrinted: true}
-
-      console.log(data)
     
     let modal = this.modalCtrl.create('PaymentPage', data);
 
@@ -429,7 +444,7 @@ export class PreprintedPage {
   }
 
   remove(command){
-    this.uiUtils.showConfirm(this.dataInfo.titleAtention, 'Deseja remover?')
+    this.uiUtils.showConfirm(this.dataInfo.titleAtention, 'Deseja remover o item de venda?')
     .then(res => {
       if(res){
         this.removeContinue(command)
@@ -441,6 +456,7 @@ export class PreprintedPage {
     this.removeCart(command)
     this.removeSingle(command)                    
     this.removeListMultiple(command)
+
   }
 
   removeCart(command){
@@ -448,7 +464,8 @@ export class PreprintedPage {
           
       let id_estoque_utilizavel = this.allTicketCart[i].id_estoque_utilizavel            
 
-      if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
+      if(id_estoque_utilizavel === command.id_estoque_utilizavel){   
+        console.log('Removendo Cart: ', id_estoque_utilizavel)  
         this.allTicketCart.splice(i, 1)
       }
    }       
