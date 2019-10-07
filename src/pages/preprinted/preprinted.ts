@@ -19,6 +19,7 @@ export class PreprintedPage {
   inputVisible: Boolean = true
   isLoading: Boolean = true  
 
+  allDuplicateds: any = []  
   allTickets: any = []  
   allTicketsMultiple: any = []  
   allTicketCart: any = []
@@ -338,22 +339,22 @@ export class PreprintedPage {
   pagamento(){
 
     this.valorTotal = 0
-    let dup = []
+    this.allDuplicateds = []
+
     let cart = []
 
-    this.allTicketCart.forEach(element => {
-      console.log('element.valor_produto', element.id_estoque_utilizavel, element.valor_produto)
+    this.allTicketCart.forEach(element => {      
 
-      if(! dup.includes(element.id_estoque_utilizavel)){
+      if(! this.allDuplicateds.includes(element.id_estoque_utilizavel))
+      {
         this.valorTotal += element.valor_produto
-        dup.push(element.id_estoque_utilizavel)
+        this.allDuplicateds.push(element.id_estoque_utilizavel)
         cart.push(element)
         
       }            
     });
 
     this.allTicketCart = cart
-    console.log(cart)
     
     let data = {productSelected: this.allTicketCart, 
       totalSelected: this.valorTotal, finalValue: this.valorTotal, isPrePrinted: true}
@@ -402,9 +403,9 @@ export class PreprintedPage {
   
     let id_produto = productS.id_produto    
 
-    for(var i = 0; i < this.allTicketCart.length; ++i){
+    for(var ii = 0; ii < this.allTicketCart.length; ++ii){
 
-      let product = this.allTicketCart[i]
+      let product = this.allTicketCart[ii]
       let product_id_produto = product.id_produto      
       
       if(id_produto === product_id_produto){

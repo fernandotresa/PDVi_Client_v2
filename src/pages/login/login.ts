@@ -59,8 +59,8 @@ export class LoginPage {
 
   goHome(){    
     if(this.dataInfo.appType === 1){
-      //this.navCtrl.setRoot(HomePage);
-      this.navCtrl.setRoot('PreprintedPage');      
+      this.navCtrl.setRoot(HomePage);
+      //this.navCtrl.setRoot('PreprintedPage');      
     }      
 
     else if(this.dataInfo.appType === 2)
