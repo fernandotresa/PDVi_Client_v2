@@ -105,19 +105,20 @@ export class PreprintedPage {
  
   search(){    
     
+    if(this.searchTicket.length == 8){
+
     if(! this.allTickesSimpleList.includes(this.searchTicket)){
-
-      if(this.searchTicket.length == 8){
-
+      
         if(this.allTickets.length === 0)
             this.searchOne()
         
         else 
           this.checkDigits()        
-      }
-      else {
-        this.uiUtils.showAlert('Erro!', 'Código Incorreto')
-      }
+      }      
+    }
+    else {
+      this.uiUtils.showAlert('Erro!', 'Código Incorreto').present()
+      this.searchTicket = ''
     }         
   }
 
@@ -208,7 +209,8 @@ export class PreprintedPage {
 
 
   searchCallbackNone(){
-      this.uiUtils.showAlert('Erro!', 'Bilhetenão existe no estoque!').present()
+      this.uiUtils.showAlert('Erro!', 'Bilhete não existe no estoque!').present()
+      this.searchTicket = ''
       this.totemWorking()
   }
 
@@ -259,7 +261,7 @@ export class PreprintedPage {
   }
 
   avisoIngressosVencidos(vencidos){
-    let msg = "Ingressos já vendido: " + vencidos
+    let msg = "Bilhete(s) já vendidos: " + vencidos
     this.uiUtils.showAlert("Atenção", msg).present()
   }
 

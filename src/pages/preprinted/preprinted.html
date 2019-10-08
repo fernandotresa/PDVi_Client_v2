@@ -43,7 +43,7 @@
 <ion-list  *ngIf="! isLoading && allTickets.length > 0"> 
 
         <ion-item *ngFor="let command of allTickets">    
-                Ingresso: {{ command.id_estoque_utilizavel}} Subtipo: {{command.nome_subtipo_produto}}
+                Bilhete: {{ command.id_estoque_utilizavel}} Subtipo: {{command.nome_subtipo_produto}}
               
             <span item-end>R$ {{ command.valor_produto}} </span>
 
