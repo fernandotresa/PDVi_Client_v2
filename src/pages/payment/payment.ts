@@ -39,6 +39,8 @@ export class PaymentPage {
   }
 
   ionViewDidLoad() {    
+
+    this.finalValue = 0
     this.productSelected = this.navParams.get('productSelected') 
     this.totalSelected = this.navParams.get('totalSelected') 
     this.finalValue = this.navParams.get('finalValue') 
@@ -101,7 +103,7 @@ export class PaymentPage {
     this.startCheckout()      
   }
   
-  startCheckout(){
+  startCheckout(){    
 
     let loading = this.uiUtils.showLoading(this.dataInfo.titleLoadingInformations)
     loading.present() 
@@ -153,6 +155,7 @@ export class PaymentPage {
 
     if(erros){
       this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titlePaymentError).present()
+
       this.recoverPaymentErros(errosArray)
 
     } else 
@@ -162,7 +165,9 @@ export class PaymentPage {
 
   recoverPaymentErros(data){
     this.httpd.recoverPaymentErros(data).subscribe( () => {
+
       this.events.publish(this.dataInfo.eventPaymentOk, 0);
+      
       this.navCtrl.pop()  
 
     })
@@ -184,9 +189,25 @@ export class PaymentPage {
         }, 3000);        
       })
   }
+
+  checkNegative(){
+    if(this.totalChange < 0){
+      this.totalChange = 0
+    }
+
+    if(this.totalReceived < 0){
+      this.totalReceived = 0
+    }
+
+    if(this.finalValue < 0){
+      this.finalValue = 0
+    }
+  }
  
-  totalChanged(){    
+  totalChanged(){        
+    this.checkNegative()
     this.totalChange = this.totalReceived - this.finalValue
+    this.checkNegative()
   }
 
   paymentChanged(event){

@@ -45,6 +45,7 @@ export class PreprintedPage {
     public http: HttpdProvider) {      
 
       this.events.subscribe(this.dataInfo.eventPaymentOk, data => {       
+        console.log('Recebido sinal de pagamento com sucesso')
         this.cancelar()
       }); 
   }
@@ -54,12 +55,19 @@ export class PreprintedPage {
   }
 
   ionViewDidLoad() {    
+
+    if(! this.dataInfo.isHome){
+      this.navCtrl.setRoot('LoginPage')
+    }
+    else {
+
+      this.cancelar()
+      this.goBack()    
+      this.totemWorking()
+      this.setFocus()
+      this.setIntervalFocus()      
+    }
     
-    this.cancelar()
-    this.goBack()    
-    this.totemWorking()
-    this.setFocus()
-    this.setIntervalFocus()      
   }    
 
   goBack(){    
@@ -105,7 +113,9 @@ export class PreprintedPage {
  
   search(){    
     
-    if(this.searchTicket.length == 8){
+    let total = this.searchTicket.length
+
+    if(total == 8){
 
     if(! this.allTickesSimpleList.includes(this.searchTicket)){
       
@@ -116,8 +126,12 @@ export class PreprintedPage {
           this.checkDigits()        
       }      
     }
-    else {
+    else if(total > 0){
       this.uiUtils.showAlert('Erro!', 'Código Incorreto').present()
+
+      this.searchTicket = ''
+    }
+    else {     
       this.searchTicket = ''
     }         
   }
@@ -258,9 +272,12 @@ export class PreprintedPage {
     if(vencidos.length > 0){
       this.avisoIngressosVencidos(vencidos)
     }
+
+    this.removeTicketDuplicated(vencidos)
   }
 
   avisoIngressosVencidos(vencidos){
+    this.searchTicket = ''
     let msg = "Bilhete(s) já vendidos: " + vencidos
     this.uiUtils.showAlert("Atenção", msg).present()
   }
@@ -304,7 +321,7 @@ export class PreprintedPage {
       }
               
       else {
-        vencidos.push(element.id_estoque_utilizavel)
+        vencidos.push(element)
     } 
 
     });            
@@ -315,7 +332,7 @@ export class PreprintedPage {
 
     this.allTicketsMultiple.push(el)    
 
-    this.removeTicketDuplicated(items_)  
+    this.removeTicketDuplicated(vencidos)  
   }
 
   removeTicketDuplicated(items_){
@@ -332,6 +349,7 @@ export class PreprintedPage {
     this.allTickesSimpleList = []
     this.allTickets = []
     this.allTicketsMultiple = []
+    this.allTicketCart = []
     this.valorTotal = 0
     this.searchTicket = ''
     this.searchTicketStart = ''
@@ -341,6 +359,7 @@ export class PreprintedPage {
   pagamento(){
 
     this.valorTotal = 0
+    console.log('Zerando valor total', this.valorTotal)
     this.allDuplicateds = []
 
     let cart = []
@@ -350,11 +369,14 @@ export class PreprintedPage {
       if(! this.allDuplicateds.includes(element.id_estoque_utilizavel))
       {
         this.valorTotal += element.valor_produto
+        console.log('Incrementando valor total', this.valorTotal)
         this.allDuplicateds.push(element.id_estoque_utilizavel)
         cart.push(element)
         
       }            
     });
+
+    console.log('Valor total', this.valorTotal)
 
     this.allTicketCart = cart
     
@@ -435,9 +457,9 @@ export class PreprintedPage {
         product.selectedsIds = []
         product.selectedsName = []
 
-        for(var j = 0; j < selecteds.length; ++j){
+        for(var jj = 0; jj < selecteds.length; ++jj){
 
-          let subselected = selecteds[j];
+          let subselected = selecteds[jj];
 
           product.selectedsIds.push(subselected.id_subtipo_produto)
           product.selectedsName.push(subselected.nome_subtipo_produto)
@@ -460,6 +482,7 @@ export class PreprintedPage {
     this.removeSingle(command)                    
     this.removeListMultiple(command)
 
+    this.searchTicket = ''
   }
 
   removeCart(command){

@@ -35,6 +35,7 @@ export class UiUtilsProvider {
     let alert = this.alertCtrl.create({
       title: title_,
       subTitle: subtitle_,
+      enableBackdropDismiss: false,
       buttons: ['OK']
     });
     
@@ -46,6 +47,7 @@ export class UiUtilsProvider {
       this.alertCtrl.create({
         title: title_,
         message: subtitle_,
+        enableBackdropDismiss: false,
         buttons: [{
             text: 'Não',
             handler:_=> resolve(false)            
@@ -59,6 +61,9 @@ export class UiUtilsProvider {
   })
     
   }
+
+
+  
 
   showToast(msg: string) {
     let toast = this.toastCtrl.create({

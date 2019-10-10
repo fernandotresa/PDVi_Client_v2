@@ -9,6 +9,8 @@ export class DataInfoProvider {
   totemId: number = 1
   portaId: number = 1
 
+  isHome: Boolean = false
+
   maxTicketsMultiple: number = 1000
   isWeb: Boolean = true
 
@@ -87,7 +89,7 @@ export class DataInfoProvider {
   titleCEP: string = "CEP"
   titleState: string = "Estado"
   titleEnterPassword: string = "Digite a sua senha"
-  titleLoadingInformations: string = "Carregando informações"
+  titleLoadingInformations: string = "Favor aguarde"
   titlePaymentForm: string = "Forma de pagamento"
   titleWarning: string = "Erro!"
   titleLimit: string = "Limite atingido"

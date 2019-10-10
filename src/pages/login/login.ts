@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils'
 import { DataInfoProvider } from '../../providers/data-info/data-info'
 import { Observable } from 'rxjs/Observable';
@@ -7,6 +7,7 @@ import { HttpdProvider } from '../../providers/httpd/httpd';
 import { HomePage } from '../../pages/home/home';
 import {Md5} from 'ts-md5/dist/md5';
 
+@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
@@ -58,9 +59,13 @@ export class LoginPage {
   
 
   goHome(){    
+
+    this.dataInfo.isHome = true
+
+
     if(this.dataInfo.appType === 1){
-      this.navCtrl.setRoot(HomePage);
-      //this.navCtrl.setRoot('PreprintedPage');      
+      //this.navCtrl.setRoot(HomePage);
+      this.navCtrl.setRoot('PreprintedPage');      
     }      
 
     else if(this.dataInfo.appType === 2)
