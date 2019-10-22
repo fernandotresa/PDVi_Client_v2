@@ -121,7 +121,6 @@ export class PreprintedPage {
     if(total == 8){
 
     let multi = this.allTickesSimpleList.includes(this.searchTicket)    
-    console.log(this.allTickesSimpleList)
     
     if(! multi){
       
@@ -130,16 +129,16 @@ export class PreprintedPage {
         
         else 
           this.checkDigits()        
+
+          this.searchTicket = ''
+
       }      
     }
     else if(total > 0){
       this.uiUtils.showAlert('Erro!', 'Código Incorreto').present()
-
       this.searchTicket = ''
     }
-    else {     
-      this.searchTicket = ''
-    }         
+
   }
 
   checkDigits(){
@@ -179,7 +178,7 @@ export class PreprintedPage {
   }
 
   searchOne(){
-    
+
     this.uiUtils.showToast('Verificando ingresso: ' + this.searchTicket)
     this.isLoading = true
 
@@ -202,8 +201,11 @@ export class PreprintedPage {
       if(res){
         this.searchMultipleTickets()
       }
-      else
+      else {
+        this.searchTicket = this.searchTicketEnd
         this.searchOne()
+      }
+        
     })    
   }
 
@@ -298,6 +300,7 @@ export class PreprintedPage {
 
   avisoIngressosVencidos(vencidos){
     this.searchTicket = ''
+    console.log(vencidos)
     let msg = "Bilhete(s) já vendidos: " + vencidos
     this.uiUtils.showAlert("Atenção", msg).present()
   }
@@ -651,13 +654,18 @@ export class PreprintedPage {
   return new Promise((resolve) => {
 
     let total = this.allTickets.length
+    
     for( var j = 0; j < total; j++){ 
           
-      let id_estoque_utilizavel = this.allTickets[j].id_estoque_utilizavel            
+      if(this.allTickets[j]){
+
+        let id_estoque_utilizavel = this.allTickets[j].id_estoque_utilizavel            
   
-      if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
-        this.allTickets.splice(j, 1)
+        if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
+          this.allTickets.splice(j, 1)
+        }
       }
+      
     }
 
     resolve()
@@ -715,12 +723,59 @@ export class PreprintedPage {
         this.allTicketCart.splice(j, 1)
         resolve()
       }
-    }
-
-    
-
-  })
-  
+    }    
+  })  
  }
+
+ presentModalCashDrain(){
+  let modal = this.modalCtrl.create('CashDrainPage');    
+
+  modal.onDidDismiss( data => {
+    
+    if(data){
+      this.uiUtils.showAlertSuccess()
+    }      
+  });
+  
+  modal.present();
+}
+
+presentModalChange(){
+  let modal = this.modalCtrl.create('CashChangePage');    
+
+  modal.onDidDismiss( data => {
+    
+    if(data){
+      this.uiUtils.showAlertSuccess()
+    }      
+  });
+  
+  modal.present();
+}
+
+presentModalExtract(){
+  let modal = this.modalCtrl.create('CashStatementPage');    
+
+  modal.onDidDismiss( data => {
+    
+    if(data){
+      this.uiUtils.showAlertSuccess()
+    }      
+  });
+  
+  modal.present();
+}
+
+goPageTicket(){    
+  let modal = this.modalCtrl.create('HistoryPage');    
+
+  modal.onDidDismiss( data => {
+    
+    if(data)
+      this.uiUtils.showAlertSuccess()            
+  });
+  
+  modal.present();
+} 
  
 }

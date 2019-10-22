@@ -1,15 +1,53 @@
 <ion-header>
-  <ion-navbar text-center no-border-bottom color="primary">            
-  <ion-title>Venda de bilhetes</ion-title> 
+  <ion-navbar text-center no-border-bottom color="primary">              
 
-  <ion-item detail-none no-lines class="backgroundPainel" text-center>  
-      <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
-      <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} 
-      <b>{{dataInfo.titleTime}}:</b> {{dataInfo.clock}}          
-  </ion-item>
+      <ion-row>
 
-  </ion-navbar>   
+          <ion-col>
+              <ion-item detail-none no-lines class="backgroundPainel" text-left>  
+                  <ion-title *ngIf="! dataInfo.isAdmin">{{dataInfo.titleAppName}}</ion-title>                                              
+                  <ion-title *ngIf="dataInfo.isAdmin">{{dataInfo.titleAppName}} {{dataInfo.titleProducts}} </ion-title>                                              
+              </ion-item>                
+          </ion-col>
+
+          <ion-col col-9 *ngIf="! dataInfo.isAdmin">
+              <ion-item detail-none no-lines class="backgroundPainel" text-center>  
+                  <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
+                  <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} 
+                  <b>{{dataInfo.titleTime}}:</b> {{dataInfo.clock}}
+              </ion-item>
+          </ion-col>        
+      </ion-row>        
+     
+      <ion-buttons end *ngIf="! dataInfo.isAdmin">
+
+          <button ion-button icon-only color="royal" (click)="presentModalCashDrain()" tooltip="Sangria" positionV="bottom" arrow>
+              <ion-icon class="fs-30" name="md-remove-circle"></ion-icon>
+          </button>
+
+          <button ion-button icon-only color="royal" (click)="presentModalChange()" tooltip="Troco" positionV="bottom" arrow>
+              <ion-icon class="fs-30" name="cash"></ion-icon>
+          </button>
+
+          <button ion-button icon-only color="royal" (click)="presentModalExtract()" tooltip="Extrato de caixa" positionV="bottom" arrow>
+              <ion-icon class="fs-30" name="ios-clipboard"></ion-icon>
+          </button>        
+
+          <button ion-button icon-only color="royal" (click)="goPageTicket()" tooltip="Reimpressão" positionV="bottom" arrow>
+              <ion-icon class="fs-30" name="ios-print"></ion-icon>
+          </button>
+
+          <button ion-button icon-only color="royal" (click)="logout()" tooltip="Deslogar" positionV="bottom" arrow>
+              <ion-icon class="fs-30" name="log-out"></ion-icon>
+          </button>            
+      </ion-buttons>                
+
+</ion-navbar>  
+
 </ion-header>
+
+
+
 <ion-content padding>  
 
 <ion-list *ngIf="isLoading">
