@@ -1,10 +1,15 @@
 <ion-header>
-  <ion-navbar text-center no-border-bottom color="primary">        
-    <ion-title>Venda de bilhetes</ion-title>     
-  </ion-navbar>  
-  
-</ion-header>
+  <ion-navbar text-center no-border-bottom color="primary">            
+  <ion-title>Venda de bilhetes</ion-title> 
 
+  <ion-item detail-none no-lines class="backgroundPainel" text-center>  
+      <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
+      <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} 
+      <b>{{dataInfo.titleTime}}:</b> {{dataInfo.clock}}          
+  </ion-item>
+
+  </ion-navbar>   
+</ion-header>
 <ion-content padding>  
 
 <ion-list *ngIf="isLoading">
@@ -62,7 +67,7 @@
 <ion-list  *ngIf="! isLoading && allTicketsMultiple.length > 0"> 
 
     <ion-item *ngFor="let command of allTicketsMultiple">    
-    <h3 style="color: red;"> Ingresso:{{command.nome_subtipo_produto}} do {{command.ticketStart}} até {{command.ticketEnd}} .... 
+    <h3 style="color: red;"> Bilhetes:{{command.nome_subtipo_produto}} do {{command.ticketStart}} até {{command.ticketEnd}} .... 
         <b>R$ {{command.valor_produto}} x {{command.total}}</b>
         
       </h3>

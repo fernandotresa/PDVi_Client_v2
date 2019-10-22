@@ -65,7 +65,10 @@ export class PreprintedPage {
       this.goBack()    
       this.totemWorking()
       this.setFocus()
-      this.setIntervalFocus()      
+      this.setIntervalFocus()    
+      
+      this.searchTicketStart = '19520001'
+      this.searchTicketEnd = '19520005'
     }
     
   }    
@@ -117,7 +120,10 @@ export class PreprintedPage {
 
     if(total == 8){
 
-    if(! this.allTickesSimpleList.includes(this.searchTicket)){
+    let multi = this.allTickesSimpleList.includes(this.searchTicket)    
+    console.log(this.allTickesSimpleList)
+    
+    if(! multi){
       
         if(this.allTickets.length === 0)
             this.searchOne()
@@ -244,36 +250,50 @@ export class PreprintedPage {
 
     let vencidos = []
 
-    ticket.success.forEach(element => {            
+    var bar = new Promise((resolve) => {
 
-      if(element.data_log_venda == undefined){
+    ticket.success.forEach(element => {    
+      
+        if(element.data_log_venda == undefined){
         
-        element.quantity = ticket.success.length  
-        element.selectedsIds = []
-        element.selectedsName = []     
+          element.quantity = ticket.success.length  
+          element.selectedsIds = []
+          element.selectedsName = []     
+          
+          element.selectedsIds.push(element.id_subtipo_produto)
+          element.selectedsName.push(element.nome_subtipo_produto)
+  
+          this.valorTotal += element.valor_produto
+          this.vendaLoteTipoTicket = element.nome_subtipo_produto
+  
+          let ticketNumberStr = String(element.id_estoque_utilizavel)        
+  
+          console.log('Adicionando na lista UNICO: ', ticketNumberStr)        
+  
+          this.allTickesSimpleList.push(ticketNumberStr)
+          this.allTickets.push(element)
+  
+          this.allTicketCart.push(element)        
+  
+        } else {
+            vencidos.push(element.id_estoque_utilizavel)
+        }
         
-        element.selectedsIds.push(element.id_subtipo_produto)
-        element.selectedsName.push(element.nome_subtipo_produto)
+        resolve()
 
-        this.valorTotal += element.valor_produto
-        this.vendaLoteTipoTicket = element.nome_subtipo_produto
-
-        let ticketNumberStr = String(element.id_estoque_utilizavel)        
-
-        this.allTickesSimpleList.push(ticketNumberStr)
-        this.allTickets.push(element)
-        this.allTicketCart.push(element)        
-
-      } else {
-          vencidos.push(element.id_estoque_utilizavel)
-      }        
+      });            
     });
     
-    if(vencidos.length > 0){
-      this.avisoIngressosVencidos(vencidos)
-    }
+    bar.then(() => {
 
-    this.removeTicketDuplicated(vencidos)
+      if(vencidos.length > 0){
+        this.avisoIngressosVencidos(vencidos)
+      }
+  
+      this.removeTicketDuplicated(vencidos)
+
+    })
+    
   }
 
   avisoIngressosVencidos(vencidos){
@@ -284,65 +304,95 @@ export class PreprintedPage {
 
   searchCallbackContinueMultiple(ticket){
     
-    let el = {valorTotal: 0, ticketStart: '', ticketEnd: '', total: 0, valorTotalF: '', quantity: 0,
+    let el = {valorTotal: 0, ticketStart: 0, ticketEnd: 0, total: 0, valorTotalF: '', quantity: 0,
     selectedsIds: [], selectedsName: []}
 
     let items_ = []
     let vencidos = []
+    this.allDuplicateds = []    
+
+    var bar = new Promise((resolve) => {
 
     ticket.success.forEach(element => {
 
-      if(element.data_log_venda == undefined){
+        if(! this.allDuplicateds.includes(element.id_estoque_utilizavel)){
 
-        el = element
-        el.total = ticket.success.length  
+          this.removeSingleCart(element)
 
-        el.valorTotal = 0
-        el.valorTotal += element.valor_produto * el.total
-        element.quantity = ticket.success.length  
+          this.allDuplicateds.push(element.id_estoque_utilizavel)
 
-        el.selectedsIds = []
-        el.selectedsName = []
+          if(element.data_log_venda == undefined){
 
-        el.selectedsIds.push(element.id_subtipo_produto)
-        el.selectedsName.push(element.nome_subtipo_produto)
+            el = element
+            el.total = ticket.success.length  
+    
+            el.valorTotal = 0
+            el.valorTotal += element.valor_produto * el.total
+            element.quantity = ticket.success.length  
+    
+            el.selectedsIds = []
+            el.selectedsName = []
+    
+            el.selectedsIds.push(element.id_subtipo_produto)
+            el.selectedsName.push(element.nome_subtipo_produto)
+    
+            el.valorTotalF = el.valorTotal.toFixed(2)
+    
+            el.ticketStart = Number(this.searchTicketStart)
+            el.ticketEnd = Number(this.searchTicketEnd)
+            el.quantity =  1
+            
+            let ticketNumberStr = String(element.id_estoque_utilizavel)                             
+            this.allTickesSimpleList.push(ticketNumberStr)            
+            this.allTicketCart.push(el)
 
-        el.valorTotalF = el.valorTotal.toFixed(2)
+            this.valorTotal += element.valor_produto
+            this.vendaLoteTipoTicket = element.nome_subtipo_produto
+    
+            items_.push(el)
+            console.log('Adicionando na lista multiplo: ', ticketNumberStr)
+          }
+                  
+          else {
+            vencidos.push(element)
+          } 
+       }
 
-        el.ticketStart = this.searchTicketStart
-        el.ticketEnd = this.searchTicketEnd 
-        el.quantity =  1
+       
+    });
 
-        this.allTicketCart.push(el)
-        this.valorTotal += element.valor_produto
-        this.vendaLoteTipoTicket = element.nome_subtipo_produto
+        console.log('this.allTicketCart', this.allTicketCart)
+        resolve()
+    }); 
+    
+    bar.then(() => {
 
-        items_.push(el)
-      }
-              
-      else {
-        vencidos.push(element)
-    } 
+      if(vencidos.length > 0){
+        this.avisoIngressosVencidos(vencidos)
+      }    
+  
+      this.allTicketsMultiple.push(el)    
+      this.removeTicketDuplicated(vencidos)
+      this.removeTicketDuplicated(items_)
 
-    });            
-
-    if(vencidos.length > 0){
-      this.avisoIngressosVencidos(vencidos)
-    }    
-
-    this.allTicketsMultiple.push(el)    
-
-    this.removeTicketDuplicated(vencidos)  
+    })        
   }
 
   removeTicketDuplicated(items_){
 
-    for( var i = 0; i < items_.length; i++){       
+    return new Promise((resolve) => {
+
+      for( var i = 0; i < items_.length; i++){       
       
-      let ticket = items_[i]
-      //this.removeCart(ticket)
-      this.removeSingle(ticket)          
-    }    
+        let ticket = items_[i]
+        
+        this.removeSingle(ticket)            
+        //this.removeListMultiple(ticket)
+      }   
+      
+      resolve()
+    });
+    
   }
 
   cancelar(){
@@ -359,33 +409,39 @@ export class PreprintedPage {
   pagamento(){
 
     this.valorTotal = 0
-    console.log('Zerando valor total', this.valorTotal)
     this.allDuplicateds = []
 
     let cart = []
 
-    this.allTicketCart.forEach(element => {      
+    var bar = new Promise((resolve) => {
 
-      if(! this.allDuplicateds.includes(element.id_estoque_utilizavel))
-      {
-        this.valorTotal += element.valor_produto
-        console.log('Incrementando valor total', this.valorTotal)
-        this.allDuplicateds.push(element.id_estoque_utilizavel)
-        cart.push(element)
-        
-      }            
-    });
+      this.allTicketCart.forEach(element => {      
 
-    console.log('Valor total', this.valorTotal)
+        if(! this.allDuplicateds.includes(element.id_estoque_utilizavel))
+        {
+          this.valorTotal += element.valor_produto        
+          this.allDuplicateds.push(element.id_estoque_utilizavel)
+          cart.push(element)          
+        }            
+      });
 
-    this.allTicketCart = cart
+      resolve()
+    })
     
-    let data = {productSelected: this.allTicketCart, 
-      totalSelected: this.valorTotal, finalValue: this.valorTotal, isPrePrinted: true}
-    
-    let modal = this.modalCtrl.create('PaymentPage', data);
 
-    modal.present(); 
+    bar.then(() => {
+
+      this.allTicketCart = cart
+    
+      let data = {productSelected: this.allTicketCart, 
+        totalSelected: this.valorTotal, finalValue: this.valorTotal, isPrePrinted: true}
+      
+      let modal = this.modalCtrl.create('PaymentPage', data);
+
+      modal.present(); 
+
+    })
+    
     
   }
 
@@ -478,6 +534,7 @@ export class PreprintedPage {
   }
 
   removeContinue(command){        
+    
     this.removeCart(command)
     this.removeSingle(command)                    
     this.removeListMultiple(command)
@@ -486,52 +543,184 @@ export class PreprintedPage {
   }
 
   removeCart(command){
-    for( var i = 0; i < this.allTicketCart.length; i++){ 
-          
-      let id_estoque_utilizavel = this.allTicketCart[i].id_estoque_utilizavel            
 
-      if(id_estoque_utilizavel === command.id_estoque_utilizavel){   
-        console.log('Removendo Cart: ', id_estoque_utilizavel)  
-        this.allTicketCart.splice(i, 1)
+    let ini = 0
+    let fim = 0
+
+    var bar = new Promise((resolve) => {
+
+      for( var i = 0; i < this.allTicketCart.length; i++){ 
+          
+        let id_estoque_utilizavel = this.allTicketCart[i].id_estoque_utilizavel
+        
+        if(id_estoque_utilizavel === command.id_estoque_utilizavel){   
+  
+          let ticketStart = Number(this.allTicketCart[i].ticketStart)
+          let ticketEnd = Number(this.allTicketCart[i].ticketEnd)
+  
+          if(ticketStart && ticketEnd){    
+            ini = ticketStart
+            fim = ticketEnd
+          }
+  
+          else {            
+            this.allTicketCart.splice(i, 1) 
+          }        
+        }                
       }
-   }       
+
+      resolve()
+    });
+    
+    bar.then(() => {
+
+      if(ini && fim){
+          this.removeMultiploTry(ini, fim)         
+          this.removeMultiploSimpleListTry(ini, fim)         
+       }
+    })   
+ }
+
+
+ removeMultiploTry(ini, fim){
+
+  var bar1 = this.removeMultiploInicioFim(ini, fim)
+
+  bar1.catch(() => {
+   this.removeMultiploTry(ini, fim)
+  })
+
+ }
+
+ removeMultiploInicioFim(ini, fim){
+
+  return new Promise((resolve, reject) => {
+    
+    let totalFila = 0
+
+    for( var j = 0; j < this.allTicketCart.length; j++){ 
+        
+      let id_estoque_utilizavel = this.allTicketCart[j].id_estoque_utilizavel
+
+      if(id_estoque_utilizavel => ini && id_estoque_utilizavel <= fim){
+        
+        this.allTicketCart.splice(j, 1)
+        totalFila++
+      }
+     }
+
+     totalFila === 0 ? resolve() : reject()
+    
+   })
+ }
+
+ removeMultiploSimpleListTry(ini, fim){
+
+  var bar1 = this.removeMultiploInicioFimSimples(ini, fim)
+
+  bar1.catch(() => {   
+   this.removeMultiploSimpleListTry(ini, fim)
+  })
+
+ }
+
+ removeMultiploInicioFimSimples(ini, fim){
+
+  return new Promise((resolve, reject) => {
+    
+    let totalFila = 0
+
+    for( var j = 0; j < this.allTickesSimpleList.length; j++){ 
+      
+      let id_estoque_utilizavel = this.allTickesSimpleList[j].id_estoque_utilizavel
+
+      if(id_estoque_utilizavel => ini && id_estoque_utilizavel <= fim){
+        
+        this.allTickesSimpleList.splice(j, 1)
+        totalFila++
+      }
+     }
+
+     totalFila === 0 ? resolve() : reject()
+    
+   })
  }
 
  removeSingle(command){
-  for( var j = 0; j < this.allTickets.length; j++){ 
-          
-    let id_estoque_utilizavel = this.allTickets[j].id_estoque_utilizavel            
 
-    if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
-      this.allTickets.splice(j, 1)
+  return new Promise((resolve) => {
+
+    let total = this.allTickets.length
+    for( var j = 0; j < total; j++){ 
+          
+      let id_estoque_utilizavel = this.allTickets[j].id_estoque_utilizavel            
+  
+      if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
+        this.allTickets.splice(j, 1)
+      }
     }
-  }
+
+    resolve()
+
+  })
+  
  }
 
  removeListMultiple(command){
 
-  for( var m = 0; m < this.allTicketsMultiple.length; m++){ 
+  var bar = new Promise((resolve) => {
+
+    for( var m = 0; m < this.allTicketsMultiple.length; m++){ 
           
-    let id_estoque_utilizavel = this.allTicketsMultiple[m].id_estoque_utilizavel            
-
-    if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
-      this.allTicketsMultiple.splice(m, 1)
-    }
-   }     
-
-  for( var k = 0; k < this.allTickesSimpleList.length; k++){ 
-          
-    let id_estoque_utilizavel = Number(this.allTickesSimpleList[k])
-
-    if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
-      this.allTickesSimpleList.splice(k, 1)
-    }
-  }
- }
-
- 
-
+      let id_estoque_utilizavel = this.allTicketsMultiple[m].id_estoque_utilizavel            
   
+      if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
+        this.allTicketsMultiple.splice(m, 1)
+      }
+     }
+     
+     resolve()
+  })
 
+  bar.then(() => {
+
+    new Promise((resolve) => {
+
+      for( var k = 0; k < this.allTickesSimpleList.length; k++){ 
+          
+        let id_estoque_utilizavel = Number(this.allTickesSimpleList[k])
+    
+        if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
+          this.allTickesSimpleList.splice(k, 1)
+        }
+      }
+
+      resolve()
+
+    })    
+  })  
+ }   
+
+ removeSingleCart(command){
+
+  return new Promise((resolve) => {
+
+    for( var j = 0; j < this.allTicketCart.length; j++){ 
+          
+      let id_estoque_utilizavel = this.allTicketCart[j].id_estoque_utilizavel            
+  
+      if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
+
+        console.log('Removendo ÚNICO CART', id_estoque_utilizavel)
+        this.allTicketCart.splice(j, 1)
+        resolve()
+      }
+    }
+
+    
+
+  })
+  
+ }
  
 }
