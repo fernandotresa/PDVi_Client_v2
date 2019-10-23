@@ -269,9 +269,7 @@ export class PreprintedPage {
           this.vendaLoteTipoTicket = element.nome_subtipo_produto
   
           let ticketNumberStr = String(element.id_estoque_utilizavel)        
-  
-          console.log('Adicionando na lista UNICO: ', ticketNumberStr)        
-  
+    
           this.allTickesSimpleList.push(ticketNumberStr)
           this.allTickets.push(element)
   
@@ -299,8 +297,7 @@ export class PreprintedPage {
   }
 
   avisoIngressosVencidos(vencidos){
-    this.searchTicket = ''
-    console.log(vencidos)
+    this.searchTicket = ''    
     let msg = "Bilhete(s) já vendidos: " + vencidos
     this.uiUtils.showAlert("Atenção", msg).present()
   }
@@ -353,19 +350,17 @@ export class PreprintedPage {
             this.vendaLoteTipoTicket = element.nome_subtipo_produto
     
             items_.push(el)
-            console.log('Adicionando na lista multiplo: ', ticketNumberStr)
           }
                   
           else {
-            vencidos.push(element)
+            vencidos.push(element.id_estoque_utilizavel)
           } 
        }
 
        
     });
 
-        console.log('this.allTicketCart', this.allTicketCart)
-        resolve()
+    resolve()
     }); 
     
     bar.then(() => {
@@ -550,6 +545,8 @@ export class PreprintedPage {
     let ini = 0
     let fim = 0
 
+    console.log(command)
+
     var bar = new Promise((resolve) => {
 
       for( var i = 0; i < this.allTicketCart.length; i++){ 
@@ -568,6 +565,7 @@ export class PreprintedPage {
   
           else {            
             this.allTicketCart.splice(i, 1) 
+            resolve()
           }        
         }                
       }
@@ -605,8 +603,10 @@ export class PreprintedPage {
         
       let id_estoque_utilizavel = this.allTicketCart[j].id_estoque_utilizavel
 
-      if(id_estoque_utilizavel => ini && id_estoque_utilizavel <= fim){
+      if(id_estoque_utilizavel >= ini && id_estoque_utilizavel <= fim){
         
+        console.log('Removendo ', id_estoque_utilizavel)
+
         this.allTicketCart.splice(j, 1)
         totalFila++
       }
@@ -654,7 +654,7 @@ export class PreprintedPage {
   return new Promise((resolve) => {
 
     let total = this.allTickets.length
-    
+
     for( var j = 0; j < total; j++){ 
           
       if(this.allTickets[j]){
@@ -664,14 +664,12 @@ export class PreprintedPage {
         if(id_estoque_utilizavel === command.id_estoque_utilizavel){            
           this.allTickets.splice(j, 1)
         }
-      }
-      
+      }      
     }
 
     resolve()
 
-  })
-  
+  })  
  }
 
  removeListMultiple(command){
