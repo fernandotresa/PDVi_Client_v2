@@ -34,6 +34,7 @@ export class PreprintedPage {
   vendaLoteTipoTicket: string = 'Inteira'
 
   valorTotal: number = 0  
+  intervalFocus: any
 
 
   constructor(public dataInfo: DataInfoProvider,
@@ -88,7 +89,7 @@ export class PreprintedPage {
   setIntervalFocus(){
     let self = this
 
-      setInterval(function(){ 
+      this.intervalFocus = setInterval(function(){ 
 
         if(self.searchTicket.length < 8)
             self.setFocus();        
@@ -251,6 +252,7 @@ export class PreprintedPage {
   searchCallbackContinueOne(ticket){
 
     let vencidos = []
+    let valoresVencidos = []
 
     var bar = new Promise((resolve) => {
 
@@ -271,11 +273,11 @@ export class PreprintedPage {
           let ticketNumberStr = String(element.id_estoque_utilizavel)        
     
           this.allTickesSimpleList.push(ticketNumberStr)
-          this.allTickets.push(element)
-  
+          this.allTickets.push(element)  
           this.allTicketCart.push(element)        
   
         } else {
+            valoresVencidos.push(element.valor_produto)
             vencidos.push(element.id_estoque_utilizavel)
         }
         
@@ -299,18 +301,19 @@ export class PreprintedPage {
   avisoIngressosVencidos(vencidos){
     this.searchTicket = ''    
     let msg = "Bilhete(s) já vendidos: " + vencidos
-    this.uiUtils.showAlert("Atenção", msg).present()
+    this.uiUtils.showAlert("Atenção", msg).present()  
   }
-
+  
   searchCallbackContinueMultiple(ticket){
     
     let el = {valorTotal: 0, ticketStart: 0, ticketEnd: 0, total: 0, valorTotalF: '', quantity: 0,
-    selectedsIds: [], selectedsName: []}
+    selectedsIds: [], selectedsName: [], vencidos: []}
 
     let items_ = []
     let vencidos = []
     this.allDuplicateds = []    
 
+    let totalTickets = 0
     var bar = new Promise((resolve) => {
 
     ticket.success.forEach(element => {
@@ -323,32 +326,36 @@ export class PreprintedPage {
 
           if(element.data_log_venda == undefined){
 
+            totalTickets++
+
             el = element
-            el.total = ticket.success.length  
+            el.total = totalTickets      
     
             el.valorTotal = 0
             el.valorTotal += element.valor_produto * el.total
-            element.quantity = ticket.success.length  
-    
+            element.quantity = totalTickets
+
+            el.valorTotalF = el.valorTotal.toFixed(2)
+  
             el.selectedsIds = []
             el.selectedsName = []
     
             el.selectedsIds.push(element.id_subtipo_produto)
-            el.selectedsName.push(element.nome_subtipo_produto)
-    
-            el.valorTotalF = el.valorTotal.toFixed(2)
+            el.selectedsName.push(element.nome_subtipo_produto)                
     
             el.ticketStart = Number(this.searchTicketStart)
             el.ticketEnd = Number(this.searchTicketEnd)
             el.quantity =  1
             
             let ticketNumberStr = String(element.id_estoque_utilizavel)                             
+
             this.allTickesSimpleList.push(ticketNumberStr)            
             this.allTicketCart.push(el)
 
             this.valorTotal += element.valor_produto
             this.vendaLoteTipoTicket = element.nome_subtipo_produto
     
+            console.log(el)
             items_.push(el)
           }
                   
@@ -366,9 +373,10 @@ export class PreprintedPage {
     bar.then(() => {
 
       if(vencidos.length > 0){
+        el.vencidos = vencidos
         this.avisoIngressosVencidos(vencidos)
       }    
-  
+        
       this.allTicketsMultiple.push(el)    
       this.removeTicketDuplicated(vencidos)
       this.removeTicketDuplicated(items_)
@@ -434,7 +442,15 @@ export class PreprintedPage {
       let data = {productSelected: this.allTicketCart, 
         totalSelected: this.valorTotal, finalValue: this.valorTotal, isPrePrinted: true}
       
+      clearInterval(this.intervalFocus)
+
       let modal = this.modalCtrl.create('PaymentPage', data);
+
+      modal.onDidDismiss(data => {
+      
+        this.setFocus()
+        this.setIntervalFocus()    
+      });
 
       modal.present(); 
 
@@ -603,10 +619,7 @@ export class PreprintedPage {
         
       let id_estoque_utilizavel = this.allTicketCart[j].id_estoque_utilizavel
 
-      if(id_estoque_utilizavel >= ini && id_estoque_utilizavel <= fim){
-        
-        console.log('Removendo ', id_estoque_utilizavel)
-
+      if(id_estoque_utilizavel >= ini && id_estoque_utilizavel <= fim){                
         this.allTicketCart.splice(j, 1)
         totalFila++
       }

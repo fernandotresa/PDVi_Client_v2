@@ -19,7 +19,7 @@
           </ion-col>        
       </ion-row>        
      
-      <ion-buttons end *ngIf="! dataInfo.isAdmin">
+      <ion-buttons end *ngIf="false">
 
           <button ion-button icon-only color="royal" (click)="presentModalCashDrain()" tooltip="Sangria" positionV="bottom" arrow>
               <ion-icon class="fs-30" name="md-remove-circle"></ion-icon>
@@ -112,7 +112,8 @@
       
     <span item-end>R$ {{ command.valorTotalF}} </span>    
 
-    <h3> {{command.total}} bilhete(s). Subtipo: {{command.nome_subtipo_produto}}</h3>
+    <h3> {{command.total}} bilhete(s) válidos. Subtipo: {{command.nome_subtipo_produto}}</h3>
+    <h3 *ngIf="command.vencidos"> Bilhete(s) vencidos: {{command.vencidos}}</h3>
 
     <button ion-button color="light" item-end (click)="presentModal(command)">Subtipos</button>
     <button ion-button color="danger" item-end (click)="remove(command)">Remover</button>
