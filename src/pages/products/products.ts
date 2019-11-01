@@ -11,6 +11,8 @@ import { CashStatementPage } from '../../pages/cash-statement/cash-statement';
 import { CashChangePage } from '../../pages/cash-change/cash-change';
 import { CashDrainPage } from '../../pages/cash-drain/cash-drain';
 import { AttachmentsPage } from '../../pages/attachments/attachments';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 
 @IonicPage()
 @Component({
@@ -42,6 +44,7 @@ export class ProductsPage {
     public navParams: NavParams,
     public modalCtrl: ModalController,
     public events: Events,
+    private iab: InAppBrowser,
     public httpd: HttpdProvider) {
 
     this.searchControl = new FormControl();
@@ -57,6 +60,22 @@ export class ProductsPage {
       this.startAdmin()
     else
       this.startOperator()
+
+
+    if(this.dataInfo.abreTotem)    {
+      this.abreTotem()
+    }
+  }
+
+  abreTotem(){
+
+    const browser = this.iab.create('https://localhost/totem_acesso');
+
+    this.httpd.systemCommandLocal()
+    .subscribe(() => {
+      
+      console.log('Comando alt tab enviado com sucesso!')
+    })
   }
 
   startAdmin(){
@@ -80,7 +99,7 @@ export class ProductsPage {
   }
 
   goPageTicket(){    
-    let modal = this.modalCtrl.create('HistoryPage');    
+    let modal = this.modalCtrl.create('HistoryPage', {showBackdrop: true, enableBackdropDismiss: true});    
 
     modal.onDidDismiss( data => {
       
@@ -223,14 +242,14 @@ export class ProductsPage {
     } 
     
     let modal = this.modalCtrl.create('PaymentPage', {productSelected: productsSelect, 
-      totalSelected: this.totalSelected, finalValue: this.finalValue});
+      totalSelected: this.totalSelected, finalValue: this.finalValue}, {showBackdrop: true, enableBackdropDismiss: true});
 
     modal.present();    
   }
 
   presentPromptParking(){
 
-    let modal = this.modalCtrl.create('ParkingPage');
+    let modal = this.modalCtrl.create('ParkingPage', {showBackdrop: true, enableBackdropDismiss: true});
     modal.onDidDismiss(data => {  
 
       if(data)
@@ -253,7 +272,7 @@ export class ProductsPage {
 
   presentModal(product){
 
-    let modal = this.modalCtrl.create('SubproductsPage', {productSelected: product});
+    let modal = this.modalCtrl.create('SubproductsPage', {productSelected: product}, {showBackdrop: true, enableBackdropDismiss: true});
     modal.onDidDismiss(data => {
       
       if(data)
@@ -322,7 +341,7 @@ export class ProductsPage {
   }
 
   presentModalCashDrain(){
-    let modal = this.modalCtrl.create(CashDrainPage);    
+    let modal = this.modalCtrl.create(CashDrainPage, {showBackdrop: true, enableBackdropDismiss: true});    
 
     modal.onDidDismiss( data => {
       
@@ -335,7 +354,7 @@ export class ProductsPage {
   }
 
   presentModalChange(){
-    let modal = this.modalCtrl.create(CashChangePage);    
+    let modal = this.modalCtrl.create(CashChangePage, {showBackdrop: true, enableBackdropDismiss: true});    
 
     modal.onDidDismiss( data => {
       
@@ -348,7 +367,7 @@ export class ProductsPage {
   }
 
   presentModalExtract(){
-    let modal = this.modalCtrl.create(CashStatementPage);    
+    let modal = this.modalCtrl.create(CashStatementPage, {showBackdrop: true, enableBackdropDismiss: true});    
 
     modal.onDidDismiss( data => {
       

@@ -1,4 +1,4 @@
-import { ErrorHandler, Injector, NgModule } from '@angular/core';
+import { ErrorHandler, Injector, NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -43,6 +43,13 @@ import { AngularFireModule } from 'angularfire2';
 
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireStorageModule } from 'angularfire2/storage';
+
+import { ConfigurationService } from "ionic-configuration-service";
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
+export function loadConfiguration(configurationService: ConfigurationService): () => Promise<void> {
+  return () => configurationService.load("assets/configs/document.json");
+}
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAzSLbqgDiYqYIkemFmOmnJIb2DBesxL7I",
@@ -109,7 +116,15 @@ export const firebaseConfig = {
     Firebase,
     Camera,
     CameraProvider,
-    StorageProvider
+    StorageProvider,
+    InAppBrowser,
+    ConfigurationService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: loadConfiguration,
+      deps: [ConfigurationService],
+      multi: true
+    },
     ]
 })
 

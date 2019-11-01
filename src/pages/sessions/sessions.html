@@ -1,0 +1,74 @@
+<ion-header>
+
+  <ion-navbar text-center no-border-bottom color="primary">      
+    <ion-title>Sessões</ion-title>
+
+
+    <ion-buttons end style="border: 1px; border-color: white;">        
+        <button ion-button color="white_" (click)="add()">
+            Nova sessão
+            <ion-icon name="add-circle" style="padding: 10px;"></ion-icon>          
+        </button>
+    </ion-buttons> 
+
+</ion-navbar>  
+
+
+<ion-toolbar no-border color="primary">
+  <ion-searchbar
+    [(ngModel)]="searchTerm"
+    (search)="setFilteredItems()"
+    placeholder= "Filtrar por nome...">
+ </ion-searchbar>
+</ion-toolbar>
+
+</ion-header>
+
+<ion-content padding class="trips detail-bg">
+
+  <ion-list>
+
+    <ion-card class="trip card" text-wrap *ngFor="let session of sessions" no-lines>
+
+      <ion-card-content>
+        <ion-item>
+          
+            <ion-title>{{session.nome}}</ion-title>
+            <p><b>Status:</b> {{session.status}} </p>            
+            <p><b>Lotação Máxima:</b> {{session.lotacao}} </p>
+            <p><b>Lotação Atual:</b> {{session.lotacaoAtual}} </p>
+            
+          </ion-item>              
+                        
+      <ion-row>
+          <ion-col>
+              <button ion-button icon-start clear small (click)="edit(session)"> 
+
+                  <ion-icon name="md-clipboard"></ion-icon>                
+                <div>Editar</div>
+              </button>
+            </ion-col>
+            <ion-col>
+              <button ion-button icon-start clear small (click)="duplicate(session)"> 
+                  <ion-icon name="md-copy"></ion-icon>                
+                <div>Duplicar</div>
+              </button>
+            </ion-col>
+            <ion-col>
+              <button ion-button icon-start clear small (click)="remove(session)" color="danger"> 
+
+                  <ion-icon name="md-trash"></ion-icon>                
+                <div>Remover</div>
+              </button>
+            </ion-col>                       
+      </ion-row>
+                                
+    
+    </ion-card-content>
+          
+        
+  </ion-card>
+
+  </ion-list>
+
+</ion-content>

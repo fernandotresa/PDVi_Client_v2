@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, MenuController	} from 'ionic-angular';
+import { Nav, Platform, MenuController, Events	} from 'ionic-angular';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
-//import { AdministratorPage } from '../pages/administrator/administrator';
 import { SideMenuSettings } from './../shared/side-menu-content/models/side-menu-settings';
 import { SideMenuOption } from './../shared/side-menu-content/models/side-menu-option';
 import { SideMenuContentComponent } from './../shared/side-menu-content/side-menu-content.component';
@@ -37,17 +36,22 @@ export class MyApp {
 
 	rootPage:any = LoginPage;	  
 
-  constructor(platform: Platform, private menuCtrl: MenuController) {
-    platform.ready().then(() => {
-			this.initializeOptionsClient()
-			//this.menuCtrl.enable(false)
+  constructor(platform: Platform, 
+	public events: Events,
+	private menuCtrl: MenuController) {
 
-			if(firebaseApp){
-				if(!firebaseApp.apps.length)      
-				firebaseApp.initializeApp(firebaseConfig)  
-			
-			  }    
+    platform.ready().then(() => {
+		this.startInterface()			
     });
+  }
+
+  startInterface(){
+	this.initializeOptionsClient()			
+
+	if(firebaseApp){
+		if(!firebaseApp.apps.length)      
+		firebaseApp.initializeApp(firebaseConfig)  	
+	  } 	 
   }
 
   public onOptionSelected(option: SideMenuOption): void {
@@ -56,10 +60,7 @@ export class MyApp {
 			if (option.custom && option.custom.isLogin) {
 				console.log('You\'ve clicked the login option!');
 
-
 			} else if (option.custom && option.custom.isLogout) {
-
-				console.log('You\'ve clicked the logout option!');
 				this.nav.setRoot(LoginPage, { autoLogin: false })
 
 			} else if (option.custom && option.custom.isHome)
@@ -69,8 +70,7 @@ export class MyApp {
 				let url = option.custom.externalUrl;
 				window.open(url, '_blank');
 
-			} else {
-				
+			} else {				
 				const params = option.custom && option.custom.param;
 				this.nav.push(option.component, params);
 					
@@ -81,7 +81,6 @@ export class MyApp {
 	public collapseMenuOptions(): void {
 		this.sideMenu.collapseAllOptions();
 	}
-
 
   private initializeOptionsClient(): void {
 
@@ -98,7 +97,7 @@ export class MyApp {
 			displayText: 'Totem de acesso',
 			custom: {
 				isExternalLink: true,
-				externalUrl: "http://localhost/totem_acesso/	"
+				externalUrl: "http://localhost/totem_acesso/"
 			}			
 		});	
 

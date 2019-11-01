@@ -21,6 +21,12 @@ export class HttpdProvider {
     return this.http.get(url);
   }
 
+  systemCommandLocal(){
+    let myData = JSON.stringify({id: 1});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/systemCommandLocal", myData, {headers: headers})
+  }
+
   getUsers(){
     let myData = JSON.stringify({id: 1});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
@@ -277,7 +283,56 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/useTicketMultiple", myData, {headers: headers})
   }
 
+  /**
+   * ESTOQUE ONLINE
+   */
+
+  syncStock(){
+    let myData = JSON.stringify({id: this.dataInfo.totemId});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/syncStock", myData, {headers: headers})
+  }
 
 
+ /**
+   * SESSÕES
+   */
 
+  getSessions(){    
+    let myData = JSON.stringify({id: this.dataInfo.totemId});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getSessions", myData, {headers: headers})
+  }
+
+  getSessionsName(name_){    
+    let myData = JSON.stringify({id: this.dataInfo.totemId, name: name_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getSessions", myData, {headers: headers})
+  }
+
+  addSession(info_){    
+    let myData = JSON.stringify({id: this.totemId, info: info_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/addSession", myData, {headers: headers})
+  }
+
+  updateSession(info_){    
+    let myData = JSON.stringify({id: this.totemId, info: info_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/updateSession", myData, {headers: headers})
+  }
+
+  removeSession(idSession_){    
+    let myData = JSON.stringify({id: this.dataInfo.totemId, idSession: idSession_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getSessions", myData, {headers: headers})
+  }
+
+  getProductsTypes(){    
+    let myData = JSON.stringify({id: this.totemId});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getProductsTypes", myData, {headers: headers})
+  }
+
+  
 }

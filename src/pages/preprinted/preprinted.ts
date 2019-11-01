@@ -3,7 +3,10 @@ import { IonicPage, NavController, NavParams, Events, ModalController} from 'ion
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { DataInfoProvider } from '../../providers/data-info/data-info'
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils'
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 //import moment from 'moment';
+import { Platform } from 'ionic-angular';
+
 
 @IonicPage()
 @Component({
@@ -43,10 +46,11 @@ export class PreprintedPage {
     public navParams: NavParams,  
     public events: Events,
     public modalCtrl: ModalController,
+    private iab: InAppBrowser,
+    public platform: Platform,
     public http: HttpdProvider) {      
 
-      this.events.subscribe(this.dataInfo.eventPaymentOk, data => {       
-        console.log('Recebido sinal de pagamento com sucesso')
+      this.events.subscribe(this.dataInfo.eventPaymentOk, data => {               
         this.cancelar()
       }); 
   }
@@ -57,7 +61,7 @@ export class PreprintedPage {
 
   ionViewDidLoad() {    
 
-    if(! this.dataInfo.isHome){
+    if(! this.dataInfo.isHome){      
       this.navCtrl.setRoot('LoginPage')
     }
     else {
@@ -69,10 +73,30 @@ export class PreprintedPage {
       this.setIntervalFocus()    
       
       this.searchTicketStart = '19520001'
-      this.searchTicketEnd = '19520005'
+      this.searchTicketEnd = '19520005'  
+            
+      
+      if(this.dataInfo.abreTotem){
+        this.abreTotem()
+      }
     }
     
-  }    
+  }   
+  
+  abreTotem(){
+
+    this.platform.ready().then(() => {
+
+      const browser = this.iab.create('http://localhost/totem_acesso');    
+
+      this.http.systemCommandLocal()
+      .subscribe(() => {      
+        console.log('Comando alt tab enviado com sucesso!')
+      })    
+
+    });
+    
+  }
 
   goBack(){    
     let self = this
@@ -355,16 +379,13 @@ export class PreprintedPage {
             this.valorTotal += element.valor_produto
             this.vendaLoteTipoTicket = element.nome_subtipo_produto
     
-            console.log(el)
             items_.push(el)
           }
                   
           else {
             vencidos.push(element.id_estoque_utilizavel)
           } 
-       }
-
-       
+       }       
     });
 
     resolve()
@@ -454,9 +475,7 @@ export class PreprintedPage {
 
       modal.present(); 
 
-    })
-    
-    
+    })        
   }
 
   presentModal(product){    
@@ -486,8 +505,7 @@ export class PreprintedPage {
       if(quantity > 0){
         productS.nome_subtipo_produto = subtype.nome_subtipo_produto
         subtypesquantities.push(subtype)
-      }    
-        
+      }            
     }
     
     this.searchProductSubtype(subtypesquantities, productS)
@@ -739,7 +757,7 @@ export class PreprintedPage {
  }
 
  presentModalCashDrain(){
-  let modal = this.modalCtrl.create('CashDrainPage');    
+  let modal = this.modalCtrl.create('CashDrainPage', {showBackdrop: true, enableBackdropDismiss: true});    
 
   modal.onDidDismiss( data => {
     
@@ -752,7 +770,7 @@ export class PreprintedPage {
 }
 
 presentModalChange(){
-  let modal = this.modalCtrl.create('CashChangePage');    
+  let modal = this.modalCtrl.create('CashChangePage', {showBackdrop: true, enableBackdropDismiss: true});    
 
   modal.onDidDismiss( data => {
     
@@ -765,7 +783,7 @@ presentModalChange(){
 }
 
 presentModalExtract(){
-  let modal = this.modalCtrl.create('CashStatementPage');    
+  let modal = this.modalCtrl.create('CashStatementPage', {showBackdrop: true, enableBackdropDismiss: true});    
 
   modal.onDidDismiss( data => {
     
@@ -778,7 +796,7 @@ presentModalExtract(){
 }
 
 goPageTicket(){    
-  let modal = this.modalCtrl.create('HistoryPage');    
+  let modal = this.modalCtrl.create('HistoryPage', {showBackdrop: true, enableBackdropDismiss: true});    
 
   modal.onDidDismiss( data => {
     

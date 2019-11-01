@@ -62,14 +62,18 @@ export class LoginPage {
 
     this.dataInfo.isHome = true
 
-
+    // PDVi Normal
     if(this.dataInfo.appType === 1){
-      //this.navCtrl.setRoot(HomePage);
-      this.navCtrl.setRoot('PreprintedPage');      
+      this.navCtrl.setRoot(HomePage);      
     }      
 
+    // PDVi Online
     else if(this.dataInfo.appType === 2)
       this.navCtrl.setRoot("ShopPage");
+
+    // PDVi Pré Impresso
+    else if(this.dataInfo.appType === 3)
+      this.navCtrl.setRoot('PreprintedPage');      
   }
 
   loginUser(): void {        
@@ -113,7 +117,9 @@ export class LoginPage {
       this.dataInfo.userInfo = data.success[0]
 
       console.log(this.dataInfo.userInfo)
-      this.goHome()
+
+      //this.goHome()
+      this.navCtrl.push('SessionsPage')
     }
       
     else  

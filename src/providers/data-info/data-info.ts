@@ -1,30 +1,28 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment-timezone';
+import { ConfigurationService } from "ionic-configuration-service";
+import { Events	} from 'ionic-angular';
 
 @Injectable()
 export class DataInfoProvider {
     
   appType: number = 1
+  abreTotem: number = 0
   areaId: number = 1
   totemId: number = 1
   portaId: number = 1
-
+  addressServer: string
   isHome: Boolean = false
-
   maxTicketsMultiple: number = 1000
   isWeb: Boolean = true
-
-  ipLocal: string = ""
-  
-  isAdmin: Boolean = false
-  
+  ipLocal: string = ""  
+  isAdmin: Boolean = false  
   clock: String;
   ticketRead: String;
 
   titleGoBack: string = "Voltar"
   userType: any = {name: 'Atendente', email: 'falecom@megaticket.com.br', photo: "assets/imgs/100x100.png"}
   userInfo: any;
-
   appName: string = "PDVi"
   titleNotifications: string = "Notificações"
   titleProducts: string = "Produtos"
@@ -36,7 +34,6 @@ export class DataInfoProvider {
   titlePdvi: string = "PDVi"
   titleAddress: string = "Endereço"
   titleParking: string = "Estacionamento"
-
   titleAttachments: string = "Anexos"
   titleAttachmentSent: string = "Anexo Enviado"
   titleAttachment: string = "Anexar Documento"
@@ -146,14 +143,37 @@ export class DataInfoProvider {
   titleTime: string = "Horário"
   titleUsers: string = "Usuários"
 
-  constructor() {
-    console.log('Hello DataInfoProvider Provider');
+  constructor(
+    private configurationService: ConfigurationService,    
+    public events: Events) {
 
-    moment.locale('pt-br'); 
+    this.addressServer =  this.configurationService.getValue<string>("addressServer");
+    this.appType =  this.configurationService.getValue<number>("appType");
+    this.abreTotem = this.configurationService.getValue<number>("abreTotem");
+   
+    console.log('addressServer', this.addressServer)
+    console.log('appType', this.appType)
+    console.log('abreTotem', this.abreTotem)
+
+    moment.locale('pt-br');     
+
+    this.startClock()  
+  }
+
+  
+  enviaAltTab(){
 
     let self = this
-    this.clock = moment().format("DD/MM/YY hh:mm")
+      setTimeout(() => {
+        console.log("## ENVINANDO ALT TB")
+        self.events.publish('alt-tab', true)       
 
+      }, 5000)
+  }
+
+  startClock(){
+    let self = this
+    this.clock = moment().format("DD/MM/YY hh:mm")
 
     setInterval(function(){
 
