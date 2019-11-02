@@ -15,7 +15,7 @@
 
     <ion-item no-lines>
         <ion-label stacked>Status</ion-label>  
-        <ion-select [(ngModel)]="status" multiple="true">
+        <ion-select [(ngModel)]="status">
           <ion-option>Ativo</ion-option>
           <ion-option>Inativo</ion-option>
         </ion-select>                          
@@ -23,7 +23,7 @@
 
     <ion-item no-lines>
           <ion-label stacked>Tipos de ingresso</ion-label>  
-          <ion-select [(ngModel)]="tiposIngressos" multiple="true">
+          <ion-select [(ngModel)]="tiposProdutos" multiple="true">
             <ion-option *ngFor="let data of productsTypesArray">{{data.nome_tipo_produto}}</ion-option>                                                  
           </ion-select>                          
         </ion-item>

@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, Events } from 'ionic-angular';
 import { DataInfoProvider } from '../../providers/data-info/data-info'
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils'
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { Observable } from 'rxjs/Observable';
 import { FormControl } from '@angular/forms';
-import { domainToASCII } from 'url';
 
 @IonicPage()
 @Component({
@@ -28,13 +27,26 @@ export class SessionsPage {
     public dataInfo: DataInfoProvider,
     public platform: Platform,
     public http: HttpdProvider,
+    public events: Events,
     public navParams: NavParams) {
 
       this.searchControl = new FormControl();    
+
+      this.subscribeStuff()
   }
 
   ionViewDidLoad() {    
     this.reload()    
+  }
+
+  subscribeStuff(){
+    this.events.subscribe('atualiza-sessoes', () => {
+      this.reload()
+    })
+  }
+
+  ngOnDestroy(){
+    this.events.unsubscribe('atualiza-sessoes')
   }
 
   load(){
@@ -57,8 +69,6 @@ export class SessionsPage {
       element.status = element.status === 1 ? "Ativo" : "Inativo"
       this.sessions.push(element)
     });
-
-    console.log(this.sessions)
   }
 
   add(){
@@ -66,7 +76,6 @@ export class SessionsPage {
   }
 
   setFilteredItems(){
-    console.log(this.searchTerm)
 
     if(this.searchTerm.length === 0){
       this.reload()
@@ -102,7 +111,9 @@ export class SessionsPage {
    removeContinue(key){
       this.http.removeSession(key)
       .subscribe(() => {
+
         this.uiUtils.showAlert('Sucesso', 'Removido com sucesso')
+        this.reload()
       })
    }
 

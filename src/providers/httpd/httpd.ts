@@ -307,7 +307,16 @@ export class HttpdProvider {
   getSessionsName(name_){    
     let myData = JSON.stringify({id: this.dataInfo.totemId, name: name_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
-    return this.http.post(this.address  + "/getSessions", myData, {headers: headers})
+    return this.http.post(this.address  + "/getSessionsName", myData, {headers: headers})
+  }
+
+  getSessionsTypes(idSessao_: number){    
+    let myData = JSON.stringify({id: this.dataInfo.totemId, idSessao: idSessao_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+
+
+    console.log(myData)
+    return this.http.post(this.address  + "/getSessionsTypes", myData, {headers: headers})
   }
 
   addSession(info_){    
@@ -322,10 +331,10 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/updateSession", myData, {headers: headers})
   }
 
-  removeSession(idSession_){    
-    let myData = JSON.stringify({id: this.dataInfo.totemId, idSession: idSession_});
+  removeSession(session){    
+    let myData = JSON.stringify({id: this.dataInfo.totemId, idSession: session.id});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
-    return this.http.post(this.address  + "/getSessions", myData, {headers: headers})
+    return this.http.post(this.address  + "/removeSession", myData, {headers: headers})
   }
 
   getProductsTypes(){    

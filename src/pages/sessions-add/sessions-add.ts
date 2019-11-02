@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils'
 import { HttpdProvider } from '../../providers/httpd/httpd';
 import { DataInfoProvider } from '../../providers/data-info/data-info'
@@ -18,7 +18,7 @@ export class SessionsAddPage {
   status: string = 'Ativo'
   obs: string = ''  
   lotacao: string = ''  
-  tiposProdutos: string = ''
+  tiposProdutos: any
 
   payload: any
   isDuplicate: Boolean = false
@@ -26,6 +26,7 @@ export class SessionsAddPage {
   constructor(public navCtrl: NavController, 
     public uiUtils: UiUtilsProvider,
     public http: HttpdProvider,
+    public events: Events,
     public dataInfo: DataInfoProvider,
     public navParams: NavParams) {
   }
@@ -55,10 +56,15 @@ export class SessionsAddPage {
   }
 
   carregaTipos(){
+
+    let loading = this.uiUtils.showLoading("Carregando tipos")
+    loading.present()
+
     this.productsTypes = this.http.getProductsTypes()
     
     this.productsTypes.subscribe( data => {      
       this.carregaTiposContinue(data)
+      loading.dismiss()
     })
   }
 
@@ -67,23 +73,47 @@ export class SessionsAddPage {
     this.productsTypesArray = []
 
     data.success.forEach(element => {
-      console.log(element) 
       this.productsTypesArray.push(element) 
     });
+
+    if(this.payload)
+      this.getSessionTypes()
   }
 
-
   load(){
-    console.log(this.payload)
     this.nome = this.payload.nome
     this.obs = this.payload.obs
+    this.lotacao = this.payload.lotacao
+    this.status = this.payload.status === 1 ? "Ativo" : "Inativo"
+
+  }
+
+  getSessionTypes(){
+  
+    this.http.getSessionsTypes(this.payload.id)
     
-    this.tiposProdutos = this.payload.tiposProdutos
+    .subscribe( data => {          
+      
+      this.getSessionTypesCallback(data)
+    })
+  }
+
+  getSessionTypesCallback(data){
+    
+    let tipos = []
+
+    data.success.forEach(element => {      
+      tipos.push(element.nome_tipo_produto)        
+    });
+
+    this.tiposProdutos = tipos
   }
 
   copy(){
+    this.load()
     this.nome = this.payload.nome + ' Cópia'
     this.obs = this.payload.obs + ' Cópia'
+
   }
  
   clear(){
@@ -105,15 +135,24 @@ export class SessionsAddPage {
     loading.present()
     
     let info = {nome: this.nome, tipos: this.tiposProdutos, status: this.status, obs: this.obs, lotacao: this.lotacao}
-    console.log(info)
 
     this.http.addSession(info)
 
-    .subscribe( () =>{                      
+    .subscribe( callback =>{    
+
         loading.dismiss()
-        this.navCtrl.pop()
-        this.uiUtils.showAlertSuccess()
-        this.clear()
+
+        if(callback){
+
+          this.events.publish('atualiza-sessoes', true)
+          this.navCtrl.pop()
+          this.uiUtils.showAlertSuccess()
+          this.clear()
+        }
+        else {
+          this.uiUtils.showAlert('Erro!', 'Falha ao adicionar')
+        }
+        
       })
   }
 
@@ -139,16 +178,16 @@ export class SessionsAddPage {
     let loading = this.uiUtils.showLoading("Favor aguarde")
     loading.present()    
 
-    let info = {id: this.payload.id_tipo_produto, 
+    let info = {id: this.payload.id, 
       nome: this.nome, tipos: this.tiposProdutos, status: this.status, obs: this.obs, lotacao: this.lotacao}
-
-    console.log(info)
 
     this.http.updateSession(info)
 
     .subscribe( () =>{
         loading.dismiss()
         this.clear()
+
+        this.events.publish('atualiza-sessoes', true)
         this.navCtrl.pop()
         this.uiUtils.showAlertSuccess()
 
