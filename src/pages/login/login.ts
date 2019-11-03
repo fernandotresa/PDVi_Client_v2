@@ -118,8 +118,8 @@ export class LoginPage {
 
       console.log(this.dataInfo.userInfo)
 
-      //this.goHome()
-      this.navCtrl.push('SessionsPage')
+      this.goHome()
+      //this.navCtrl.push('SessionsPage')
     }
       
     else  

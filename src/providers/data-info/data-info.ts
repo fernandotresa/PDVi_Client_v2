@@ -8,6 +8,7 @@ export class DataInfoProvider {
     
   appType: number = 1
   abreTotem: number = 0
+  sessao: number = 0
   areaId: number = 1
   totemId: number = 1
   portaId: number = 1
@@ -28,6 +29,9 @@ export class DataInfoProvider {
   titleProducts: string = "Produtos"
   titleSync: string = "Sincronizar"
   titleStock: string = "Estoque"
+  titleSession: string = "Sessão"
+  titleSessionMax: string = "Lotação máxima"
+  titleSessionActual: string = "Lotação atual"
   titleAccessDenied: string = "Acesso negado"
   eventPaymentOk: string = 'eventPaymentOk'
   titleAppName: string = "3A PDVi"
@@ -150,10 +154,13 @@ export class DataInfoProvider {
     this.addressServer =  this.configurationService.getValue<string>("addressServer");
     this.appType =  this.configurationService.getValue<number>("appType");
     this.abreTotem = this.configurationService.getValue<number>("abreTotem");
+    this.sessao = this.configurationService.getValue<number>("sessao");
+    
    
     console.log('addressServer', this.addressServer)
     console.log('appType', this.appType)
     console.log('abreTotem', this.abreTotem)
+    console.log('abreTotem', this.sessao)
 
     moment.locale('pt-br');     
 
@@ -165,7 +172,6 @@ export class DataInfoProvider {
 
     let self = this
       setTimeout(() => {
-        console.log("## ENVINANDO ALT TB")
         self.events.publish('alt-tab', true)       
 
       }, 5000)

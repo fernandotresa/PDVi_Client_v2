@@ -38,7 +38,11 @@
       {{ dataInfo.titleUsers }}
   </button>
 
-  <button ion-item (click)="presentModalAttachments()">
+  <button ion-item (click)="presentModalSession()">
+      {{ dataInfo.titleSession }}
+  </button>
+
+  <button *ngIf="false" ion-item (click)="presentModalAttachments()">
       Anexos comprovantes
   </button>
 

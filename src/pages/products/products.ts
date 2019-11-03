@@ -13,7 +13,6 @@ import { CashDrainPage } from '../../pages/cash-drain/cash-drain';
 import { AttachmentsPage } from '../../pages/attachments/attachments';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
-
 @IonicPage()
 @Component({
   selector: 'page-products',
@@ -54,8 +53,17 @@ export class ProductsPage {
     });       
   }
 
-  ionViewDidLoad() {    
+  ionViewDidLoad() {   
+        
+    if(! this.dataInfo.isHome){      
+      this.navCtrl.setRoot('LoginPage')
+    }
+    else {
+      this.startInterface()
+    }
+  }
 
+  startInterface(){
     if(this.dataInfo.isAdmin)
       this.startAdmin()
     else
@@ -72,14 +80,12 @@ export class ProductsPage {
     const browser = this.iab.create('https://localhost/totem_acesso');
 
     this.httpd.systemCommandLocal()
-    .subscribe(() => {
-      
+    .subscribe(() => {      
       console.log('Comando alt tab enviado com sucesso!')
     })
   }
 
   startAdmin(){
-    console.log("Iniciando administrador")
     this.getAllProductsAdmin()
   }
 
@@ -145,9 +151,11 @@ export class ProductsPage {
 
       this.products.forEach(element => {        
         element.selectedsIds = []
-        element.selectedsName = []        
+        element.selectedsName = [] 
+        element.sessaoLotacacao = 0       
       });
 
+      this.getTicketSessions()
       this.inputSearch.setFocus()
     })
   }
@@ -176,6 +184,25 @@ export class ProductsPage {
 
   increment(product){      
      
+    console.log(product)
+
+    let sessaoLotacacao = product.sessaoLotacacao
+    let quantity = product.quantity
+    let lotacaoAtual = product.lotacaoAtual
+    let total = quantity + lotacaoAtual
+
+    if(this.dataInfo.sessao === 1){
+
+      if(total < sessaoLotacacao){
+        this.incrementNormal(product)    
+      }
+
+    } else
+      this.incrementNormal(product)    
+        
+  }
+
+  incrementNormal(product){
     product.quantity++
     product.valor_total = product.valor_produto * product.quantity    
 
@@ -380,8 +407,30 @@ export class ProductsPage {
   }
 
 
-  productQuantityChanged(){
+  productQuantityChanged(product){
 
+    let sessaoLotacacao = product.sessaoLotacacao
+    let quantity = Number(product.quantity)
+    let lotacaoAtual = product.lotacaoAtual
+    let total = quantity + lotacaoAtual
+
+    console.log(sessaoLotacacao, quantity, lotacaoAtual, total)
+
+
+    if(this.dataInfo.sessao === 1){
+
+      if(total < sessaoLotacacao){
+          this.productChangedContinue()
+      } else
+        product.quantity = sessaoLotacacao - lotacaoAtual
+    }
+    else {
+      this.productChangedContinue()
+    }
+            
+  }
+
+  productChangedContinue(){
     this.finalValue = 0
     this.totalSelected = 0
 
@@ -403,7 +452,7 @@ export class ProductsPage {
           product_.selectedsName.push(product_.nome_subtipo_produto)        
         }        
       } 
-    }        
+    }
   }
 
   onKeydown(product){    
@@ -421,13 +470,87 @@ export class ProductsPage {
       if(data.urls){        
 
         prod.urlUpload = data.url
-        console.log(prod)
-
         this.uiUtils.showAlertSuccess()
       }      
     });
     
     modal.present();
+  }
+
+  getTicketSessions(){
+
+    let loading = this.uiUtils.showLoading(this.dataInfo.titlePleaseWait)    
+    loading.present() 
+    
+    let promises = []
+
+    this.products.forEach(element => {        
+
+       let ticket = element.fk_id_tipo_produto       
+
+       let prom = new Promise((resolve, reject) =>{
+
+        this.httpd.getSessionsTicket(ticket)
+          .subscribe(data => {
+
+            this.getTicketSessionsCallback(data, element)
+            promises.push(prom)
+            resolve()
+          })
+       })       
+    });
+
+    Promise.all(promises)
+    .then(() => {
+
+      loading.dismiss()
+      this.getTicketSessionsTotal()
+    })
+  }
+
+  getTicketSessionsCallback(data, ticket){
+
+    data.success.forEach(element => {
+      ticket.sessaoNome = element.nome
+      ticket.sessaoLotacacao = element.lotacao
+    });
+  }
+
+  getTicketSessionsTotal(){
+
+    let loading = this.uiUtils.showLoading(this.dataInfo.titlePleaseWait)    
+    loading.present() 
+    
+    let promises = []
+
+    this.products.forEach(element => {        
+
+       let ticket = element.fk_id_tipo_produto       
+
+       let prom = new Promise((resolve, reject) =>{
+
+        this.httpd.getSessionsTicketTotal(ticket)
+          .subscribe(data => {
+
+            this.getTicketSessionsTotalCallback(data, element)
+            promises.push(prom)
+            resolve()
+          })
+       })       
+    });
+
+    Promise.all(promises)
+    .then(() => {
+
+      loading.dismiss()
+    })
+  }
+
+  getTicketSessionsTotalCallback(data, ticket){
+
+    data.success.forEach(element => {      
+      ticket.lotacaoAtual = element.lotacaoAtual
+    });
   }
 
 }

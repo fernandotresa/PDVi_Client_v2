@@ -10,7 +10,7 @@
                 </ion-item>                
             </ion-col>
 
-            <ion-col col-9 *ngIf="! dataInfo.isAdmin">
+            <ion-col col-9 *ngIf="! dataInfo.isAdmin && dataInfo.userInfo">
                 <ion-item detail-none no-lines class="backgroundPainel" text-center>  
                     <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
                     <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} 
@@ -90,11 +90,24 @@
                         </button>
                 </ion-col> 
 
-                <ion-col class="align-text-middle" col-4>                                        
-                    <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}} - {{dataInfo.titleStock}}: {{product.stock}}</h2>       
-                    <h2 *ngIf="product.quantity === 0">{{product.nome_produto}} - {{dataInfo.titleStock}}: {{product.stock}}</h2>
+
+                <ion-col class="align-text-middle" col-4 *ngIf="dataInfo.appType === 1 && dataInfo.sessao === 0">                                        
+                    <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}}</h2> 
+                    <h2 *ngIf="product.quantity === 0">{{product.nome_produto}}</h2>
                 </ion-col>
-                
+
+                <ion-col class="align-text-middle" col-4 *ngIf="dataInfo.appType === 1 && dataInfo.sessao === 1">       
+
+                    <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}} 
+                        - {{dataInfo.titleSession}}: {{product.sessaoNome}} - {{dataInfo.titleSessionMax}}:  {{product.sessaoLotacacao}} - {{dataInfo.titleSessionActual}}: {{product.lotacaoAtual}} </h2>                   
+
+                    <h2 *ngIf="product.quantity === 0">{{product.nome_produto}}</h2>
+                </ion-col>
+
+                <ion-col class="align-text-middle" col-4 *ngIf="dataInfo.appType === 2">                                        
+                    <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}} - {{dataInfo.titleStock}}: {{product.stock}}</h2> 
+                    <h2 *ngIf="product.quantity === 0">{{product.nome_produto}} - {{dataInfo.titleStock}}: {{product.stock}}</h2>
+                </ion-col>                
 
                 <ion-col col-4>
                     <button *ngIf="product.quantity !== 0" small ion-button item-left color="secondary" text-wrap (click)="presentModal(product)">                                      

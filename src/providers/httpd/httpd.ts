@@ -312,12 +312,22 @@ export class HttpdProvider {
 
   getSessionsTypes(idSessao_: number){    
     let myData = JSON.stringify({id: this.dataInfo.totemId, idSessao: idSessao_});
-    const headers = new HttpHeaders({'Content-Type':'application/json'});
-
-
-    console.log(myData)
+    const headers = new HttpHeaders({'Content-Type':'application/json'});    
     return this.http.post(this.address  + "/getSessionsTypes", myData, {headers: headers})
   }
+
+  getSessionsTicket(idTipoProduto_: number){    
+    let myData = JSON.stringify({id: this.dataInfo.totemId, idTipoProduto: idTipoProduto_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});    
+    return this.http.post(this.address  + "/getSessionsTicket", myData, {headers: headers})
+  }
+
+  getSessionsTicketTotal(idTipoProduto_: number){    
+    let myData = JSON.stringify({id: this.dataInfo.totemId, idTipoProduto: idTipoProduto_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});    
+    return this.http.post(this.address  + "/getSessionsTicketTotal", myData, {headers: headers})
+  }
+
 
   addSession(info_){    
     let myData = JSON.stringify({id: this.totemId, info: info_});

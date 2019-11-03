@@ -75,4 +75,8 @@ export class SupervisorPage {
     modal.present();  
   }
 
+  presentModalSession(){
+    this.navCtrl.push('SessionsPage');             
+  }
+
 }
