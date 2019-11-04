@@ -77,7 +77,7 @@ export class ProductsPage {
 
   abreTotem(){
 
-    const browser = this.iab.create('https://localhost/totem_acesso');
+    this.iab.create('https://localhost/totem_acesso');
 
     this.httpd.systemCommandLocal()
     .subscribe(() => {      
@@ -186,10 +186,11 @@ export class ProductsPage {
      
     console.log(product)
 
-    let sessaoLotacacao = product.sessaoLotacacao
-    let quantity = product.quantity
-    let lotacaoAtual = product.lotacaoAtual
+    let sessaoLotacacao = product.sessaoLotacacao // Lotação
+    let quantity = product.quantity // Quantidade solicitada para compra
+    let lotacaoAtual = product.lotacaoAtual // Vendidos
     let total = quantity + lotacaoAtual
+    product.disponiveis = sessaoLotacacao - lotacaoAtual
 
     if(this.dataInfo.sessao === 1){
 

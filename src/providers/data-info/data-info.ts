@@ -29,9 +29,7 @@ export class DataInfoProvider {
   titleProducts: string = "Produtos"
   titleSync: string = "Sincronizar"
   titleStock: string = "Estoque"
-  titleSession: string = "Sessão"
-  titleSessionMax: string = "Lotação máxima"
-  titleSessionActual: string = "Lotação atual"
+  titleSession: string = "Sessão"  
   titleAccessDenied: string = "Acesso negado"
   eventPaymentOk: string = 'eventPaymentOk'
   titleAppName: string = "3A PDVi"

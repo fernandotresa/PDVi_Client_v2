@@ -99,7 +99,7 @@
                 <ion-col class="align-text-middle" col-4 *ngIf="dataInfo.appType === 1 && dataInfo.sessao === 1">       
 
                     <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}} 
-                        - {{dataInfo.titleSession}}: {{product.sessaoNome}} - {{dataInfo.titleSessionMax}}:  {{product.sessaoLotacacao}} - {{dataInfo.titleSessionActual}}: {{product.lotacaoAtual}} </h2>                   
+                        - {{dataInfo.titleSession}}: {{product.sessaoNome}} - Vendidos:  {{product.lotacaoAtual}} - Disponíveis: {{product.disponiveis}} </h2>                   
 
                     <h2 *ngIf="product.quantity === 0">{{product.nome_produto}}</h2>
                 </ion-col>
