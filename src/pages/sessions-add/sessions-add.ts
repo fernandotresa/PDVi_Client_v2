@@ -60,7 +60,7 @@ export class SessionsAddPage {
     let loading = this.uiUtils.showLoading("Carregando tipos")
     loading.present()
 
-    this.productsTypes = this.http.getProductsTypes()
+    this.productsTypes = this.http.getProducts()
     
     this.productsTypes.subscribe( data => {      
       this.carregaTiposContinue(data)
@@ -90,20 +90,20 @@ export class SessionsAddPage {
 
   getSessionTypes(){
   
-    this.http.getSessionsTypes(this.payload.id)
+    this.http.getSessionsProducts(this.payload.id)
     
     .subscribe( data => {          
       
-      this.getSessionTypesCallback(data)
+      this.getSessionProductCallback(data)
     })
   }
 
-  getSessionTypesCallback(data){
+  getSessionProductCallback(data){
     
     let tipos = []
 
     data.success.forEach(element => {      
-      tipos.push(element.nome_tipo_produto)        
+      tipos.push(element.nome_produto)        
     });
 
     this.tiposProdutos = tipos

@@ -183,9 +183,7 @@ export class ProductsPage {
    } 
 
   increment(product){      
-     
-    console.log(product)
-
+    
     let sessaoLotacacao = product.sessaoLotacacao // Lotação
     let quantity = product.quantity // Quantidade solicitada para compra
     let lotacaoAtual = product.lotacaoAtual // Vendidos
@@ -487,7 +485,7 @@ export class ProductsPage {
 
     this.products.forEach(element => {        
 
-       let ticket = element.fk_id_tipo_produto       
+       let ticket = element.id_produto       
 
        let prom = new Promise((resolve, reject) =>{
 
