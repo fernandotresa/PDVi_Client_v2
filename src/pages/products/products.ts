@@ -509,9 +509,13 @@ export class ProductsPage {
 
   getTicketSessionsCallback(data, ticket){
 
-    data.success.forEach(element => {
+    data.success.forEach(element => {      
+
       ticket.sessaoNome = element.nome
+      ticket.sessaoStatus = element.status
       ticket.sessaoLotacacao = element.lotacao
+
+      console.log(element)
     });
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { UiUtilsProvider } from '../../providers/ui-utils/ui-utils'
 import { HttpdProvider } from '../../providers/httpd/httpd';
@@ -11,6 +11,14 @@ import { Observable } from 'rxjs/Observable'
   templateUrl: 'sessions-add.html',
 })
 export class SessionsAddPage {
+  @ViewChild('inputName') inputName;
+  @ViewChild('inputStatus') inputStatus;
+  @ViewChild('inputProdutos') inputProdutos;
+  @ViewChild('inputLotacao') inputLotacao;
+  @ViewChild('inputObs') inputObs;
+
+  
+
   productsTypes: Observable<any>;
   productsTypesArray: any
  
@@ -39,6 +47,44 @@ export class SessionsAddPage {
     //this.events.unsubscribe('company:edit')  
   }
 
+  onNameKeydown(){
+
+    if(this.inputStatus)
+      this.inputStatus.open()
+  }
+
+  onStatusKeydown(event){
+
+    this.status = event
+
+    if(this.inputProdutos)
+      this.inputProdutos.open()
+  }
+
+  onProdutosKeydown(){
+
+    if(this.inputLotacao)
+      this.inputLotacao.setFocus()
+  }
+
+  onLotacaoKeydown(){
+
+    if(this.inputObs)
+      this.inputObs.setFocus()
+  }
+
+  onObsKeydown(){
+
+    if(this.nome && this.status && this.tiposProdutos && this.lotacao){
+
+      if(this.payload)
+        this.save()
+      else
+        this.add()
+    }
+    
+  }
+
   startInteface(){
     this.payload = this.navParams.get('payload')
     this.isDuplicate = this.navParams.get('isDuplicate')
@@ -52,7 +98,13 @@ export class SessionsAddPage {
         this.copy()
       else
         this.load()
-    }      
+    }
+    
+    setTimeout(() => {
+      console.log('Setando focus')
+      this.inputName.setFocus();
+    },1000);
+
   }
 
   carregaTipos(){
@@ -84,7 +136,7 @@ export class SessionsAddPage {
     this.nome = this.payload.nome
     this.obs = this.payload.obs
     this.lotacao = this.payload.lotacao
-    this.status = this.payload.status === 1 ? "Ativo" : "Inativo"
+    this.status = this.payload.status    
 
   }
 
@@ -157,7 +209,7 @@ export class SessionsAddPage {
   }
 
   save(){
-    let alert = this.uiUtils.showConfirm("Atenção", "Deseja continuar com a edição?")
+    let alert = this.uiUtils.showConfirm("Atenção", "Deseja alterar informações da sessão?")
     alert.then((result) => {
 
     if(result)  

@@ -100,7 +100,7 @@ export class SessionsPage {
   }
 
   remove(key){
-    let alert = this.uiUtils.showConfirm("Atenção", "Você tem certeza disso?")  
+    let alert = this.uiUtils.showConfirm("Atenção", "Deseja remover?")  
       alert.then((result) => {
 
       if(result)  

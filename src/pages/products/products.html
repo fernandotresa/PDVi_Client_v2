@@ -72,35 +72,27 @@
     <ion-item *ngFor="let product of products" no-lines>                    
 
         <ion-grid item-content>
-            <ion-row>   
 
-                <ion-col>
+            <ion-row *ngIf="dataInfo.sessao === 0">   
+
+                <ion-col *ngIf="dataInfo.appType === 1">
                     <button [disabled]="product.stock === 0" ion-button icon-only color="danger" clear outline (click)="decrement(product)">
                         <ion-icon class="fs-30" name="remove-circle"></ion-icon>
                     </button>                  
                 </ion-col>                
 
-                <ion-col class="align-text-middle">                
+                <ion-col class="align-text-middle" *ngIf="dataInfo.appType === 1">                
                     <ion-input text-center type="number" [disabled]="product.stock === 0" (keydown)="onKeydown(product)" [(ngModel)]="product.quantity" (ngModelChange) ="productQuantityChanged(product)"></ion-input>        
                 </ion-col>                                                    
 
-                <ion-col>
+                <ion-col *ngIf="dataInfo.appType === 1">
                     <button ion-button icon-only color="secondary" clear outline (click)="increment(product)" [disabled]="product.stock === 0">
                         <ion-icon class="fs-30" name="add-circle"></ion-icon>
                         </button>
                 </ion-col> 
 
-
-                <ion-col class="align-text-middle" col-4 *ngIf="dataInfo.appType === 1 && dataInfo.sessao === 0">                                        
+                <ion-col class="align-text-middle" col-4 *ngIf="dataInfo.appType === 1">                                        
                     <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}}</h2> 
-                    <h2 *ngIf="product.quantity === 0">{{product.nome_produto}}</h2>
-                </ion-col>
-
-                <ion-col class="align-text-middle" col-4 *ngIf="dataInfo.appType === 1 && dataInfo.sessao === 1">       
-
-                    <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}} 
-                        - {{dataInfo.titleSession}}: {{product.sessaoNome}} - Vendidos:  {{product.lotacaoAtual}} - Disponíveis: {{product.disponiveis}} </h2>                   
-
                     <h2 *ngIf="product.quantity === 0">{{product.nome_produto}}</h2>
                 </ion-col>
 
@@ -120,6 +112,51 @@
                 </ion-col>
                 
             </ion-row>
+
+            <ion-row *ngIf="dataInfo.sessao === 1">   
+
+                    <ion-col *ngIf="dataInfo.appType === 1  && product.sessaoStatus === 1">
+                        <button [disabled]="product.stock === 0" ion-button icon-only color="danger" clear outline (click)="decrement(product)">
+                            <ion-icon class="fs-30" name="remove-circle"></ion-icon>
+                        </button>                  
+                    </ion-col>                
+    
+                    <ion-col class="align-text-middle" *ngIf="dataInfo.appType === 1  && product.sessaoStatus === 1">                
+                        <ion-input text-center type="number" [disabled]="product.stock === 0" (keydown)="onKeydown(product)" [(ngModel)]="product.quantity" (ngModelChange) ="productQuantityChanged(product)"></ion-input>        
+                    </ion-col>                                                    
+    
+                    <ion-col *ngIf="dataInfo.appType === 1  && product.sessaoStatus === 1">
+                        <button ion-button icon-only color="secondary" clear outline (click)="increment(product)" [disabled]="product.stock === 0">
+                            <ion-icon class="fs-30" name="add-circle"></ion-icon>
+                            </button>
+                    </ion-col> 
+    
+                    <ion-col class="align-text-middle" col-4 *ngIf="dataInfo.appType === 1 && product.sessaoStatus === 1">                                        
+                            <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}} 
+                                    - {{dataInfo.titleSession}}: {{product.sessaoNome}} - Vendidos:  {{product.lotacaoAtual}} - Disponíveis: {{product.disponiveis}} </h2>                   
+            
+                            <h2 *ngIf="product.quantity === 0">{{product.nome_produto}}</h2>
+                    </ion-col>
+    
+                    <ion-col class="align-text-middle" col-4 *ngIf="dataInfo.appType === 2 && product.sessaoStatus === 1">                                        
+                        <h2 *ngIf="product.quantity !== 0">{{product.nome_produto}} - R$ {{product.valor_total}} - {{dataInfo.titleStock}}: {{product.stock}}</h2> 
+                        <h2 *ngIf="product.quantity === 0">{{product.nome_produto}} - {{dataInfo.titleStock}}: {{product.stock}}</h2>
+                    </ion-col>                
+    
+                    <ion-col col-4>
+                        <button *ngIf="product.quantity !== 0 && product.sessaoStatus === 1" small ion-button item-left color="secondary" text-wrap (click)="presentModal(product)">                                      
+                            <ion-icon name="ios-folder-open"></ion-icon>{{product.selectedsName}} 
+                        </button>                                      
+    
+                        <button *ngIf="product.quantity !== 0 && product.comprovante === 1" small ion-button item-left color="secondary" text-wrap (click)="presentModalAttachment(product)">                                      
+                            <ion-icon name="ios-folder-open"></ion-icon>{{dataInfo.titleAttachment}}
+                        </button>
+                    </ion-col>
+                    
+
+                </ion-row>
+
+            
         </ion-grid>        
                    
     </ion-item>    
