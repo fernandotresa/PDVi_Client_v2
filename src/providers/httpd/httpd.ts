@@ -7,7 +7,7 @@ import { DataInfoProvider } from '../../providers/data-info/data-info'
 export class HttpdProvider {
   
   //address : string = 'http://produtos.dbltecnologia.com.br:8086'    
-  address : string = 'http://localhost:8086'    
+  address : string = this.dataInfo.addressServer 
   contentHeader: Headers = new Headers({'Content-Type': 'application/json'});
   totemId: number = 1
   
@@ -15,6 +15,7 @@ export class HttpdProvider {
     public http: HttpClient, 
     public dataInfo: DataInfoProvider) {
   
+      this.address = this.dataInfo.addressServer
   }  
 
   GET(url) {
