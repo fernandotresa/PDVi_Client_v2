@@ -1,7 +1,6 @@
 {
   "addressServer": "http://localhost:8086",  
   "appType": 1,
-  "abreTotem": 0,
-  
-  "sessao": 1
+  "abreTotem": 0,  
+  "sessao": 0
 }
