@@ -101,8 +101,18 @@ export class MyApp {
 			}			
 		});	
 
-			
+
 		this.options.push({
+			iconName: 'pricetag',
+			displayText: '3Access',
+			custom: {
+				isExternalLink: true,
+				externalUrl: "http://localhost/3access/"
+			}			
+		});	
+
+			
+		/*this.options.push({
 			iconName: 'clipboard',
 			displayText: 'Venda de Pré Impresso	',
 			component: "PreprintedPage"			
@@ -136,13 +146,14 @@ export class MyApp {
 			iconName: 'cog',
 			displayText: 'Configurações',
 			component: "SettingsPage"			
-		});	
+		});	*/
 		
 		this.options.push({
 			iconName: 'log-out',
 			displayText: 'Sair',
 			custom: {
 				isLogout: true
+				
 			}			
 		});
 	}	
