@@ -1,7 +1,15 @@
 <ion-header>
 
     <ion-navbar text-center no-border-bottom color="primary">
-      <ion-title> {{dataInfo.titleUsers}} </ion-title>                
+      <ion-title> {{dataInfo.titleUsers}} </ion-title>        
+      
+      <ion-buttons end style="border: 1px; border-color: white;">        
+        <button ion-button color="white_" (click)="add()">
+            Adicionar novo
+            <ion-icon name="add-circle" style="padding: 10px;"></ion-icon>          
+        </button>
+    </ion-buttons> 
+
     </ion-navbar>
   
     <ion-toolbar no-border color="primary">
@@ -40,6 +48,7 @@
           <ion-icon name="md-flash" item-start *ngIf="user.fk_id_nivel_acesso === 1" color="primary"></ion-icon>
           <ion-icon name="ribbon" item-start *ngIf="user.fk_id_nivel_acesso === 2" color="primary"></ion-icon>
           <ion-icon name="people" item-start *ngIf="user.fk_id_nivel_acesso === 4" color="primary"></ion-icon>
+          <ion-icon name="people" item-start *ngIf="user.fk_id_nivel_acesso === 0" color="primary"></ion-icon>
 
           {{user.login_usuarios}} 
        </ion-buttons>

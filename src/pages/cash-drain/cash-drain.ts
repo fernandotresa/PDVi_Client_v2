@@ -70,7 +70,8 @@ export class CashDrainPage {
       }        
     });
 
-    return checked;
+    //return checked;
+    return true;
   }
 
   finish(){        

@@ -34,6 +34,24 @@ export class HttpdProvider {
     return this.http.post(this.address  + "/getUsers", myData, {headers: headers})
   }
 
+  addUsers(username_, password_, acl_){
+    let myData = JSON.stringify({username: username_, password: password_, acl: acl_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/addUsers", myData, {headers: headers})
+  }
+
+  saveUsers(id_, username_, password_, acl_){
+    let myData = JSON.stringify({id: id_, username: username_, password: password_, acl: acl_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/saveUsers", myData, {headers: headers})
+  }
+
+  delUsers(id_){
+    let myData = JSON.stringify({id: id_});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/delUsers", myData, {headers: headers})
+  }
+
   getUserByName(name_){
     let myData = JSON.stringify({ name: name_});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
@@ -358,6 +376,12 @@ export class HttpdProvider {
     let myData = JSON.stringify({id: this.totemId});
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(this.address  + "/getProducts", myData, {headers: headers})
+  }
+
+  getAcls(){
+    let myData = JSON.stringify({id: this.totemId});
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.post(this.address  + "/getAcls", myData, {headers: headers})
   }
 
   

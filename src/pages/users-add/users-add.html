@@ -1,0 +1,50 @@
+
+<ion-header class="bg-theme">
+
+  <ion-navbar text-center no-border-bottom color="primary">
+    <ion-title>Usuários</ion-title>    
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content class="trips detail-bg">
+
+  <ion-list>  
+
+    <ion-card class="trip card" text-wrap no-lines>
+        <ion-item>
+            <ion-avatar item-start *ngIf="false"> 
+                <img (click)="selectPicture()" [src]="base64Image" *ngIf="base64Image" />                          
+                <img (click)="selectPicture()" *ngIf="! base64Image" src="{{dataInfo.defaultCarPic}}" />
+              </ion-avatar>
+
+              <ion-avatar item-start *ngIf="false"> 
+                  <img [src]="base64Image" *ngIf="base64Image" />                  
+                  <input type="file" (change)="picChange($event)" accept="image/*;capture=camera">
+                  <img *ngIf="! base64Image" src="{{dataInfo.defaultCarPic}}" />                                          
+                </ion-avatar>
+            
+        </ion-item>             
+
+        <ion-item no-lines><ion-label stacked>Nome:</ion-label><ion-input type="text" [(ngModel)]="name"></ion-input></ion-item>                      
+        <ion-item no-lines><ion-label stacked>Senha: </ion-label><ion-input type="password" [(ngModel)]="password"></ion-input></ion-item>   
+        <ion-item no-lines><ion-label stacked>Confirmar senha: </ion-label><ion-input type="password" [(ngModel)]="password1"></ion-input></ion-item> 
+        
+        <ion-item no-lines class="text-green fs-15 fw-600 pdl-0">                  
+          <ion-label color="primary" class="fs-30">Nível de acesso</ion-label>    
+            <ion-select [(ngModel)]="aclUser">              
+            <ion-option *ngFor="let acl of allAclsArray">{{acl.nome_nivel_acesso}}</ion-option>                                                  
+          </ion-select>                          
+        </ion-item>     
+
+        
+    </ion-card>
+
+  </ion-list>    
+
+</ion-content>
+
+<ion-footer>
+    <button *ngIf="!key" [disabled]="!name || !password || !password1 || !aclUser" ion-button block class="btn" (click)="add()">Adicionar</button>
+    <button *ngIf="key" [disabled]="!name || !password || !password1 || !aclUser" ion-button block class="btn" (click)="save()">Salvar</button>
+</ion-footer>

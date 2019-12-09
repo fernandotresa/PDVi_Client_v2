@@ -82,7 +82,7 @@ export class UsersPage {
           handler: data => {                        
 
             if(data.password1 === data.password2)              
-              this.changeUserPassword(user, data.password1)            
+              this.changeUserPassword(user, data.password1)
           }
         }
       ]
@@ -106,6 +106,8 @@ export class UsersPage {
     let checked = false
 
     this.supervisorInfo.forEach(element => {
+
+      console.log(element)
       
       if(element.login_usuarios === this.supervisorUsername) {
 
@@ -158,6 +160,29 @@ export class UsersPage {
       } 
 
     }        
+  }
+
+  add(){
+    this.navCtrl.push('UsersAddPage')
+  }
+
+  remove(){
+    
+    let self  = this
+
+    let alert = this.uiUtils.showConfirm("Atenção", "Você tem certeza?")
+    alert.then((result) => {
+
+      if(result)  
+        self.removeContinue()
+    })   
+  }
+
+  removeContinue(){
+    this.httpd.delUsers("this.key")
+    .subscribe( () => {
+      this.uiUtils.showAlert("Sucesso", "Removido com sucesso!")
+    })
   }
 
 }

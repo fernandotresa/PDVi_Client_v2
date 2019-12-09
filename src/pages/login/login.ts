@@ -34,6 +34,7 @@ export class LoginPage {
     this.autoLogin = this.navParams.get("autoLogin")
 
     if(this.autoLogin == undefined)
+
       this.autoLogin = true
             
     if(this.autoLogin)
@@ -118,8 +119,8 @@ export class LoginPage {
 
       console.log(this.dataInfo.userInfo)
 
-      this.goHome()
-      //this.navCtrl.push('SessionsPage')
+      //this.goHome()
+      this.navCtrl.push('CashDrainPage')
     }
       
     else  

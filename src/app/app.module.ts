@@ -18,6 +18,7 @@ import { ParkingPageModule } from '../pages/parking/parking.module';
 import { PaymentPageModule } from '../pages/payment/payment.module';
 import { LoginPageModule } from '../pages/login/login.module';
 import { UsersPageModule } from '../pages/users/users.module';
+import { UsersAddPageModule } from '../pages/users-add/users-add.module';
 import { PreprintedPageModule } from '../pages/preprinted/preprinted.module';
 
 import { CashChangePageModule } from '../pages/cash-change/cash-change.module';
@@ -105,7 +106,7 @@ export const firebaseConfig = {
     ReceptorPageModule,
     AttachmentsPageModule,
     AttachmentsListPageModule,
-    
+    UsersAddPageModule,
     PreprintedPageModule
     ],
   providers: [    

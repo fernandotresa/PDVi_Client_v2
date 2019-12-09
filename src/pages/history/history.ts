@@ -107,7 +107,7 @@ export class HistoryPage {
   finish(){        
 
     if(! this.checkSupervisorInfo())      
-      this.uiUtils.showAlert(this.dataInfo.titleSuccess, this.dataInfo.titleAuthError).present()
+      this.uiUtils.showAlert(this.dataInfo.titleSuccess, "Reimpressão realizada com sucesso").present()
 
     else 
       this.supervisorOk = true           
