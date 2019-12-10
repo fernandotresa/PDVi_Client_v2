@@ -93,10 +93,12 @@ export class CashChangePage {
       loading.dismiss()      
       this.uiUtils.showAlertSuccess()
 
+      self.goBack()
     }, error => {
       loading.dismiss().then( () => {
 
         self.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleCashChangeError).present()
+        self.goBack()
       });
     });
 

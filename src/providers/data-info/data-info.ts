@@ -13,6 +13,7 @@ export class DataInfoProvider {
   totemId: number = 1
   portaId: number = 1
   addressServer: string
+  threeaccess: string
   isHome: Boolean = false
   maxTicketsMultiple: number = 1000
   isWeb: Boolean = true
@@ -150,6 +151,7 @@ export class DataInfoProvider {
     public events: Events) {
 
     this.addressServer =  this.configurationService.getValue<string>("addressServer");
+    this.threeaccess =  this.configurationService.getValue<string>("3access");
     this.appType =  this.configurationService.getValue<number>("appType");
     this.abreTotem = this.configurationService.getValue<number>("abreTotem");
     this.sessao = this.configurationService.getValue<number>("sessao");
@@ -177,11 +179,11 @@ export class DataInfoProvider {
 
   startClock(){
     let self = this
-    this.clock = moment().format("DD/MM/YY hh:mm")
+    this.clock = moment().add(-1, 'hour').format("DD/MM/YY hh:mm")
 
     setInterval(function(){
 
-      self.clock = moment().format("DD/MM/YY hh:mm")
+      self.clock = moment().add(-1, 'hour').format("DD/MM/YY hh:mm")
     }, 10000);   
 
   }

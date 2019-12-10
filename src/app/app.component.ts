@@ -6,6 +6,8 @@ import { SideMenuSettings } from './../shared/side-menu-content/models/side-menu
 import { SideMenuOption } from './../shared/side-menu-content/models/side-menu-option';
 import { SideMenuContentComponent } from './../shared/side-menu-content/side-menu-content.component';
 import * as firebaseApp from 'firebase/app';
+import { DataInfoProvider } from './../providers/data-info/data-info'
+
 
 export const firebaseConfig = {
 	apiKey: "AIzaSyAzSLbqgDiYqYIkemFmOmnJIb2DBesxL7I",
@@ -38,6 +40,7 @@ export class MyApp {
 
   constructor(platform: Platform, 
 	public events: Events,
+	public dataInfo: DataInfoProvider,
 	private menuCtrl: MenuController) {
 
     platform.ready().then(() => {
@@ -107,7 +110,7 @@ export class MyApp {
 			displayText: '3Access',
 			custom: {
 				isExternalLink: true,
-				externalUrl: "http://localhost/3access/"
+				externalUrl: this.dataInfo.threeaccess
 			}			
 		});	
 

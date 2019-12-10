@@ -92,12 +92,14 @@ export class CashDrainPage {
 
     .subscribe( data => {
       self.uiUtils.showAlertSuccess()
-      loading.dismiss()      
+      loading.dismiss()    
+      self.goBack()
 
     }, error => {
       loading.dismiss().then( () => {
 
         self.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleCashDrainError).present()
+        self.goBack()
       });
     });
 

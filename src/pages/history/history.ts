@@ -104,13 +104,15 @@ export class HistoryPage {
     return checked;
   }
 
-  finish(){        
+  checkAuthSupervisor(){
+    this.supervisorOk = this.checkSupervisorInfo()
 
-    if(! this.checkSupervisorInfo())      
-      this.uiUtils.showAlert(this.dataInfo.titleSuccess, "Reimpressão realizada com sucesso").present()
-
-    else 
-      this.supervisorOk = true           
+    if(this.supervisorOk){
+      this.uiUtils.showAlert("Sucesso", "Acesso permitido").present()
+    }
+    else {
+      this.uiUtils.showAlert("Erro", "Acesso negado ou senha inválida").present()
+    }
   }
 
 
@@ -248,6 +250,8 @@ export class HistoryPage {
       data.success.forEach(element => {        
         element.post_date = moment(element.post_date).tz('America/Sao_Paulo').format("L")        
         element.checked = false
+
+        console.log(element)
         this.ticketsCallback.push(element)
       });
 
@@ -291,6 +295,8 @@ export class HistoryPage {
       this.httpd.printTicketMultiple(this.ticketsSelect, this.dataInfo.userInfo.login_usuarios, 1)
       .subscribe(() => {
         this.viewCtrl.dismiss(true);
+
+        this.uiUtils.showAlert("Sucesso", "Comando de impressão enviado com sucesso")
       })
     }        
   }
@@ -383,6 +389,10 @@ export class HistoryPage {
 
     this.httpd.printTicketMultipleOnline(this.ticketsChecked, this.dataInfo.userInfo.login_usuarios, 1)
       .subscribe(() => {
+
+        console.log('Dismiss')
+
+        
         this.viewCtrl.dismiss(true);
         this.uiUtils.showAlertSuccess()
       })
