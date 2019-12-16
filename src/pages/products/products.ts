@@ -12,6 +12,7 @@ import { CashChangePage } from '../../pages/cash-change/cash-change';
 import { CashDrainPage } from '../../pages/cash-drain/cash-drain';
 import { AttachmentsPage } from '../../pages/attachments/attachments';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { CurrencyPipe } from '@angular/common';
 
 @IonicPage()
 @Component({
@@ -42,6 +43,7 @@ export class ProductsPage {
     public dataInfo: DataInfoProvider,
     public navParams: NavParams,
     public modalCtrl: ModalController,
+    private currencyPipe: CurrencyPipe,
     public events: Events,
     private iab: InAppBrowser,
     public httpd: HttpdProvider) {
@@ -62,6 +64,11 @@ export class ProductsPage {
       this.startInterface()
     }
   }
+
+  getCurrency(amount: number) {
+    return this.currencyPipe.transform(amount, 'BRL', true, '1.2-2');
+  }
+
 
   startInterface(){
     if(this.dataInfo.isAdmin)
@@ -202,14 +209,25 @@ export class ProductsPage {
   }
 
   incrementNormal(product){
+    console.log("INCREMENTANDO")
+    
     product.quantity++
     product.valor_total = product.valor_produto * product.quantity    
 
     product.selectedsIds.push(product.id_subtipo_produto)
     product.selectedsName.push(product.nome_subtipo_produto)
         
-    this.totalSelected++
-    this.finalValue += product.valor_produto  
+    this.totalSelected++    
+    this.finalValue += product.valor_produto
+
+    let f = this.finalValue
+    let ff = f.toFixed(2)
+
+    console.log("######", this.finalValue, ff)
+
+    this.finalValue = Number(ff)
+
+    console.log(this.finalValue, ff, "!@@!#!@#@!#")
   }
  
   decrement(product){            
@@ -230,8 +248,13 @@ export class ProductsPage {
         }                
       }      
   
-      this.totalSelected--
+      this.totalSelected--      
       this.finalValue -= product.valor_produto
+
+      let f = this.finalValue
+      let ff = f.toFixed(2)
+      console.log(this.finalValue, ff)
+
     }     
   }
 
@@ -443,7 +466,9 @@ export class ProductsPage {
         product_.valor_total = product_.valor_produto * quantity    
         let productValueFinal = valor_produto * quantity 
         this.totalSelected += quantity
-        this.finalValue += productValueFinal                
+
+        let finalV = productValueFinal.toFixed(2)
+        this.finalValue += Number(finalV)
 
         if(product_.selectedsIds.length === 0){
 

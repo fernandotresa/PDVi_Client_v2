@@ -101,6 +101,9 @@ export class HistoryPage {
       }        
     });
 
+    if(!checked)
+      this.supervisorPassword = ""
+      
     return checked;
   }
 

@@ -31,11 +31,12 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {    
+    
     this.autoLogin = this.navParams.get("autoLogin")
 
     if(this.autoLogin == undefined)
 
-      this.autoLogin = false
+      this.autoLogin = true
             
     if(this.autoLogin)
       this.loginContinue("admin", "Mudaragora00")

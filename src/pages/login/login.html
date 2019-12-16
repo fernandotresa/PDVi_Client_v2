@@ -6,14 +6,18 @@
           <img class="mg-auto" src="assets/imgs/logo.png" alt="">
         </ion-row>
         <ion-list class="ani-bottom-to-top">
+
+            <ion-label>Login</ion-label>
           <ion-item class="bdra-20">
-            <ion-input #inputUsername type="text" placeholder="{{dataInfo.titleEmail}}" [(ngModel)]="username" (keyup.enter)="focusPassword()"></ion-input>
+            <ion-input #inputUsername type="text" placeholder="Login" [(ngModel)]="username" (keyup.enter)="focusPassword()"></ion-input>
 
           </ion-item>
         </ion-list>
         <ion-list class="ani-bottom-to-top">
+
+          <ion-label>Senha</ion-label>
           <ion-item class="bdra-20">
-            <ion-input #inputEnd type="password" placeholder="{{dataInfo.titlePassword}}" [(ngModel)]="password" (keyup.enter)="loginUser()"></ion-input>
+            <ion-input #inputEnd type="password" placeholder="Senha" [(ngModel)]="password" (keyup.enter)="loginUser()"></ion-input>
           </ion-item>
         </ion-list>
         

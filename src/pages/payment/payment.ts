@@ -5,6 +5,7 @@ import { HttpdProvider } from '../../providers/httpd/httpd';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
 import { CameraProvider } from '../../providers/camera/camera'
 import { Observable } from 'rxjs/Observable';
+import { CurrencyPipe } from '@angular/common';
 
 @IonicPage()
 @Component({
@@ -15,13 +16,14 @@ export class PaymentPage {
 
   @ViewChild('inputEnd') inputEnd;
 
-  finalValue: number = 0
-  totalSelected: number = 0
-  totalReceived: number = 0
-  totalChange: number = 0
+  finalValue: string
+  totalSelected: string
+  totalReceived: number
+  totalChange: string
   payments: Observable<any>;
   productSelected: any = []  
   paymentForm: string = "Dinheiro"
+  isTotalOk: Boolean = false
 
   urlPicture: string;
   isPrePrinted: Boolean = false
@@ -35,16 +37,20 @@ export class PaymentPage {
     public platform: Platform,
     public events: Events,
     public camera: CameraProvider,
+    private currencyPipe: CurrencyPipe,
     public navParams: NavParams) {      
   }
 
   ionViewDidLoad() {    
 
-    this.finalValue = 0
+    this.finalValue = "0"
     this.productSelected = this.navParams.get('productSelected') 
     this.totalSelected = this.navParams.get('totalSelected') 
     this.finalValue = this.navParams.get('finalValue') 
     this.isPrePrinted = this.navParams.get('isPrePrinted')     
+
+    console.log("VALOR FINAL")
+    console.log(this.finalValue)
     
     this.setIntervalFocus()
 
@@ -53,6 +59,10 @@ export class PaymentPage {
       this.setPaymentDefault(data)      
     })    
   }  
+
+  getCurrency(amount: number) {
+    return this.currencyPipe.transform(amount, 'BRL', true, '1.2-2');
+  }
 
   setPaymentDefault(data){    
     this.paymentForm = data.success[0].nome_tipo_pagamento    
@@ -191,27 +201,32 @@ export class PaymentPage {
   }
 
   checkNegative(){
-    if(this.totalChange < 0){
-      this.totalChange = 0
+    if(Number(this.totalChange) < 0){
+      this.totalChange = "0"
     }
 
     if(this.totalReceived < 0){
       this.totalReceived = 0
     }
 
-    if(this.finalValue < 0){
-      this.finalValue = 0
+    if(Number(this.finalValue) < 0){
+      this.finalValue = "0"
     }
   }
  
   totalChanged(){        
+    this.checkNegative()    
+    let total = this.totalReceived - Number(this.finalValue)
+    this.totalChange = total.toFixed(2)        
     this.checkNegative()
-    this.totalChange = this.totalReceived - this.finalValue
-    this.checkNegative()
+
+    this.isTotalOk = this.totalReceived >= Number(this.finalValue)
+    
   }
 
-  paymentChanged(event){
-    console.log(event)
+  paymentChanged(event){  
+    console.log(event)    
+
   }
 
   

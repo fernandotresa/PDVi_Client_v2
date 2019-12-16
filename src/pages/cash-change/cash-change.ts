@@ -5,6 +5,7 @@ import { HttpdProvider } from '../../providers/httpd/httpd';
 import { DataInfoProvider } from '../../providers/data-info/data-info';
 import { Observable } from 'rxjs/Observable';
 import {Md5} from 'ts-md5/dist/md5';
+import { CurrencyPipe } from '@angular/common';
 
 @IonicPage()
 @Component({
@@ -28,6 +29,7 @@ export class CashChangePage {
     public dataInfo: DataInfoProvider,    
     public httpd: HttpdProvider,
     public uiUtils: UiUtilsProvider,
+    private currencyPipe: CurrencyPipe,
     public navParams: NavParams) {
   }
 
@@ -45,7 +47,6 @@ export class CashChangePage {
 
     this.allSupervisors
     .subscribe( data => {
-        console.log(data)
         this.supervisorInfo = data.success
     }); 
   }    
@@ -70,6 +71,9 @@ export class CashChangePage {
       }        
     });
 
+    if(!checked)
+      this.supervisorPassword = ""
+
     return checked;
   }
 
@@ -77,11 +81,15 @@ export class CashChangePage {
     if(! this.checkSupervisorInfo())      
       this.uiUtils.showAlert(this.dataInfo.titleWarning, this.dataInfo.titleAuthError).present()
 
+    else if(this.cashDrainTotal < 0)
+      this.uiUtils.showAlert(this.dataInfo.titleWarning, "Valor negativo").present()
+
     else 
       this.confirm()           
   }
 
   confirm(){
+    
     let loading = this.uiUtils.showLoading(this.dataInfo.titlePleaseWait)    
     loading.present() 
     var self = this
@@ -102,6 +110,20 @@ export class CashChangePage {
       });
     });
 
+  }
+
+  getCurrency(amount: number) {
+    return this.currencyPipe.transform(amount, 'BRL', true, '1.2-2');
+  }
+
+
+  cashDrainChanged(){
+
+    if(this.cashDrainTotal < 0)
+      this.cashDrainTotal = 0
+
+    else 
+      this.getCurrency(this.cashDrainTotal)
   }
 
   

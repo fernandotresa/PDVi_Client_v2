@@ -12,9 +12,10 @@
 
             <ion-col col-9 *ngIf="! dataInfo.isAdmin && dataInfo.userInfo">
                 <ion-item detail-none no-lines class="backgroundPainel" text-center>  
-                    <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
+                    <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}
                     <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} 
                     <b>{{dataInfo.titleTime}}:</b> {{dataInfo.clock}}
+                    <b>Versão:</b> 0.1
                 </ion-item>
             </ion-col>        
         </ion-row>        
@@ -48,7 +49,7 @@
 
   </ion-navbar>  
 
-    <ion-toolbar color="primary">
+    <ion-toolbar color="primary" *ngIf="false">
       <ion-searchbar #inputSearch
         [(ngModel)]="searchTerm"
         (search)="setFilteredItems()"

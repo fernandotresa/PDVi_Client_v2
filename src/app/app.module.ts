@@ -48,6 +48,8 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { ConfigurationService } from "ionic-configuration-service";
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
+import { CurrencyPipe } from '@angular/common';
+
 export function loadConfiguration(configurationService: ConfigurationService): () => Promise<void> {
   return () => configurationService.load("assets/configs/document.json");
 }
@@ -119,6 +121,7 @@ export const firebaseConfig = {
     CameraProvider,
     StorageProvider,
     InAppBrowser,
+    CurrencyPipe,
     ConfigurationService,
     {
       provide: APP_INITIALIZER,

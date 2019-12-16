@@ -5,7 +5,8 @@
   <ion-item detail-none no-lines class="backgroundPainel" text-center>  
       <b>{{dataInfo.titleUsername}}:</b> {{dataInfo.userInfo.login_usuarios}}             
       <b>{{dataInfo.titleAddress}}:</b> {{dataInfo.ipLocal}} 
-      <b>{{dataInfo.titleTime}}:</b> {{dataInfo.clock}}          
+      <b>{{dataInfo.titleTime}}:</b> {{dataInfo.clock}}  
+      <b>Versão:</b> 0.1        
   </ion-item>
 
   </ion-navbar>   
@@ -30,12 +31,12 @@
             
     <ion-item no-lines class="text-green fs-15 fw-600 pdl-0">
         <ion-label color="primary" class="text-size">{{dataInfo.titleFinalValue}}</ion-label>      
-         <ion-input type="number" [(ngModel)]="finalValue" text-right min="0"></ion-input>
+         <ion-input type="text" [(ngModel)]="finalValue" text-right min="0"></ion-input>
       </ion-item>     
 
       <ion-item no-lines class="text-green fs-15 fw-600 pdl-0">
           <ion-label color="primary" class="text-size">{{dataInfo.titleTotalChange}}</ion-label>      
-           <ion-input type="number" [(ngModel)]="totalChange" text-right min="0"></ion-input>
+           <ion-input type="text" [(ngModel)]="totalChange" text-right min="0"></ion-input>
         </ion-item>                      
 
 </ion-list>
@@ -43,6 +44,6 @@
 </ion-content>   
 
 <ion-footer no-border color="transparent">   
-  <button ion-button full large (click)="getLastCashierId()" color="secondary">{{dataInfo.titlePay}}</button>  
+  <button ion-button full large (click)="getLastCashierId()" color="secondary" [disabled]="! isTotalOk">{{dataInfo.titlePay}}</button>  
   <button ion-button full large (click)="goBack()" color="positive">{{dataInfo.titleCancel}}</button>
 </ion-footer>
